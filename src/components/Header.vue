@@ -1,6 +1,7 @@
 <template>
   <header>
-    <nav class="bg-transparent h-[70px] dark:bg-gray-900">
+    <nav :class="['fixed top-0 left-0 w-full z-50 h-[70px]', isScrolled ? 'bg-white shadow-lg' : 'bg-transparent']" dark:bg-gray-900>
+
       <div class="flex items-center justify-between mx-auto pt-2 pb-2 px-[120px]">
         <!-- 로고 -->
         <router-link class="flex items-center justify-start" to="/">
@@ -25,7 +26,7 @@
         
         <!-- 네비게이션 바 -->
         <div :class="{ hidden: !isMenuOpen }" class="justify-between w-full md:flex md:w-auto md:order-1" id="navbar-cta">
-          <ul class="flex flex-col font-medium p-3 md:p-0 mt-4 border border-gray-100 rounded-[15px] bg-gray-50 md:space-x-32 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <ul :class="['flex flex-col font-medium p-3 md:p-0 mt-4 border border-gray-100 rounded-[15px] md:space-x-32 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0', isScrolled ? 'bg-white dark:bg-gray-800' : 'bg-transparent']">
             <li>
               <router-link
               class="block py-2 px-6 text-lg md:p-2 hover:bg-gray-100 md:hover:bg-primary-color rounded-[15px] dark:text-white dark:hover:bg-gray-700"
@@ -66,11 +67,27 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
 const isMenuOpen = ref(false);
+const isScrolled = ref(false); // 스크롤 상태를 추적하는 변수
 
 function toggleMenu() {
   isMenuOpen.value = !isMenuOpen.value;
 }
+
+function handleScroll() {
+  if (window.scrollY > 200) {
+    isScrolled.value = true;
+  } else {
+    isScrolled.value = false;
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 </script>
