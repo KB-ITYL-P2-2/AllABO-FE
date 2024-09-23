@@ -1,9 +1,10 @@
 <script setup>
-import MainPage from './pages/MainPage.vue';
+import Header from './components/Header.vue';
 </script>
 
 <template>
-  <MainPage></MainPage>
+<Header/>
+<router-view></router-view>
 </template>
 
 <style scoped>
