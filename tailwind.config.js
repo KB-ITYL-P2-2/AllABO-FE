@@ -7,8 +7,9 @@ module.exports = {
         'primary-color' : "#F4BF42",
         'kb-dark-gray' : "#5F584E"
       },
-      keyframes:{
-        
+      keyframes:{},
+      screens:{
+        laptop: "1537px"
       }
     },
   },
