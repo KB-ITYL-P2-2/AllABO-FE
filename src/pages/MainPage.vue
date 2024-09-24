@@ -1,6 +1,5 @@
 <template>
-  <div class="bg-primary-color w-[1920px] h-[1900px]">
-    메인이얌
+  <div class="bg-primary-color w-full h-[1900px]">
   </div>
 </template>
 
