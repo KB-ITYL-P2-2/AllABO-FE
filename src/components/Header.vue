@@ -14,7 +14,7 @@
           <button
             @click="$router.push('/login')"
             type="button"
-            class="text-white w-[90px] h-[50px] hover:bg-kb-color-6 focus:ring-4 focus:bg-kb-color-6 rounded-[15px] text-lg px-2 py-2 text-center bg-kb-color-3"
+            class="text-white w-[90px] h-[50px] hover:bg-kb-color-6 focus:ring-4 focus:bg-kb-color-6 rounded-[15px] text-lg px-2 py-2 text-center bg-kb-brown-1"
           >
             LOGIN
           </button>
