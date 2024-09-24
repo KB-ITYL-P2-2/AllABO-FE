@@ -27,8 +27,8 @@
         </div>
         
         <!-- 네비게이션 바 -->
-        <div class="justify-between w-full md:flex md:w-auto md:order-1 transition-all duration-500 ease-in-out" id="navbar-cta">
-          <ul :class="['flex flex-col font-medium md:p-1  md:space-x-32 md:flex-row', isScrolled ? 'bg-inherit' : 'bg-transparent','transition duration-500 ease-in-out']">
+        <div :class="{'hidden': !isMenuOpen, 'block': isMenuOpen, 'md:flex': true}" class="justify-between w-full md:w-auto md:order-1 transition-all duration-500 ease-in-out" id="navbar-cta">
+          <ul :class="['flex flex-col font-medium md:p-1 md:space-x-32 md:flex-row', isScrolled ? 'bg-inherit' : 'bg-transparent','transition duration-500 ease-in-out']">
             <li>
               <router-link
               class="block py-2 px-6 text-lg md:p-2 md:hover:bg-nav-color transition duration-500 ease-in-out"
