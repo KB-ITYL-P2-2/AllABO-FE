@@ -1,21 +1,28 @@
 <template>
   <div class="">
-    <div class="flex flex-col items-center justify-center h-screen bg-kb-dark-gray">
+    <!-- 처음 -->
+    <div class="flex flex-col items-center justify-center h-screen bg-kb-color-3">
       <div class="md:max-laptop:text-[54px] text-[80px] font-black border border-x-[20px] border-t-[20px] px-[72px] border-white border-b-0">
         <span class="text-white">{{ text }}</span>
-        <span class="text-primary-color">{{ dot }}</span>
+        <span class="text-kb-color-1">{{ dot }}</span>
       </div>
       <p class="md:max-laptop:text-[28px] text-[40px] text-white mt-6">Next Generation FinTech</p>
     </div>
 
+    <!-- 두번쨰 -->
     <div class="flex items-center justify-center h-screen bg-white ">
-      <div class="bg-primary-color blur-[80px] md:max-laptop:w-[320px] md:max-laptop:h-[320px] w-[460px] h-[460px] rounded-full">
+      <div class="bg-kb-color-1 blur-[80px] md:max-laptop:w-[320px] md:max-laptop:h-[320px] w-[460px] h-[460px] rounded-full">
       </div>
         <p class="absolute md:max-laptop:text-[24px] text-[36px] text-center">
           혁신적인 금융자산 분석 비교 서비스<br />
           기존에 없던 편리한 금융 서비스를 경험하세요.
         </p>
     </div>
+
+    <!-- 세번째 -->
+     <div class="bg-[url('/images/MainPage/background1.png')] flex items-center justify-center h-screen bg-cover">
+      <h1 class="font-bold text-white text-[60px] md:max-laptop:text-[42px]">상품 추천 | 자산 분석 |자산 설계</h1>
+     </div>
     
   </div>
 </template>
