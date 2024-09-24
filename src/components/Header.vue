@@ -14,7 +14,7 @@
           <button
             @click="$router.push('/login')"
             type="button"
-            class="text-white w-[90px] h-10 kb-dark-gray hover:bg-kb-color-6 focus:ring-4 focus:bg-kb-color-6 rounded-[15px] text-lg px-2 py-2 text-center bg-kb-dark-gray"
+            class="text-white w-[90px] h-[50px] kb-dark-gray hover:bg-kb-color-6 focus:ring-4 focus:bg-kb-color-6 rounded-[15px] text-lg px-2 py-2 text-center bg-kb-dark-gray"
           >
             LOGIN
           </button>
@@ -31,7 +31,7 @@
           <ul :class="['flex flex-col font-medium md:p-1  md:space-x-32 md:flex-row', isScrolled ? 'bg-inherit' : 'bg-transparent','transition duration-500 ease-in-out']">
             <li>
               <router-link
-              class="block py-2 px-6 text-lg md:p-2 hover:bg-gray-100 md:hover:bg-primary-color rounded-[15px]"
+              class="block py-2 px-6 text-lg md:p-2 md:hover:bg-nav-color transition duration-500 ease-in-out"
               to="/products"
               >
                 맞춤 상품
@@ -39,7 +39,7 @@
             </li>
             <li>
               <router-link
-              class="block py-2 px-6 text-lg md:p-2 hover:bg-gray-100 md:hover:bg-primary-color rounded-[15px]"
+              class="block py-2 px-6 text-lg md:p-2 md:hover:bg-nav-color transition duration-500 ease-in-out "
               to="/asset-detail"
               >
                 자산 분석
@@ -47,7 +47,7 @@
             </li>
             <li>
               <router-link
-              class="block py-2 px-6 text-lg md:p-2 hover:bg-gray-100 md:hover:bg-primary-color rounded-[15px]"
+              class="block py-2 px-6 text-lg md:p-2 hover:bg-gray-100 md:hover:bg-nav-color transition duration-500 ease-in-out"
               to="/asset-plan"
               >
                 자산 설계
@@ -55,7 +55,7 @@
             </li>
             <li>
               <router-link
-                class="block py-2 px-6 text-lg md:p-2 hover:bg-gray-100 md:hover:bg-primary-color rounded-[15px]"
+                class="block py-2 px-6 text-lg md:p-2 md:hover:bg-nav-color transition duration-500 ease-in-out"
                 to="/mypage"
               >
                 마이 페이지
@@ -79,7 +79,7 @@ function toggleMenu() {
 }
 
 function handleScroll() {
-  if (window.scrollY > 100) {
+  if (window.scrollY > 1) {
     isScrolled.value = true;
   } else {
     isScrolled.value = false;
