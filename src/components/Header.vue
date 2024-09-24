@@ -1,7 +1,7 @@
 <template>
   <header>
     <!-- 네비게이션 바 -->
-    <nav :class="['fixed top-0 left-0 w-full z-50 h-[70px]', isScrolled ? 'bg-white shadow-lg' : 'bg-transparent','transition duration-500 ease-in-out']">
+    <nav :class="['fixed top-0 left-0 w-full h-[70px]', isScrolled ? 'bg-white shadow-lg' : 'bg-transparent','transition duration-500 ease-in-out']">
 
       <div class="flex items-center justify-between mx-auto pt-2 pb-2 px-[120px]">
         <!-- 로고 -->
@@ -12,6 +12,7 @@
         <!-- 로그인 버튼과 화면 축소 시 햄버거 버튼 -->
         <div class="flex md:order-2 space-x-3 justify-end rtl:space-x-reverse">
           <button
+            @click="$router.push('/login')"
             type="button"
             class="text-white w-[90px] h-10 kb-dark-gray hover:bg-kb-color-6 focus:ring-4 focus:bg-kb-color-6 rounded-[15px] text-lg px-2 py-2 text-center bg-kb-dark-gray"
           >
