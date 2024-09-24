@@ -14,12 +14,12 @@
           <button
             @click="$router.push('/login')"
             type="button"
-            class="text-white w-[90px] h-[50px] kb-dark-gray hover:bg-kb-color-6 focus:ring-4 focus:bg-kb-color-6 rounded-[15px] text-lg px-2 py-2 text-center bg-kb-dark-gray"
+            class="text-white w-[90px] h-[50px] hover:bg-kb-color-6 focus:ring-4 focus:bg-kb-color-6 rounded-[15px] text-lg px-2 py-2 text-center bg-kb-color-3"
           >
             LOGIN
           </button>
-          <button @click="toggleMenu" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 ">
-            <span class="sr-only">Open main menu</span>
+          <button @click="toggleMenu" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-font-color rounded-lg md:hidden hover:bg-white focus:outline-none focus:ring-2 focus:ring-gray-500 ">
+            <span class="sr-only">메인 메뉴 열기</span>
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
             </svg>
@@ -79,7 +79,7 @@ function toggleMenu() {
 }
 
 function handleScroll() {
-  if (window.scrollY > 1) {
+  if (window.scrollY > 200) {
     isScrolled.value = true;
   } else {
     isScrolled.value = false;

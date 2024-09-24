@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-primary-color w-full h-[1900px]">
+  <div class="bg-kb-color-1 w-full h-[1900px]">
   </div>
 </template>
 
