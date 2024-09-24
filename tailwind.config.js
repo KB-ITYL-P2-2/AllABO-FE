@@ -11,8 +11,10 @@ module.exports = {
     
         'kb-brown-3':"#897552",
         'kb-gray-1':"#85888B",      
+        'kb-gray-2':"#B8B8BC",
         'nav-color':"#FFE89A",
         'font-color' :"#27272a",
+        
        
       },
     },
