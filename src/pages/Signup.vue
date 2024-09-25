@@ -1,35 +1,59 @@
 <template>
-    <div class="h-[70px]"></div>
-    <div class="flex justify-center mt-[187px]">
-        <div class="text-3xl font-bold text-font-color">회원가입</div>
-    </div>
-    <div class="mt-6 mb-3 flex justify-start mx-auto w-[760px]">
-        <p class="text-kb-yellow-2 text-lg font-bold ">[필수] </p> 
-        <p class="text-font-color text-lg font-bold"> 개인정보 수집 및 이용 동의 </p>
-    </div>
-    <div>
-        <div class="flex justify-center mx-auto w-[760px] h-[380px] rounded-[15px] border-2">
-            <p class="p-2">
-                <br><br>
-                (주)000 는 아래의 목적으로 개인정보를 수집 및 이용하며, 회원의 개인정보를 안전하게 취급하는데
-                최선을 다합니다. <br><br>  
-                <b>개인정보 수집 및 이용에 대한 안내</b><br><br>          
-                1. 목적 : 금융거래 인증, 금융제공 -> 여기는 내용 조금 더 추가를 해볼 수 있ㄷ면....해야함<br>
-                2. 항목 : 아이디, 비밀번호, 이름,주민번호, 휴대폰번호3. 보유기간 : 회원 탈퇴 시까지 보유 (개인 신상정보를 삭제한 지원이력 정보는 일방향 암호화하여 보관됩니다.)<br><br>
-                
-                위 개인정보 수집에 대한 동의를 거부할 권리가 있으며, 동의 거부 시에는 지원자 등록이 제한될 수 있습니다.더 자세한 내용에 대해서는 ㅇㅇㅇ의  개인정보처리방침을 참고하시길 바랍니다.
-                        </p>
-        </div>
-        <div class="flex justify-center mt-[60px]">
-            <button class="w-[213px] h-[50px] text-lg rounded-[15px] mr-10 bg-white text-font-color border border-kb-brown-2">취소</button>
-            <button class="w-[213px] h-[50px] text-lg rounded-[15px] bg-kb-brown-2 text-white">동의하기</button>
-        </div>
+<div class="h-[70px]"></div>
+<div class="flex justify-center mt-[187px]">
+    <div class="text-3xl font-bold text-font-color">회원가입</div>
+</div>
+<!--회원가입 입력 폼-->
+<div>
+    <div class="mt-[200px] flex justify-center">
+        <form @submit.prevent="submitForm">
+            <div>
+				<label for="name" name="username" class="block mb-2 text-font-color text-[16px]">이름</label>
+               <input type="text" id="name" placeholder=" 이름을 입력해주세요" 
+                class="h-[50px] w-[343px] text-kb-gray-2 rounded-[15px] border border-kb-brown-1  focus:outline-none focus:ring-2 focus:ring-kb-brown-2"/>
+			</div>
+            <div>
+				<label for="birthday" name="userbd" class="block mb-2 text-font-color text-[16px]"> 생년월일</label>
+               <input type="text" id="birthday" placeholder=" 생년월일을 입력해주세요(YYYYMMdd)" 
+                class="h-[50px] w-[343px] text-kb-gray-2 rounded-[15px] border border-kb-brown-1  focus:outline-none focus:ring-2 focus:ring-kb-brown-2"/>
+			</div>
+            <div>
+				<label for="email" name="useremail" class="block mb-2 text-font-color text-[16px]">email</label>
+				<input type="text" id="email" placeholder="이메일을 입력해주세요" v-model="email"                 
+                class="h-[50px] w-[343px] text-kb-gray-2 rounded-[15px] border border-kb-brown-1  focus:outline-none focus:ring-2 focus:ring-kb-brown-2 mr-[50px]"/>
+                <button class="text-lg text-white bg-kb-brown-2 h-[50px]  w-[120px] rounded-[15px]">이메일 인증</button>
+            </div>
+			<div>
+				<label for="password" name="password" class="block mb-2 text-font-color text-[16px]">비밀번호</label>
+				<input type="password" id="password" v-model="password" placeholder="비밀번호를 입력해주세요"
+                class="h-[50px] w-[343px] text-kb-gray-2 rounded-[15px] border border-kb-brown-1  focus:outline-none focus:ring-2 focus:ring-kb-brown-2"/>
+			</div>
+			<div>
+				<label for="passwordConfirm" name="passwordconfirm" class="block mb-2 text-font-color text-[16px]">비밀번호 확인</label>
+				<input type="password" id="passwordConfirm" v-model="passwordConfirm" placeholder="비밀번호를 다시 한번 입력해주세요"
+                class="h-[50px] w-[343px] text-kb-gray-2 rounded-[15px] border border-kb-brown-1  focus:outline-none focus:ring-2 focus:ring-kb-brown-2"/>
+			</div>
+			<div>
+				<label for="tel" name="tel" class="block mb-2 text-font-color text-[16px]">전화번호</label>
+				<input type="number" id="tel" v-model="tel" placeholder="- 없이 전화번호를 입력해주세요(01012341234)"
+                class="h-[50px] w-[343px] text-kb-gray-2 rounded-[15px] border border-kb-brown-1  focus:outline-none focus:ring-2 focus:ring-kb-brown-2 mr-[50px]"/>
+                <button class="text-lg text-white bg-kb-brown-2 h-[50px] w-[120px] rounded-[15px]">인증번호 발송</button>
+            </div>
+            <div>
+				<label for="asset" name="asset" class="block mb-2 text-font-color text-[16px]">현재 자산</label>
+				<input type="text" id="asset" v-model="asset" placeholder="현재 자산을 입력해주세요 (ex: 1000000원)"
+                class="h-[50px] w-[343px] text-kb-gray-2 rounded-[15px] border border-kb-brown-1  focus:outline-none focus:ring-2 focus:ring-kb-brown-2"/>
+			</div>
 
+
+            <div class="flex justify-center mt-[60px]">
+                <button class="w-[213px] h-[50px] text-lg rounded-[15px] mr-10 bg-white text-font-color border border-kb-brown-2">취소</button>
+                <button @click="$router.push('/signup')" type="button"
+                        class="w-[213px] h-[50px] text-lg rounded-[15px] bg-kb-gray-2 text-font-color">가입하기</button>
+            </div>
+		</form>
     </div>
+</div>
 </template>
-
-<script setup>
-import { ref } from 'vue';
-const showModal=ref(false);
-
+<script>
 </script>

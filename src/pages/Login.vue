@@ -7,11 +7,11 @@
         <form>
             <!--email-->
             <label for="email" name="useremail" class="block mb-2"></label>
-            <input type="text" placeholder="이메일을 입력하세요" 
+            <input type="text" placeholder=" 이메일을 입력하세요" 
                    class="h-[50px] w-[340px] rounded-[15px] border border-kb-brown-1  focus:outline-none focus:ring-2 focus:ring-kb-brown-2"/>
             <br>
             <label for="password" name="password" class="block mt-4 mb-2"></label>
-            <input type="password" placeholder="비밀번호를 입력하세요" 
+            <input type="password" placeholder=" 비밀번호를 입력하세요" 
                    class="h-[50px] w-[340px] rounded-[15px] border border-kb-brown-1  focus:outline-none focus:ring-2 focus:ring-kb-brown-2"/>
             <br>
             <button class="h-[50px] w-[340px] rounded-[15px] bg-kb-brown-1 text-white text- py-2 px-4 focus:ring-kb-brown-2 mt-4">LOGIN</button>
@@ -19,7 +19,7 @@
             <div class="user_info mt-4">
                 <button @click.prevent="$emit('openModal')" type="button" class="text-kb-gray-2 text-[16px] underline ml-4">이메일 찾기</button>
                 <a href="#" class="text-kb-gray-2 text-[16px] underline ml-4">비밀번호 찾기</a>
-                <button @click="$router.push('/signup')" type="button" class="text-kb-gray-2 text-[16px] underline ml-4">회원가입</button>
+                <button @click="$router.push('/signup-condition')" type="button" class="text-kb-gray-2 text-[16px] underline ml-4">회원가입</button>
             </div>
         </form>
     </div>
