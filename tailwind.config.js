@@ -11,10 +11,10 @@ module.exports = {
         'kb-brown-3':"#897552",
         'kb-brown-4':"#563A3A",
 
-        'kb-gray-1':"#85888B",      
+        'kb-gray-1':"#85888B",
         'nav-color':"#FFE89A",
         'font-color' :"#27272a",
-       
+        'kb-disabled' : "#B8B8BC"
       },
       keyframes:{},
       screens:{
