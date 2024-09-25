@@ -14,27 +14,23 @@
             <input type="password" placeholder="비밀번호를 입력하세요" 
                    class="h-[50px] w-[340px] rounded-[15px] border border-kb-brown-1  focus:outline-none focus:ring-2 focus:ring-kb-brown-2"/>
             <br>
-            <button class="h-[50px] w-[340px] rounded-[15px] bg-kb-brown-1 text-white text- py-2 px-4  focus:ring-kb-brown-2 mt-4">LOGIN</button>
+            <button class="h-[50px] w-[340px] rounded-[15px] bg-kb-brown-1 text-white text- py-2 px-4 focus:ring-kb-brown-2 mt-4">LOGIN</button>
             <!--페이지 생성 후 수정 예정-->
             <div class="user_info mt-4">
-                <!-- <a href="#" class="text-kb-gray-2 text-[16px] underline">이메일 찾기</a> -->
-                 <!-- <button @click="">이메일 찾기</button> -->
-                <!-- <button @click=""></button> -->
+                <button @click.prevent="$emit('openModal')" type="button" class="text-kb-gray-2 text-[16px] underline ml-4">이메일 찾기</button>
                 <a href="#" class="text-kb-gray-2 text-[16px] underline ml-4">비밀번호 찾기</a>
-                <!-- <CalendarModal
-                v-if="showModal"
-                @close="showModal = false"
-                :events="selectedEvents"
-              /> -->
-                <button @click="$router.push('/signup')" class="text-kb-gray-2 text-[16px] underline ml-4">회원가입</button>
+                <button @click="$router.push('/signup')" type="button" class="text-kb-gray-2 text-[16px] underline ml-4">회원가입</button>
             </div>
         </form>
     </div>
+    <!-- EmailModal 컴포넌트를 showModal이 true일 때만 표시 -->
+    <EmailModal v-if="showModal" @close="showModal = false" />
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import EmailModal from '../components/Login/EmailModal.vue';
-const showModal=ref(false);
 
+// 모달을 관리할 ref 선언
+const showModal = ref(false);
 </script>

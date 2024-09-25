@@ -3,13 +3,13 @@
     <div class="flex justify-center mt-[187px]">
         <div class="text-3xl font-bold text-font-color">회원가입</div>
     </div>
-    <div class="mt-6 flex ml-[580px]">
-        <p class="text-kb-yellow-2 text-lg font-bold ">[필수] </p> <p class="text-font-color text-lg font-bold"> 개인정보 수집 및 이용 동의 </p>
-        <!--사각형 박스-->
+    <div class="mt-6 mb-3 flex justify-start mx-auto w-[760px]">
+        <p class="text-kb-yellow-2 text-lg font-bold ">[필수] </p> 
+        <p class="text-font-color text-lg font-bold"> 개인정보 수집 및 이용 동의 </p>
     </div>
     <div>
-        <div class="flex ml-[580px] w-[760px] h-[380px] rounded-[15px] border-2">
-            <p>
+        <div class="flex justify-center mx-auto w-[760px] h-[380px] rounded-[15px] border-2">
+            <p class="p-2">
                 <br><br>
                 (주)000 는 아래의 목적으로 개인정보를 수집 및 이용하며, 회원의 개인정보를 안전하게 취급하는데
                 최선을 다합니다. <br><br>  
@@ -19,6 +19,10 @@
                 
                 위 개인정보 수집에 대한 동의를 거부할 권리가 있으며, 동의 거부 시에는 지원자 등록이 제한될 수 있습니다.더 자세한 내용에 대해서는 ㅇㅇㅇ의  개인정보처리방침을 참고하시길 바랍니다.
                         </p>
+        </div>
+        <div class="flex justify-center mt-[60px]">
+            <button class="w-[213px] h-[50px] text-lg rounded-[15px] mr-10 bg-white text-font-color border border-kb-brown-2">취소</button>
+            <button class="w-[213px] h-[50px] text-lg rounded-[15px] bg-kb-brown-2 text-white">동의하기</button>
         </div>
 
     </div>
