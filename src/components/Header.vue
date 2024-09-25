@@ -1,7 +1,7 @@
 <template>
   <header>
     <!-- 네비게이션 바 -->
-    <nav :class="['fixed top-0 left-0 w-full h-[70px]', isScrolled ? 'bg-white shadow-lg' : 'bg-transparent','transition duration-500 ease-in-out']">
+    <nav :class="['fixed top-0 left-0 w-full h-[70px] z-50', isScrolled ? 'bg-white shadow-lg' : 'bg-transparent','transition duration-500 ease-in-out']">
 
       <div class="flex items-center justify-between mx-auto pt-2 pb-2 px-[120px]">
         <!-- 로고 -->
@@ -10,7 +10,7 @@
         </router-link>
         
         <!-- 로그인 버튼과 화면 축소 시 햄버거 버튼 -->
-        <div class="flex md:order-2 space-x-3 justify-end rtl:space-x-reverse">
+        <div class="flex justify-end space-x-3 md:order-2 rtl:space-x-reverse">
           <button
             @click="$router.push('/login')"
             type="button"
@@ -18,7 +18,7 @@
           >
             LOGIN
           </button>
-          <button @click="toggleMenu" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-font-color rounded-lg md:hidden hover:bg-white focus:outline-none focus:ring-2 focus:ring-gray-500 ">
+          <button @click="toggleMenu" type="button" class="inline-flex items-center justify-center w-10 h-10 p-2 text-sm rounded-lg text-font-color md:hidden hover:bg-white focus:outline-none focus:ring-2 focus:ring-gray-500 ">
             <span class="sr-only">메인 메뉴 열기</span>
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
@@ -27,11 +27,11 @@
         </div>
         
         <!-- 네비게이션 바 -->
-        <div :class="{'hidden': !isMenuOpen, 'block': isMenuOpen, 'md:flex': true}" class="justify-between w-full md:w-auto md:order-1 transition-all duration-500 ease-in-out" id="navbar-cta">
+        <div :class="{'hidden': !isMenuOpen, 'block': isMenuOpen, 'md:flex': true}" class="justify-between w-full transition-all duration-500 ease-in-out md:w-auto md:order-1" id="navbar-cta">
           <ul :class="['flex flex-col font-medium md:p-1 md:space-x-32 md:flex-row', isScrolled ? 'bg-inherit' : 'bg-transparent','transition duration-500 ease-in-out']">
             <li>
               <router-link
-              class="block py-2 px-6 text-lg md:p-2 md:hover:bg-nav-color transition duration-500 ease-in-out"
+              class="block px-6 py-2 text-lg transition duration-500 ease-in-out md:p-2 md:hover:bg-nav-color"
               to="/products"
               >
                 맞춤 상품
@@ -39,7 +39,7 @@
             </li>
             <li>
               <router-link
-              class="block py-2 px-6 text-lg md:p-2 md:hover:bg-nav-color transition duration-500 ease-in-out "
+              class="block px-6 py-2 text-lg transition duration-500 ease-in-out md:p-2 md:hover:bg-nav-color "
               to="/asset-detail"
               >
                 자산 분석
@@ -47,7 +47,7 @@
             </li>
             <li>
               <router-link
-              class="block py-2 px-6 text-lg md:p-2 hover:bg-gray-100 md:hover:bg-nav-color transition duration-500 ease-in-out"
+              class="block px-6 py-2 text-lg transition duration-500 ease-in-out md:p-2 hover:bg-gray-100 md:hover:bg-nav-color"
               to="/asset-plan"
               >
                 자산 설계
@@ -55,7 +55,7 @@
             </li>
             <li>
               <router-link
-                class="block py-2 px-6 text-lg md:p-2 md:hover:bg-nav-color transition duration-500 ease-in-out"
+                class="block px-6 py-2 text-lg transition duration-500 ease-in-out md:p-2 md:hover:bg-nav-color"
                 to="/mypage"
               >
                 마이 페이지
