@@ -1,9 +1,19 @@
 <template>
     <div class="h-[70px]"></div>
-    <div class="flex justify-center mt-[187px]">
+    <div class="flex justify-center mt-[90px]">
         <div class="text-3xl font-bold text-font-color">회원가입</div>
-    </div>
-    <div class="mt-6 mb-3 flex justify-start mx-auto w-[760px]">
+      </div>
+      <div class="flex justify-center mt-[25px]">
+          <img  alt="circle" src = "../../assets/images/full_circle.png"  class="mx-9 w-5 h-5"/>
+          <img alt="circle" src = "../../assets/images/empty_circle.png"  class="mx-9 w-5 h-5"/>
+          <img alt="circle" src = "../../assets/images/empty_circle.png"  class="mx-9 w-5 h-5"/>
+      </div>
+      <div class="flex justify-center mt-[25px]">
+         <p class="mx-4 text-[15px]">약관동의</p>
+         <p class="mx-4 text-[15px]">정보입력</p>
+         <p class="mx-4 text-[15px]">회원가입</p>
+      </div>
+    <div class="mt-[90px] mb-3 flex justify-start mx-auto w-[760px]">
         <p class="text-kb-yellow-2 text-lg font-bold ">[필수] </p> 
         <p class="text-font-color text-lg font-bold"> 개인정보 수집 및 이용 동의 </p>
     </div>
