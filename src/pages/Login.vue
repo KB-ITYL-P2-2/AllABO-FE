@@ -18,11 +18,18 @@
             <!--페이지 생성 후 수정 예정-->
             <div class="user_info mt-4">
                 <a href="#" class="text-kb-gray-2 text-[16px] underline">이메일 찾기</a>
+                <button @click=""></button>
                 <a href="#" class="text-kb-gray-2 text-[16px] underline ml-4">비밀번호 찾기</a>
-                <a href="#" class="text-kb-gray-2 text-[16px] underline ml-4">회원가입</a>
+                <button @click="$router.push('/signup')" class="text-kb-gray-2 text-[16px] underline ml-4">회원가입</button>
             </div>
         </form>
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+import EmailModal from '../components/modal/EmailModal.vue';
+
+const showModal=ref(false);
+
+</script>
