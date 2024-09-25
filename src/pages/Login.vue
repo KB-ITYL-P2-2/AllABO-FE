@@ -17,9 +17,15 @@
             <button class="h-[50px] w-[340px] rounded-[15px] bg-kb-brown-1 text-white text- py-2 px-4  focus:ring-kb-brown-2 mt-4">LOGIN</button>
             <!--페이지 생성 후 수정 예정-->
             <div class="user_info mt-4">
-                <a href="#" class="text-kb-gray-2 text-[16px] underline">이메일 찾기</a>
-                <button @click=""></button>
+                <!-- <a href="#" class="text-kb-gray-2 text-[16px] underline">이메일 찾기</a> -->
+                 <!-- <button @click="">이메일 찾기</button> -->
+                <!-- <button @click=""></button> -->
                 <a href="#" class="text-kb-gray-2 text-[16px] underline ml-4">비밀번호 찾기</a>
+                <!-- <CalendarModal
+                v-if="showModal"
+                @close="showModal = false"
+                :events="selectedEvents"
+              /> -->
                 <button @click="$router.push('/signup')" class="text-kb-gray-2 text-[16px] underline ml-4">회원가입</button>
             </div>
         </form>
@@ -28,8 +34,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import EmailModal from '../components/modal/EmailModal.vue';
-
+import EmailModal from '../components/Login/EmailModal.vue';
 const showModal=ref(false);
 
 </script>
