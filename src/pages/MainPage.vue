@@ -1,34 +1,61 @@
 <template>
   <div class="">
     <!-- 처음 -->
-    <div class="flex flex-col items-center justify-center h-screen bg-kb-color-3">
+    <div class="flex flex-col items-center justify-center h-screen bg-kb-brown-2">
       <div class="md:max-laptop:text-[54px] text-[80px] font-black border border-x-[20px] border-t-[20px] px-[72px] border-white border-b-0">
         <span class="text-white">{{ text }}</span>
-        <span class="text-kb-color-1">{{ dot }}</span>
+        <span class="text-kb-yellow-1">{{ dot }}</span>
       </div>
       <p class="md:max-laptop:text-[28px] text-[40px] text-white mt-6">Next Generation FinTech</p>
     </div>
 
     <!-- 두번쨰 -->
-    <div class="flex items-center justify-center h-screen bg-white ">
-      <div class="bg-kb-color-1 blur-[80px] md:max-laptop:w-[320px] md:max-laptop:h-[320px] w-[460px] h-[460px] rounded-full">
-      </div>
-        <p class="absolute md:max-laptop:text-[24px] text-[36px] text-center">
-          혁신적인 금융자산 분석 비교 서비스<br />
-          기존에 없던 편리한 금융 서비스를 경험하세요.
-        </p>
+    <div class="flex items-center justify-center h-screen bg-white">
+      <div class="bg-kb-yellow-1 blur-[80px] md:max-laptop:w-[320px] md:max-laptop:h-[320px] w-[460px] h-[460px] rounded-full"></div>
+      <p class="absolute md:max-laptop:text-[24px] text-[36px] text-center">
+        혁신적인 금융자산 분석 비교 서비스<br />
+        기존에 없던 편리한 금융 서비스를 경험하세요.
+      </p>
     </div>
 
     <!-- 세번째 -->
-     <div class="bg-[url('/images/MainPage/background1.png')] flex items-center justify-center h-screen bg-cover">
+    <div class="bg-[url('/images/MainPage/background1.png')] flex items-center justify-center h-screen bg-cover">
       <h1 class="font-bold text-white text-[60px] md:max-laptop:text-[42px]">상품 추천 | 자산 분석 |자산 설계</h1>
-     </div>
-    
+    </div>
+
+    <MainPageSection v-for="(item, index) in data" :item="item" :key="index" />
+
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
+
+import MainPageSection from "../components/MainPage/MainPageSection.vue";
+
+const data = [
+  {
+    title: "추천 서비스",
+    mainContent: "사용자 맞춤 상품 추천",
+    subContent: "예금, 적금 부터 보험 대출 그리고 카드까지\n사용자 맞춤형 서비스 제공",
+    buttonText: "상품 추천 받으러 가기",
+    left: true,
+  },
+  {
+    title: "자산 분석 서비스",
+    mainContent: "개인 자산 분석 비교 한번에",
+    subContent: "연령, 소득, 소비 등\n사용자에 맞는 개인 자산 분석 비교 결과 제공",
+    buttonText: "자산 분석 하러 가기",
+    left: false,
+  },
+  {
+    title: "자산 설계 서비스",
+    mainContent: "개인 자산 맞춤 설계",
+    subContent: "소비 패턴, 투자 성향 등을 토대로\n개인 자산 맞춤 설계 서비스 제공",
+    buttonText: "자산 설계 하러 가기",
+    left: true,
+  },
+];
 
 const initialText = "F:YL"; // 초기 텍스트
 const finalText = "F:ND YOUR LIFE"; // 최종 목표 텍스트
