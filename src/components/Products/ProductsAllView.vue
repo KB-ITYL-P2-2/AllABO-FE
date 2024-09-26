@@ -11,7 +11,7 @@
             class="px-4 flex-none basis-[300px] flex items-center justify-center"
             :class="[index==currentIndex && 'z-10',isAnimate && 'transition-all']"
             :style="{
-              transform: `translateX(-${(currentIndex - 1) * 300}px) scale(${currentIndex === index ? 1.1 : 1})`,
+              transform: `translateX(-${(currentIndex - 1) * 300}px) scale(${currentIndex === index ? !isHover ? 1.1 : 1.1 : 1})`,
             }"
           >
             <ProductsCards
@@ -50,7 +50,7 @@
         <!-- 동그라미 효과 -->
         <div
           class="absolute w-[589px] h-[589px] md:max-laptop:w-[489px] md:max-laptop:h-[489px] border border-kb-yellow-3 rounded-full flex justify-center items-center transition-all"
-          :class="isHover ? 'scale-[2.3] -z-0' : '-z-10'"
+          :class="isHover ? 'scale-[2.5] -z-0' : '-z-10'"
         >
           <div class="w-[496px] h-[496px] md:max-laptop:w-[389px] md:max-laptop:h-[389px] bg-kb-yellow-3 absolute rounded-full blur-sm"></div>
         </div>
@@ -95,12 +95,12 @@ const cardData = ref([
   },
   {
     cardImageUrl: "/images/Products/card2.png",
-    cardName: "우리동네 체크카드(키뮤)",
+    cardName: "2번째 카드",
     cardContent: "다 같이 돌자 동네 한 바퀴",
   },
   {
     cardImageUrl: "/images/Products/card3.png",
-    cardName: "우리동네 체크카드(키뮤)",
+    cardName: "3번째카드",
     cardContent: "다 같이 돌자 동네 한 바퀴",
   },
   {
