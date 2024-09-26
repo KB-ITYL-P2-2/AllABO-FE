@@ -22,8 +22,6 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
-
 import MainPageButton from "./MainPageButton.vue";
 
 const props = defineProps({

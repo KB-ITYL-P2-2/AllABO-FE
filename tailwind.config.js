@@ -1,8 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{vue,js}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{vue,js}"],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Pretendard', 'sans-serif'],
+      },
       colors: {
         'kb-yellow-1' : "#F4BF42", 
         'kb-yellow-2':"#F6CE46",
@@ -20,7 +25,10 @@ module.exports = {
       keyframes:{},
       screens:{
         laptop: "1537px"
-      }
+      },
+      transitionProperty: {
+        'height' : 'height'
+      },
     },
   },
   plugins: [],
