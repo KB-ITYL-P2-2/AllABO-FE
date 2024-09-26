@@ -8,13 +8,13 @@
         <!--email-->
         <label for="email" name="useremail" class="block mb-2"></label>
         <input type="text" placeholder=" 이메일을 입력하세요" 
-               class="h-[50px] w-[400px] rounded-[15px] border border-kb-brown-1  focus:outline-none focus:ring-2 focus:ring-kb-brown-2"/>
+               class="h-[50px] w-[400px] rounded-[15px] border border-kb-gray-2  focus:outline-none focus:ring-1 focus:ring-kb-brown-2"/>
         <br>
         <label for="password" name="password" class="block mt-4 mb-2"></label>
         <input type="password" placeholder=" 비밀번호를 입력하세요" 
-               class="h-[50px] w-[400px] rounded-[15px] border border-kb-brown-1  focus:outline-none focus:ring-2 focus:ring-kb-brown-2"/>
+               class="h-[50px] w-[400px] rounded-[15px] border border-kb-gray-2  focus:outline-none focus:ring-1 focus:ring-kb-brown-2"/>
         <br>
-        <button class="h-[50px] w-[400px] rounded-[15px] bg-kb-brown-1 text-white text- py-2 px-4 focus:ring-kb-brown-2 mt-[45px]">LOGIN</button>
+        <button class="h-[50px] w-[400px] rounded-[15px] bg-kb-brown-1 text-white text-[16px] py-2 px-4 focus:ring-kb-brown-2 mt-[45px]">LOGIN</button>
         <div class="user_info mt-4 flex ">
           <button @click.prevent="openEmailModal" type="button" class="text-kb-gray-2 text-[16px] underline ml-9">이메일 찾기</button>
           <button @click.prevent="openPasswordModal" type="button" class="text-kb-gray-2 text-[16px] underline ml-9 ">비밀번호 찾기</button>

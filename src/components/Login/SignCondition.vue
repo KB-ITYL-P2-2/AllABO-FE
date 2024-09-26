@@ -8,17 +8,17 @@
           <img alt="circle" src = "../../assets/images/empty_circle.png"  class="mx-9 w-5 h-5"/>
           <img alt="circle" src = "../../assets/images/empty_circle.png"  class="mx-9 w-5 h-5"/>
       </div>
-      <div class="flex justify-center mt-[25px]">
-         <p class="mx-4 text-[15px]">약관동의</p>
-         <p class="mx-4 text-[15px]">정보입력</p>
-         <p class="mx-4 text-[15px]">회원가입</p>
+      <div class="flex justify-center mt-[20px]">
+         <p class="mx-5 text-[14px] font-semibold">약관동의</p>
+         <p class="mx-5 text-[14px]">정보입력</p>
+         <p class="mx-5 text-[14px]">회원가입</p>
       </div>
     <div class="mt-[90px] mb-3 flex justify-start mx-auto w-[760px]">
         <p class="text-kb-yellow-2 text-lg font-bold ">[필수] </p> 
         <p class="text-font-color text-lg font-bold"> 개인정보 수집 및 이용 동의 </p>
     </div>
     <div>
-        <div class="flex justify-center mx-auto w-[760px] h-[380px] rounded-[15px] border-2">
+        <div class="flex justify-center mx-auto w-[760px] h-[380px] rounded-[15px] border-2 ">
             <p class="p-2">
                 <br><br>
                 (주)000 는 아래의 목적으로 개인정보를 수집 및 이용하며, 회원의 개인정보를 안전하게 취급하는데
@@ -31,9 +31,9 @@
                         </p>
         </div>
         <div class="flex justify-center mt-[60px]">
-            <button @click="$router.push('/login')" class="w-[213px] h-[50px] text-lg rounded-[15px] mr-10 bg-white text-font-color border border-kb-brown-2">취소</button>
+            <button @click="$router.push('/login')" class="w-[213px] h-[50px]  rounded-[15px] mr-10 bg-white text-font-color border border-kb-brown-2">취소</button>
             <button @click="$router.push('/signup')" type="button"
-                    class="w-[213px] h-[50px] text-lg rounded-[15px] bg-kb-brown-2 text-white">동의하기</button>
+                    class="w-[213px] h-[50px]  rounded-[15px] bg-kb-brown-2 text-white">동의하기</button>
         </div>
 
     </div>
