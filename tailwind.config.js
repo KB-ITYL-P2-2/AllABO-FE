@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         'kb-yellow-1' : "#F4BF42", 
         'kb-yellow-2':"#F6CE46",
+        'kb-yellow-3':"#FAE6A2",
         'kb-brown-1':"#535046",
         'kb-brown-2':"#5F584E",
         'kb-brown-3':"#897552",
