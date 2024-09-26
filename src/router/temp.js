@@ -7,6 +7,7 @@ import MyPage from "../pages/MyPage.vue";
 import MainPage from "../pages/MainPage.vue";
 import SignCondition from "../components/Login/SignCondition.vue";
 import Signup from "../pages/Signup.vue";
+import SignSuccess from "../components/Login/SignSuccess.vue";
 
 
 const router=createRouter({
@@ -19,7 +20,9 @@ const router=createRouter({
         {path:'/mypage',component:MyPage},
         {path:'/login',component:Login},
         {path:'/signup-condition',component:SignCondition},
-        {path:'/signup',component:Signup}
+        {path:'/signup',component:Signup},
+        {path:'/signup-success',component:SignSuccess}
+
 
     ]
 })

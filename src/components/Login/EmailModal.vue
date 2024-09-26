@@ -1,35 +1,37 @@
 <template>
-    <div class="modal-overlay" @click.self="closeModal">
-      <div class="modal-content">
-        <button class="close-button" @click="closeModal">X</button>
-       
-      </div>
+  <div class="fixed inset-0 bg-gray-600 bg-opacity-75 flex justify-center items-center z-50">
+    <div class="bg-white p-8 rounded-[15px] shadow-lg w-[750px] h-[600px] relative">
+      <!-- Close Button -->
+      <button @click="$emit('close')" class="absolute top-4 right-4 text-[24px] font-bold text-kb-gray-2">✕</button>
+      
+      <!-- Logo and Title -->
+      <p class="text-3xl mb-[20px] font-bold flex justify-center">LOGO</p>
+      <p class="text-[24px] font-bold mb-[90px] flex justify-center">이메일 찾기</p>
+      
+      <!-- Form -->
+      <form @submit.prevent="handleSubmit">
+        <div class="mb-[30px] flex justify-center items-center px-[30px]">
+          <label for="name" class="text-font-color text-[16px] w-[100px] text-left">이름</label>
+          <input type="text" id="name" placeholder="이름을 입력해주세요" 
+                 class="h-[50px] w-[400px] text-kb-gray-2 rounded-[15px] border border-kb-brown-1 focus:outline-none focus:ring-2 focus:ring-kb-brown-2"/>
+        </div>
+        <div class="mb-[60px] flex justify-center items-center px-[30px]">
+          <label for="tel" class="text-font-color text-[16px] w-[100px] text-left">전화번호</label>
+          <input type="number" id="tel" v-model="tel" placeholder="전화번호를 입력해주세요" 
+                 class="h-[50px] w-[400px] text-kb-gray-2 rounded-[15px] border border-kb-brown-1 focus:outline-none focus:ring-2 focus:ring-kb-brown-2"/>
+        </div>
+        <div class="flex justify-center">
+          <button type="submit" class="h-[50px] w-[500px] rounded-[15px] bg-kb-brown-2 text-white flex justify-center items-center">
+            이메일 찾기
+          </button>
+        </div>
+      </form>
     </div>
-  </template>
-  
-  <script>
-  import { defineComponent, toRefs } from "vue";
-  
-  export default defineComponent({
-    name: "CalendarModal",
-    props: {
-      events: {
-        type: Array,
-        required: true,
-      },
-    },
-    setup(props, { emit }) {
-      const { events } = toRefs(props);
-  
-      const closeModal = () => {
-        emit("close");
-      };
-  
-      return {
-        events,
-        closeModal,
-      };
-    },
-  });
-  </script>
-  
+  </div>
+</template>
+
+<script setup>
+const handleSubmit = () => {
+  alert('이메일 찾기 요청을 보냈습니다.');
+};
+</script>

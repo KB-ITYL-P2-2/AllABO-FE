@@ -31,7 +31,7 @@
                         </p>
         </div>
         <div class="flex justify-center mt-[60px]">
-            <button class="w-[213px] h-[50px] text-lg rounded-[15px] mr-10 bg-white text-font-color border border-kb-brown-2">취소</button>
+            <button @click="$router.push('/login')" class="w-[213px] h-[50px] text-lg rounded-[15px] mr-10 bg-white text-font-color border border-kb-brown-2">취소</button>
             <button @click="$router.push('/signup')" type="button"
                     class="w-[213px] h-[50px] text-lg rounded-[15px] bg-kb-brown-2 text-white">동의하기</button>
         </div>
