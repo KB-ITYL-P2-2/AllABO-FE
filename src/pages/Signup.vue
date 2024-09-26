@@ -20,28 +20,28 @@
       <form @submit.prevent="submitForm">
         <div class="mb-[50px] flex items-center">
           <label for="name" class="text-font-color text-[16px] w-[120px]">이름 </label>
-          <input type="text" id="name" v-model="name" placeholder="   이름을 입력해주세요" 
-                 class="h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 "/>
+          <input type="text" id="name" v-model="name" placeholder="이름을 입력해주세요" 
+                 class="pl-4 h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 "/>
         </div>
         <div class="mb-[50px] flex items-center">
           <label for="birthday" class="w-[120px]">생년월일 </label>
-          <input type="text" id="birthday" v-model="birthday" placeholder="   생년월일을 입력해주세요(YYYYMMdd)" 
-                 class="h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2"/>
+          <input type="text" id="birthday" v-model="birthday" placeholder="생년월일을 입력해주세요(YYYYMMdd)" 
+                 class="pl-4 h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2"/>
         </div>
         <div class="flex items-center">
           <label for="email" class="w-[120px]">이메일 </label>
-          <input type="text" id="email" v-model="email" placeholder="   이메일을 입력해주세요"
-                 class="h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 mr-[50px]"/>
+          <input type="text" id="email" v-model="email" placeholder="이메일을 입력해주세요"
+                 class="pl-4 h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 mr-[50px]"/>
           <button class="text-white bg-kb-brown-2 h-[50px] w-[150px] rounded-[15px]">이메일 인증</button><br>
         </div>
-        <p class="text-[12px] flex items-center ml-[130px] p-2">반드시 실제로 사용하는 이메일 주소를 입력해주세요</p>
+        <p class="text-[12px] text-gray-300 flex items-center ml-[130px] p-2">반드시 실제로 사용하는 이메일 주소를 입력해주세요</p>
 
         <div class="mt-[50px] flex items-center">
-          <label for="password" class="w-[120px]">비밀번호 </label>
+          <label for="password" class="w-[120px]">비밀번호</label>
           <input type="password" id="password" v-model="password" placeholder="   비밀번호를 입력해주세요"
-                 class="h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2"/>
+                 class="pl-4 h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2"/>
         </div>
-        <p class="text-[12px] flex items-center ml-[130px] p-2">특수문자(~!#*) 및 영문과 숫자를 포함하여 8~12자로 설정해주세요.</p>
+        <p class="text-[12px] text-gray-300 flex items-center ml-[130px] p-2">특수문자(~!#*) 및 영문과 숫자를 포함하여 8~12자로 설정해주세요.</p>
 
         <div class="mt-[50px] flex items-center">
           <label for="passwordConfirm" class="w-[120px]">비밀번호 확인 </label>
@@ -51,13 +51,13 @@
         <div class="mt-[50px] flex items-center">
           <label for="text" class="w-[120px]">전화번호 </label>
           <input type="text" id="tel" v-model="tel" placeholder="   - 없이 전화번호를 입력해주세요(01012341234)"
-                 class="h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 mr-[50px]"/>
+                 class="pl-4 h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 mr-[50px]"/>
           <button class="text-[16px] text-white bg-kb-brown-2 h-[50px] w-[150px] rounded-[15px]">인증번호 발송</button>
         </div>
         <div class="mt-[50px] flex items-center">
           <label for="asset" class="w-[120px]">연 소득 </label>
           <input type="text" id="asset" v-model="asset" placeholder="  현재 연간 소득을 입력해주세요 (ex: 3000000)"
-                 class="h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2"/>
+                 class="pl-4 h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2"/>
         </div>
 
         <div class="flex justify-center mt-[90px] mb-[90px]">
@@ -85,12 +85,16 @@ const passwordConfirm = ref('');
 const tel = ref('');
 const asset = ref('');
 
+
 const router=useRouter();
+
+
 
 // 모든 입력 필드가 채워졌는지 확인하는 computed 속성
 const isFormValid = computed(() => {
   return name.value && birthday.value && email.value && password.value && passwordConfirm.value && tel.value && asset.value && (password.value === passwordConfirm.value);
 });
+
 
 function submitForm() {
   if (isFormValid.value) {

@@ -10,17 +10,17 @@
           <div class="mb-[30px] flex justify-center items-center px-[30px]">
             <label for="name" class="text-font-color text-[16px] w-[100px] text-left">이름</label>
             <input type="text" id="name" v-model="name" placeholder="이름을 입력해주세요" 
-                   class="h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2"/>
+                   class="pl-4 h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2"/>
           </div>
           <div class="mb-[30px] flex justify-center items-center px-[30px]">
             <label for="tel" class="text-font-color text-[16px] w-[100px] text-left">전화번호</label>
             <input type="text" id="tel" v-model="tel" placeholder="전화번호를 입력해주세요" 
-                   class="h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2"/>
+                   class="pl-4 h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2"/>
           </div>
           <div class="mb-[60px] flex justify-center items-center px-[30px]">
             <label for="birthday" class="text-font-color text-[16px] w-[100px] text-left">생년월일 </label>
             <input type="text" id="birthday" v-model="birthday" placeholder="생년월일을 입력해주세요(YYYYMMdd)" 
-                   class="h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2"/>
+                   class="pl-4 h-[50px] w-[400px] text-font-color rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2"/>
           </div>
           <div class="flex justify-center">
             <button :disabled="!isFormValid" type="submit" class="h-[50px] w-[500px] rounded-[15px] bg-kb-brown-2 text-white flex justify-center items-center">
