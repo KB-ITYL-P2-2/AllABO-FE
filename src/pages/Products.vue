@@ -1,4 +1,20 @@
 <template>
+  <swiper :direction="'vertical'"
+          :slidesPerView="1"
+          :spaceBetween="30"
+          :mousewheel="{
+            sensitivity: 0.3,
+            thresholdDelta: 80,
+            thresholdTime: 600,
+          }"
+          :speed="1200"
+          :pagination="{
+            clickable: true,
+          }"
+          :modules="modules"
+          class="mySwiper w-screen h-screen"
+  >
+  <swiper-slide>
     <div class="w-screen h-screen relative overflow-hidden">
         <div 
           class="w-full transition-all duration-300 ease-in-out bg-[#5F584E] absolute top-0 left-0"
@@ -28,19 +44,41 @@
         </div>
       </div>
     </div>
-      
-  <ProductsAllView v-for="(item, index) in data" :key="index" :item="item" />
+  </swiper-slide>
+  <swiper-slide v-for="(item, index) in data" :key="index">
+  <ProductsAllView :item="item" />
+</swiper-slide>
+</swiper>
   </template>
   
   <script setup>
   import { ref } from 'vue'
+  import { Swiper, SwiperSlide } from 'swiper/vue';
+  import { Mousewheel, Pagination } from 'swiper/modules';
   
-  import CategoryButton from '../components/ProductsPage/CategoryButton.vue'
-  import LAYOUT_VARIANTS from '../constant/layout.js';
+  import 'swiper/css';
+  import 'swiper/css/pagination';
+  
+  import CategoryButton from '../components/Products/CategoryButton.vue'
   import ProductsAllView from '../components/Products/ProductsAllView.vue';
 
+  import LAYOUT_VARIANTS from '../constant/layout.js';
   import productCategoryData from '../constant/productCategoryData.js';
+
   const data = [{title: "신용카드"},{title: "체크카드"},{title: "예/적금"}]
   
   const isExpanded = ref(false)
+
+  const modules = [Mousewheel, Pagination];
   </script>
+
+<style scoped>
+  .swiper-slide {
+    text-align:center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
