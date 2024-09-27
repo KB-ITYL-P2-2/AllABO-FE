@@ -28,13 +28,19 @@
         </div>
       </div>
     </div>
+      
+  <ProductsAllView v-for="(item, index) in data" :key="index" :item="item" />
   </template>
   
   <script setup>
   import { ref } from 'vue'
+  
   import CategoryButton from '../components/ProductsPage/CategoryButton.vue'
-  import productCategoryData from '../constant/productCategoryData.js';
   import LAYOUT_VARIANTS from '../constant/layout.js';
+  import ProductsAllView from '../components/Products/ProductsAllView.vue';
+
+  import productCategoryData from '../constant/productCategoryData.js';
+  const data = [{title: "신용카드"},{title: "체크카드"},{title: "예/적금"}]
   
   const isExpanded = ref(false)
   </script>
