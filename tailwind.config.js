@@ -1,8 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{vue,js}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{vue,js}"],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Pretendard', 'sans-serif'],
+      },
       colors: {
         'kb-yellow-1' : "#F4BF42", 
         'kb-yellow-2':"#F6CE46",
@@ -12,15 +17,19 @@ module.exports = {
         'kb-brown-3':"#897552",
         'kb-brown-4':"#563A3A",
 
-        'kb-gray-1':"#85888B",
+        'kb-gray-1':"#85888B",     
+        'kb-gray-2':"#B8B8BC",
         'nav-color':"#FFE89A",
         'font-color' :"#27272a",
-        'kb-disabled' : "#B8B8BC"
+       
       },
       keyframes:{},
       screens:{
         laptop: "1537px"
-      }
+      },
+      transitionProperty: {
+        'height' : 'height'
+      },
     },
   },
   plugins: [],
