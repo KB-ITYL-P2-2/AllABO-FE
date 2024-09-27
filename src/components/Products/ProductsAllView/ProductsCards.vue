@@ -6,7 +6,8 @@
       transform: isNow && isHover ? 'translateX(-100px)' : 'none',
     }"
   >
-    <img :src="`${item.cardImageUrl}`" class="" alt="" />
+    <img v-if="item.cardImageUrl!==null" :src="`${item.cardImageUrl}`" class="" alt="" />
+    <div v-else class="bg-red-500 rounded-xl w-[200px]"></div>
 
     <!-- opacity와 visibility에 조건부 transition 적용 -->
     <div

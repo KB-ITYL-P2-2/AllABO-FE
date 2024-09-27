@@ -1,23 +1,23 @@
 <template>
-  <div :class="[`h-screen flex flex-col ${LAYOUT_VARIANTS.default}`]">
-    <h1 class="font-bold text-[28px] mb-24 z-10">체크카드 TOP 3</h1>
+  <div :class="[`flex flex-col ${LAYOUT_VARIANTS.default}`]">
+    <h1 class="font-bold text-[28px] mb-24 z-10">{{ item.title }}</h1>
     <div class="w-full">
       <div class="flex flex-col items-center justify-center w-full h-auto">
         <!-- <ProductsCards v-for="(item, index) in cardData" :item="item" :key="index" :class="[`transition-transform order-${cardOrder[currentIndex][index]}`, cardOrder[currentIndex][index]==2 ? `scale-110` : '']" /> -->
         <div class="flex flex-row h-[350px] items-center w-[900px] overflow-hidden" id="carousel-container">
           <div
-            v-for="(item, index) in cardData"
+            v-for="(item, index) in item.title.includes('카드') ? cardData : assetData"
             :key="index"
             class="px-4 flex-none basis-[300px] flex items-center justify-center"
-            :class="[index==currentIndex && 'z-10',isAnimate && 'transition-all']"
+            :class="[index == currentIndex && 'z-10', isAnimate && 'transition-all']"
             :style="{
-              transform: `translateX(-${(currentIndex - 1) * 300}px) scale(${currentIndex === index ? !isHover ? 1.1 : 1.1 : 1})`,
+              transform: `translateX(-${(currentIndex - 1) * 300}px) scale(${currentIndex === index ? (!isHover ? 1.1 : 1.1) : 1})`,
             }"
           >
             <ProductsCards
               :item="item"
               :isHover="isHover"
-              :isNow="currentIndex==index"
+              :isNow="currentIndex == index"
               class=""
               @click="currentIndex = index"
               @mouseover="
@@ -60,10 +60,17 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, onBeforeMount, ref, watch } from "vue";
 
 import ProductsCards from "./ProductsAllView/ProductsCards.vue";
 import LAYOUT_VARIANTS from "../../constant/layout";
+
+const props = defineProps({
+  item: {
+    type: Object,
+    required: true,
+  },
+});
 
 const isAnimate = ref(true);
 const isHover = ref(false);
@@ -79,16 +86,6 @@ const cardOrder = [
 
 const cardData = ref([
   {
-    cardImageUrl: "/images/Products/card2.png",
-    cardName: "우리동네 체크카드(키뮤)",
-    cardContent: "다 같이 돌자 동네 한 바퀴",
-  },
-  {
-    cardImageUrl: "/images/Products/card3.png",
-    cardName: "우리동네 체크카드(키뮤)",
-    cardContent: "다 같이 돌자 동네 한 바퀴",
-  },
-  {
     cardImageUrl: "/images/Products/card1.png",
     cardName: "우리동네 체크카드(키뮤)",
     cardContent: "다 같이 돌자 동네 한 바퀴",
@@ -103,23 +100,36 @@ const cardData = ref([
     cardName: "3번째카드",
     cardContent: "다 같이 돌자 동네 한 바퀴",
   },
+]);
+
+const assetData = ref([
   {
-    cardImageUrl: "/images/Products/card1.png",
-    cardName: "우리동네 체크카드(키뮤)",
+    cardImageUrl: "/images/Products/asset.png",
+    cardName: "예적금",
     cardContent: "다 같이 돌자 동네 한 바퀴",
   },
   {
-    cardImageUrl: "/images/Products/card2.png",
-    cardName: "우리동네 체크카드(키뮤)",
+    cardImageUrl: "/images/Products/asset.png",
+    cardName: "2번째 예적금",
+    cardContent: "다 같이 돌자 동네 한 바퀴",
+  },
+  {
+    cardImageUrl: "/images/Products/asset.png",
+    cardName: "3번째 예적금",
     cardContent: "다 같이 돌자 동네 한 바퀴",
   },
 ]);
 
-// const tempCard = ref({
-//   cardImageUrl: "/images/Products/card3.png",
-//   cardName: "우리동네 체크카드(키뮤)",
-//   cardContent: "다 같이 돌자 동네 한 바퀴",
-// });
+onBeforeMount(() => {
+  const cardStart = cardData.value.slice(0, 2);
+  const cardEnd = cardData.value.slice(-2);
+  cardData.value = [...cardEnd, ...cardData.value, ...cardStart];
+  
+  const assetStart = assetData.value.slice(0, 2);
+  const assetEnd = assetData.value.slice(-2);
+  assetData.value = [...assetEnd, ...assetData.value, ...assetStart];
+  // console.log(cardData);
+});
 
 watch(currentIndex, () => {
   if (currentIndex.value == 5) {
@@ -137,6 +147,5 @@ watch(currentIndex, () => {
   setTimeout(() => {
     isAnimate.value = true;
   }, 10);
-  // console.log(isAnimate.value)
 });
 </script>
