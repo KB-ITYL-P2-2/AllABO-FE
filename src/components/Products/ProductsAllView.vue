@@ -19,7 +19,11 @@
               :isHover="isHover"
               :isNow="currentIndex == index"
               class=""
-              @click="currentIndex = index"
+              @click="
+                (e) => {
+                  carouselItemClickHandler(index);
+                }
+              "
               @mouseover="
                 () => {
                   if (index == currentIndex) {
@@ -42,7 +46,7 @@
           <button
             v-for="(item, index) in buttonIndex"
             :key="index"
-            :class="['w-3 h-3 rounded-full', item.id == currentIndex ? 'bg-kb-yellow-1' : 'bg-kb-disabled']"
+            :class="['w-3 h-3 rounded-full', item.id == currentIndex ? 'bg-kb-yellow-1' : 'bg-kb-gray-2']"
             @click="currentIndex = item.id"
           ></button>
         </div>
@@ -75,6 +79,7 @@ const props = defineProps({
 const isAnimate = ref(true);
 const isHover = ref(false);
 const currentIndex = ref(2);
+const isClickable = ref(true); // 클릭 가능 여부
 
 const buttonIndex = [{ id: 2 }, { id: 3 }, { id: 4 }];
 
@@ -124,7 +129,7 @@ onBeforeMount(() => {
   const cardStart = cardData.value.slice(0, 2);
   const cardEnd = cardData.value.slice(-2);
   cardData.value = [...cardEnd, ...cardData.value, ...cardStart];
-  
+
   const assetStart = assetData.value.slice(0, 2);
   const assetEnd = assetData.value.slice(-2);
   assetData.value = [...assetEnd, ...assetData.value, ...assetStart];
@@ -148,4 +153,16 @@ watch(currentIndex, () => {
     isAnimate.value = true;
   }, 10);
 });
+
+const carouselItemClickHandler = (index)=>{
+  // 캐러셀 넘어갈때 클릭 빠르게 하면 item 벗어나는 거 막음
+  if (!isClickable.value) return; // 클릭이 막혀 있으면 이벤트를 무시
+  
+  currentIndex.value = index;
+  isClickable.value = false; // 클릭 이벤트 막기
+  
+  setTimeout(() => {
+    isClickable.value = true; // 150ms 후 다시 클릭 가능
+  }, 200);
+}
 </script>
