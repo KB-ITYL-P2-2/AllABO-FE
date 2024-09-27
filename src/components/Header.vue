@@ -35,10 +35,7 @@
 
           <!-- 프로필 아이콘_마이페이지 이동 -->
           <router-link to="/mypage" class="text-font-color hover:text-kb-brown-1 md:hover:bg-nav-color">
-            <img src="../assets/images/user.png" class="w-8 h-8"/>
-            <!-- <span class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-              👤
-            </span> -->
+            <img src="../assets/images/user.png" class="w-6 h-6"/>
           </router-link>
         </div>
       </div>
