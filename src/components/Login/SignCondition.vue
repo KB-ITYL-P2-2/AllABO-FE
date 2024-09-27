@@ -1,18 +1,45 @@
 <template>
-    <div class="h-[70px]"></div>
-    <div class="flex justify-center mt-[90px]">
-        <div class="text-3xl font-bold text-font-color">회원가입</div>
+    <!-- <div class="h-screen flex flex-col">
+        <div class="h-[40vh] bg-kb-brown-1 flex flex-col items-center justify-center">
+          <div class="h-[70px]"></div>
+          <div class="text-3xl font-bold text-white mt-[90px]">F:YL</div>
+         <div class="flex justify-center mt-[90px]">
+          <div class="text-3xl font-bold text-white">회원가입</div>
+        </div>
+        <div class="flex justify-center mt-[25px]">
+          <img alt="circle" src="../assets/images/empty_circle.png" class="mx-9 w-5 h-5" />
+          <img alt="circle" src="../assets/images/full_circle.png" class="mx-9 w-5 h-5" />
+          <img alt="circle" src="../assets/images/empty_circle.png" class="mx-9 w-5 h-5" />
+        </div>
+        <div class="flex justify-center mt-[20px] text-white">
+          <p class="mx-5 text-[14px] text-white">약관동의</p>
+          <p class="mx-5 text-[14px] font-semibold text-white">정보입력</p>
+          <p class="mx-5 text-[14px] mb-[10px]">회원가입</p>
+       </div>
+      </div> -->
+
+      <div class="h-screen flex flex-col">
+        <div class="h-[40vh] bg-kb-brown-1 flex flex-col items-center justify-center">
+          <div class="h-[70px]"></div>
+          <div class="text-3xl font-bold text-white mt-[90px]">F:YL</div>
+         <div class="flex justify-center mt-[90px]">
+          <div class="text-3xl font-bold text-white">회원가입</div>
+        </div>
+        <div class="flex justify-center mt-[25px]">
+          <img alt="circle" src="../../assets/images/empty_circle.png" class="mx-9 w-5 h-5" />
+          <img alt="circle" src="../../assets/images/full_circle.png" class="mx-9 w-5 h-5" />
+          <img alt="circle" src="../../assets/images/empty_circle.png" class="mx-9 w-5 h-5" />
+        </div>
+        <div class="flex justify-center mt-[20px] text-white">
+          <p class="mx-5 text-[14px] text-white">약관동의</p>
+          <p class="mx-5 text-[14px] font-semibold text-white">정보입력</p>
+          <p class="mx-5 text-[14px] mb-[10px]">회원가입</p>
+       </div>
       </div>
-      <div class="flex justify-center mt-[25px]">
-          <img  alt="circle" src = "../../assets/images/full_circle.png"  class="mx-9 w-5 h-5"/>
-          <img alt="circle" src = "../../assets/images/empty_circle.png"  class="mx-9 w-5 h-5"/>
-          <img alt="circle" src = "../../assets/images/empty_circle.png"  class="mx-9 w-5 h-5"/>
-      </div>
-      <div class="flex justify-center mt-[20px]">
-         <p class="mx-5 text-[14px] font-semibold">약관동의</p>
-         <p class="mx-5 text-[14px]">정보입력</p>
-         <p class="mx-5 text-[14px]">회원가입</p>
-      </div>
+
+
+
+      
     <div class="mt-[90px] mb-3 flex justify-start mx-auto w-[760px]">
         <p class="text-kb-yellow-2 text-lg font-bold ">[필수] </p> 
         <p class="text-font-color text-lg font-bold"> 개인정보 수집 및 이용 동의 </p>
@@ -38,6 +65,7 @@
         </div>
 
     </div>
+</div>
 </template>
 
 <script setup>
