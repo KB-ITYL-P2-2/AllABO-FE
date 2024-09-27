@@ -2,13 +2,13 @@
   <div class="h-screen flex flex-col">
     <div class="h-[40vh] bg-kb-brown-1 flex flex-col items-center justify-center">
       <div class="text-3xl font-bold text-white mt-[90px]">F:YL</div>
-      <div class="flex justify-center mt-[90px]">
+      <div class="flex justify-center mt-[50px]">
         <div class="text-3xl font-bold text-white">회원가입</div>
       </div>
       <div class="flex justify-center mt-[25px]">
-        <img alt="circle" src="../assets/images/empty_circle.png" class="mx-2 w-5 h-5" />
-        <img alt="circle" src="../assets/images/full_circle.png" class="mx-2 w-5 h-5" />
-        <img alt="circle" src="../assets/images/empty_circle.png" class="mx-2 w-5 h-5" />
+        <img alt="circle" src="../assets/images/empty_circle.png" class="mx-8 w-5 h-5" />
+        <img alt="circle" src="../assets/images/full_circle.png" class="mx-8 w-5 h-5" />
+        <img alt="circle" src="../assets/images/empty_circle.png" class="mx-8 w-5 h-5" />
       </div>
       <div class="flex justify-center mt-[10px] text-white">
         <p class="mx-4 text-sm">약관동의</p>
