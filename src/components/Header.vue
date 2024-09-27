@@ -7,9 +7,9 @@
           F:YL
         </router-link>
         <!-- 네비게이션 메뉴와 프로필 아이콘을 포함하는 컨테이너 -->
-        <div class="flex items-center space-x-8">
+        <div class="flex items-center space-x-2.5">
           <!-- 네비게이션 메뉴 -->
-          <ul class="flex items-center space-x-8">
+          <ul class="flex items-center space-x-[34px]">
             <li>
               <router-link to="/products" class="text-font-color hover:text-kb-brown-1 md:hover:bg-nav-color">
                 맞춤 상품
@@ -25,7 +25,7 @@
                 자산 설계
               </router-link>
             </li>
-            <p class="px-3"> | </p>
+            <p>|</p>
             <li>
               <router-link to="/login" class="text-font-color hover:text-kb-brown-1 md:hover:bg-nav-color">
                 로그인
@@ -35,9 +35,10 @@
 
           <!-- 프로필 아이콘_마이페이지 이동 -->
           <router-link to="/mypage" class="text-font-color hover:text-kb-brown-1 md:hover:bg-nav-color">
-            <span class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+            <img src="../assets/images/user.png" class="w-8 h-8"/>
+            <!-- <span class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
               👤
-            </span>
+            </span> -->
           </router-link>
         </div>
       </div>
