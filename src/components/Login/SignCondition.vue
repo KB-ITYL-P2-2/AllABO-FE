@@ -31,7 +31,7 @@
                 위 개인정보 수집에 대한 동의를 거부할 권리가 있으며, 동의 거부 시에는 지원자 등록이 제한될 수 있습니다.더 자세한 내용에 대해서는 ㅇㅇㅇ의  개인정보처리방침을 참고하시길 바랍니다.
                         </p>
         </div>
-        <div class="flex justify-center mt-[60px]">
+        <div class="flex justify-center mt-[60px] mb-[90px]">
             <button @click="$router.push('/login')" class="w-[213px] h-[50px]  rounded-[15px] mr-10 bg-white text-font-color border border-kb-brown-2">취소</button>
             <button @click="$router.push('/signup')" type="button"
                     class="w-[213px] h-[50px]  rounded-[15px] bg-kb-brown-2 text-white">동의하기</button>
