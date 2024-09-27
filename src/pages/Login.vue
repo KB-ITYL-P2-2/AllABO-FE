@@ -10,7 +10,7 @@
       <div class="mt-[60px] flex justify-center">
         <form class="w-[400px]">
           <!-- 이메일 -->
-          <label for="email" class="block text-kb-gray-2 mb-2">이메일</label>
+          <label for="email" class="block text-kb-gray-2 mb-2"></label>
           <input 
             id="email"
             type="email"
@@ -19,7 +19,7 @@
           />
           
           <!-- 비밀번호 -->
-          <label for="password" class="block mt-4 text-kb-gray-2 mb-2">비밀번호</label>
+          <label for="password" class="block mt-4 text-kb-gray-2 mb-2"></label>
           <input 
             id="password"
             type="password" 

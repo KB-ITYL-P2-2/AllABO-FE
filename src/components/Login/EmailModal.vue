@@ -1,27 +1,34 @@
 <template>
   <div class="fixed inset-0 bg-gray-600 bg-opacity-75 flex justify-center items-center z-50">
-    <div class="bg-white p-8 rounded-[15px] shadow-lg w-[750px] h-[600px] relative">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-[650px] relative">
       <!-- Close Button -->
-      <button @click="$emit('close')" class="absolute top-4 right-4 text-[24px] font-bold text-kb-gray-2">✕</button>
+      <button @click="$emit('close')" class="absolute top-4 right-4 text-2xl font-bold text-gray-400 hover:text-gray-600 transition duration-150">✕</button>
       
       <!-- Logo and Title -->
-      <p class="text-3xl mb-[20px] font-bold flex justify-center  text-font-color">LOGO</p>
-      <p class="text-[24px] font-bold text-font-color mb-[90px] flex justify-center">이메일 찾기</p>
+      <div class="text-center mb-6">
+        <p class="text-3xl font-bold text-gray-700">LOGO</p>
+        <p class="text-xl font-semibold text-gray-700 mt-4">이메일 찾기</p>
+      </div>
       
       <!-- Form -->
       <form @submit.prevent="handleSubmit">
-        <div class="mb-[30px] flex justify-center items-center px-[30px]">
-          <label for="name" class="text-font-color text-[16px] w-[100px] text-left">이름</label>
+        <!-- 이름 입력 -->
+        <div class="mb-6 px-6">
+          <label for="name" class="block text-left text-gray-600 mb-2">이름</label>
           <input type="text" id="name" placeholder="이름을 입력해주세요" 
-                 class=" pl-4 h-[50px] w-[400px] text-kb-gray-2 rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2"/>
+                 class="pl-4 h-[50px] w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"/>
         </div>
-        <div class="mb-[60px] flex justify-center items-center px-[30px]">
-          <label for="tel" class="text-font-color text-[16px] w-[100px] text-left">전화번호</label>
+        
+        <!-- 전화번호 입력 -->
+        <div class="mb-8 px-6">
+          <label for="tel" class="block text-left text-gray-600 mb-2">전화번호</label>
           <input type="text" id="tel" v-model="tel" placeholder="전화번호를 입력해주세요" 
-                 class="pl-4 h-[50px] w-[400px] text-kb-gray-2 rounded-[15px] border border-kb-gray-2 focus:outline-none focus:ring-1 focus:ring-kb-brown-2"/>
+                 class="pl-4 h-[50px] w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"/>
         </div>
-        <div class="flex justify-center">
-          <button type="submit" class="h-[50px] w-[500px] rounded-[15px] bg-kb-brown-2 text-white flex justify-center items-center">
+        
+        <!-- 제출 버튼 -->
+        <div class="px-6">
+          <button type="submit" class="h-[50px] w-full rounded-md text-white bg-kb-brown-2 hover:bg-kb-yellow-1 focus:bg-kb-yellow-1 transition-colors duration-150">
             이메일 찾기
           </button>
         </div>
