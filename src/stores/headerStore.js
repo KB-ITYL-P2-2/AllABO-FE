@@ -2,11 +2,22 @@ import { defineStore } from 'pinia'
 
 export const useHeaderStore = defineStore('header', {
   state: () => ({
-    isForceScrolled: false
+    isScrolled: false,
+    isHovered: false,
   }),
   actions: {
-    setForceScrolled(value) {
-      this.isForceScrolled = value
+    setScrolled(value) {
+      this.isScrolled = value
+    },
+    setHovered(value) {
+        this.isHovered = value
+    },
+    resetState() {
+        this.isScrolled = false
+        this.isHovered = false
     }
+  },
+  getters: {
+    isActive: (state) => state.isScrolled || state.isHovered
   }
 })
