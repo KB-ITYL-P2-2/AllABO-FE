@@ -151,7 +151,7 @@ watch(currentIndex, () => {
 
   setTimeout(() => {
     isAnimate.value = true;
-  }, 10);
+  }, 200);
 });
 
 const carouselItemClickHandler = (index)=>{
