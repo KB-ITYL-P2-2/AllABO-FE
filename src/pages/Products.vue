@@ -93,7 +93,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Mousewheel, Pagination } from "swiper/modules";
 import { useHeaderStore } from "../stores/headerStore.js";
@@ -110,9 +110,10 @@ import productCategoryData from "../constant/productCategoryData.js";
 const headerStore = useHeaderStore();
 
 let touchStartY = 0;
+let swiperInstance = null;
 
 const handleSlideChange = (swiper) => {
-  headerStore.setForceScrolled(swiper.activeIndex > 0);
+  headerStore.setScrolled(swiper.activeIndex > 0);
 };
 
 const handleTouchStart = (event) => {
@@ -123,14 +124,18 @@ const handleTouchEnd = (event) => {
   const touchEndY = event.changedTouches[0].clientY;
   const deltaY = touchEndY - touchStartY;
   
-  if (deltaY < 0 && window.scrollY === 0) {
+  if (deltaY < 0 && swiperInstance.activeIndex === 0) {
     // Scrolling down from the top
-    headerStore.setForceScrolled(true);
-  } else if (deltaY > 0 && window.scrollY === 0) {
+    headerStore.setScrolled(true);
+  } else if (deltaY > 0 && swiperInstance.activeIndex === 0) {
     // Scrolling up to the top
-    headerStore.setForceScrolled(false);
+    headerStore.setScrolled(false);
   }
 };
+
+const onSwiper = (swiper) => {
+  swiperInstance = swiper;
+}
 
 const data = [
   { title: "신용카드" },
@@ -152,6 +157,14 @@ const onCategoryLeave = () => {
   isExpanded.value = false;
   hoveredCategory.value = "";
 };
+
+onMounted(() => {
+  headerStore.resetState();
+});
+
+onUnmounted(() => {
+  headerStore.resetState();
+});
 </script>
 
 <style scoped>

@@ -4,7 +4,9 @@
       'fixed top-0 left-0 w-full h-[70px] z-50',
       isScrolledOrHovered ? 'bg-white shadow-lg' : 'bg-transparent',
       'transition duration-500 ease-in-out'
-      ]">
+      ]"
+      @mouseenter="handleMouseEnter"
+      @mouseleave="handleMouseLeave">
       <div class="mx-[340px] h-full flex items-center justify-between">
         <!-- 로고 -->
         <router-link to="/" :class="{ 'text-font-color' : isScrolledOrHovered, 'text-white' : !isScrolledOrHovered }" class="text-2xl font-bold">
@@ -41,13 +43,9 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { useHeaderStore } from '../stores/headerStore';
 
-const props = defineProps({
-  forceScrolled: {
-    type: Boolean,
-    default: false
-  }
-});
+const headerStore = useHeaderStore();
 
 const navItems = [
   { name: '맞춤 상품', route: '/products' },
@@ -55,26 +53,23 @@ const navItems = [
   { name: '자산 설계', route: '/asset-plan' },
 ];
 
-const isMenuOpen = ref(false);
-const isScrolled = ref(false);
-const isHovered = ref(false);
-
-const isScrolledOrHovered = computed(() => props.forceScrolled || isScrolled.value || isHovered.value);
+const isScrolledOrHovered = computed(() => headerStore.isActive);
 
 function handleScroll() {
-  isScrolled.value = window.scrollY > 1;
+  headerStore.setScrolled(window.scrollY > 1);
 }
 
 function handleMouseEnter() {
-  isHovered.value = true;
+  headerStore.setHovered(true);
 }
 
 function handleMouseLeave() {
-  isHovered.value = false;
+  headerStore.setHovered(false);
 }
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
+  headerStore.resetState();
 });
 
 onUnmounted(() => {
