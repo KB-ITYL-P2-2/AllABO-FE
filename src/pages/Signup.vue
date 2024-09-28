@@ -1,11 +1,10 @@
 <template>
   <div class="h-screen flex flex-col">
-    <div class="h-[40vh] bg-kb-brown-1 flex flex-col items-center justify-center">
-      <div class="text-3xl font-bold text-white mt-[90px]">F:YL</div>
+    <div class="h-[40vh] bg-white flex flex-col items-center justify-center">
       <div class="flex justify-center mt-[50px]">
-        <div class="text-3xl font-bold text-white">회원가입</div>
+        <div class="text-3xl font-bold text-black"> 개인정보 입력</div>
       </div>
-      <div class="flex justify-center mt-[25px]">
+      <!-- <div class="flex justify-center mt-[25px]">
         <img alt="circle" src="../assets/images/empty_circle.png" class="mx-8 w-5 h-5" />
         <img alt="circle" src="../assets/images/full_circle.png" class="mx-8 w-5 h-5" />
         <img alt="circle" src="../assets/images/empty_circle.png" class="mx-8 w-5 h-5" />
@@ -14,7 +13,7 @@
         <p class="mx-4 text-sm">약관동의</p>
         <p class="mx-4 text-sm font-semibold">정보입력</p>
         <p class="mx-4 text-sm">회원가입</p>
-      </div>
+      </div> -->
     </div>
 
     <div class="h-[60vh] bg-white flex flex-col items-center">

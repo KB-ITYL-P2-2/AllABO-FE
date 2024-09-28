@@ -5,23 +5,25 @@
           <div class="text-3xl font-bold text-white mt-[90px]">F:YL</div>
          <div class="flex justify-center mt-[50px]">
           <div class="text-3xl font-bold text-white">회원가입</div>
+          <div class="h-[80px] bg-kb-brown-1"></div>
         </div>
-        <div class="flex justify-center mt-[25px]">
+        <!-- <div class="flex justify-center mt-[25px]">
           <img alt="circle" src="../../assets/images/full_circle.png" class="mx-7 w-5 h-5" />
           <img alt="circle" src="../../assets/images/empty_circle.png" class="mx-7 w-5 h-5" />
           <img alt="circle" src="../../assets/images/empty_circle.png" class="mx-7 w-5 h-5" />
-        </div>
-        <div class="flex justify-center mt-[20px] text-white">
+        </div> -->
+        <!-- <div class="flex justify-center mt-[20px] text-white">
           <p class="mx-4 text-[14px] text-white font-semibold">약관동의</p>
           <p class="mx-4 text-[14px]  text-white">정보입력</p>
           <p class="mx-4 text-[14px] mb-[10px]">회원가입</p>
-       </div>
+       </div> -->
       </div>
 
 
 
       
     <div class="mt-[90px] mb-3 flex justify-start mx-auto w-[760px]">
+
         <p class="text-kb-yellow-2 text-lg font-bold ">[필수] </p> 
         <p class="text-font-color text-lg font-bold"> 개인정보 수집 및 이용 동의 </p>
     </div>
@@ -39,15 +41,24 @@
                 위 개인정보 수집에 대한 동의를 거부할 권리가 있으며, 동의 거부 시에는 지원자 등록이 제한될 수 있습니다.더 자세한 내용에 대해서는 ㅇㅇㅇ의  개인정보처리방침을 참고하시길 바랍니다.
                         </p>
         </div>
-        <div class="flex justify-center mt-[60px] mb-[90px]">
+        <div class="flex justify-center mt-[20px] mb-[90px]">
             <button @click="$router.push('/login')" class="w-[213px] h-[50px]  rounded-[15px] mr-10 bg-white text-font-color border border-kb-brown-2  hover:bg-kb-gray-2 focus:bg-kb-gray-2 ">취소</button>
             <button @click="$router.push('/signup')" type="button"
                     class="w-[213px] h-[50px]  rounded-[15px] bg-kb-brown-2 text-white  hover:bg-kb-yellow-1 focus:bg-kb-yellow-1 ">동의하기</button>
-        </div>
+          <!-- 위 내용에 동의합니다. -->
+          <!-- <input type="checkbox" id="agrre" value="agree" v-model="checkedNames"> -->
+        </div> 
+    </div>
 
+    <div>
+      <Signup/>
     </div>
 </div>
+
+
 </template>
 
 <script setup>
+import Signup from '../../pages/Signup.vue';
+
 </script>
