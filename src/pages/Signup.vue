@@ -67,7 +67,7 @@
           <div class="mt-6 flex flex-col">
             <label for="asset" class="text-font-color">연 소득</label>
             <input type="text" id="asset" v-model="asset" placeholder="연 소득을 입력해주세요 (예: 30000000)"
-                   class=" text-font-color pl-4 h-[50px] w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"/>
+                   class="pl-4 text-font-colorpl-4 h-[50px] w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"/>
           </div>
 
           <div class="flex justify-center mt-[50px]">
