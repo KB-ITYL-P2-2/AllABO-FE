@@ -49,6 +49,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 const isScrolled = ref(false);
 
 function handleScroll() {
+console.log(window.screenY)
   if (window.scrollY > 1) {
     isScrolled.value = true;
   } else {
