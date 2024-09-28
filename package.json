@@ -11,6 +11,7 @@
   "dependencies": {
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.7",
+    "pinia": "^2.2.2",
     "postcss": "^8.4.47",
     "swiper": "^11.1.14",
     "vue": "^3.4.37",
