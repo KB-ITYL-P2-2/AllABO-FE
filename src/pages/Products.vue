@@ -13,13 +13,13 @@
       clickable: true,
     }"
     :modules="modules"
-    class="mySwiper w-screen h-screen"
+    class="w-screen h-screen mySwiper"
     @slideChange="handleSlideChange"
     @touchStart="handleTouchStart"
     @touchEnd="handleTouchEnd"
   >
     <swiper-slide>
-      <div class="w-screen h-screen relative overflow-hidden">
+      <div class="relative w-screen h-screen overflow-hidden">
         <div
           class="w-full transition-all duration-300 ease-in-out bg-[#5F584E] absolute top-0 left-0"
           :style="{
@@ -27,21 +27,21 @@
           }"
         >
           <h1
-            class="absolute left-1/2 transform -translate-x-1/2 text-center text-white text-xl sm:text-2xl md:text-3xl font-bold px-4 w-full"
+            class="absolute w-full px-4 text-xl font-bold text-center text-white transform -translate-x-1/2 left-1/2 sm:text-2xl md:text-3xl"
             style="top: 25vh"
           >
             간단한 설문을 통해 맞춤 상품을 추천 받아보세요!
           </h1>
           <p
             v-if="isExpanded"
-            class="absolute left-1/2 transform -translate-x-1/2 text-center text-white text-lg sm:text-xl md:text-2xl font-bold px-4 w-full"
+            class="absolute w-full px-4 text-lg font-bold text-center text-white transform -translate-x-1/2 left-1/2 sm:text-xl md:text-2xl"
             style="top: 75vh"
           >
             {{ hoveredCategory }} 설문하러 가기
           </p>
         </div>
         <div
-          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-between items-center w-full"
+          class="absolute flex items-center justify-between w-full transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
           :class="`${LAYOUT_VARIANTS.default}`"
         >
           <div
@@ -65,7 +65,7 @@
 
         <div
           v-if="!isExpanded"
-          class="flex flex-col justify-center items-center absolute bottom-2 left-1/2 transform -translate-x-1/2 text-center text-gray-400 space-y-0"
+          class="absolute flex flex-col items-center justify-center space-y-0 text-center text-gray-400 transform -translate-x-1/2 bottom-2 left-1/2"
         >
           <p class="text-sm">전체 상품 보러가기</p>
           <svg
@@ -74,7 +74,7 @@
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="size-5 -mt-1"
+            class="-mt-1 size-5"
           >
             <path
               stroke-linecap="round"
