@@ -19,25 +19,9 @@
               :isHover="isHover"
               :isNow="currentIndex == index"
               class=""
-              @click="
-                e => {
-                  carouselItemClickHandler(index);
-                }
-              "
-              @mouseover="
-                () => {
-                  if (index == currentIndex) {
-                    isHover = true;
-                  }
-                }
-              "
-              @mouseout="
-                () => {
-                  if (index == currentIndex) {
-                    isHover = false;
-                  }
-                }
-              "
+              @click="carouselItemClickHandler(index)"
+              @mouseover="productMouseOverHandler(index)"
+              @mouseleave="productMouseLeaveHandler"
             />
           </div>
         </div>
@@ -63,7 +47,7 @@
 
     <!-- 전체 조회 버튼 -->
     <div class="z-0 mt-8">
-      <button class="p-2 border border-gray-400 rounded-[10px] text-font-color bg-white ">{{ `${item.title} 전체 조회` }}</button>
+      <button class="p-2 border border-gray-400 rounded-[10px] text-font-color bg-white">{{ `${item.title} 전체 조회` }}</button>
     </div>
   </div>
 </template>
@@ -129,6 +113,16 @@ const assetData = ref([
     cardContent: "다 같이 돌자 동네 한 바퀴",
   },
 ]);
+
+const productMouseOverHandler = index => {
+  if (index == currentIndex.value) {
+    isHover.value = true;
+  }
+};
+
+const productMouseLeaveHandler = () => {
+  isHover.value = false;
+};
 
 onBeforeMount(() => {
   const cardStart = cardData.value.slice(0, 2);

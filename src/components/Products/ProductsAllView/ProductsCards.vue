@@ -1,6 +1,6 @@
 <template>
   <div
-    class=" flex h-[300px] relative duration-100 gap-3"
+    class="flex h-[300px] relative duration-150 gap-3"
     :style="{
       width: isNow && isHover ? '450px' : '200px',
       transform: isNow && isHover ? 'translateX(-100px)' : 'none',
@@ -14,7 +14,8 @@
       class="flex flex-col flex-1 gap-6 text-left"
       :style="{
         opacity: isHover && isNow ? 1 : 0,
-        transition: isHover && isNow ? 'opacity 1000ms' : 'none', // 나타날 때만 transition 적용
+        visibility: isHover ? 'visible' : 'hidden', // hidden 대신 visibility 사용
+        transition: isHover && isNow ? 'opacity 1000ms' : 'none', // opacity 애니메이션이 끝난 후 visibility 변경
       }"
     >
       <h1 class="font-bold underline text-kb-brown-1 text-[22px]">{{ item.cardName }}</h1>
