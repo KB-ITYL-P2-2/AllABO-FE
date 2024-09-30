@@ -54,12 +54,22 @@
               aspectRatio: '1 / 1',
             }"
           >
-            <CategoryButton
-              :categoryName="category.name"
-              :backgroundColor="category.color"
-              @mouseenter="onCategoryHover(category.name)"
-              @mouseleave="onCategoryLeave"
-            />
+            <router-link
+              :to="{
+                path: 'products/survey',
+                query: { category: category.id },
+              }"
+              custom
+              v-slot="{ navigate }"
+            >
+              <CategoryButton
+                :categoryName="category.name"
+                :backgroundColor="category.color"
+                @mouseenter="onCategoryHover(category.name)"
+                @mouseleave="onCategoryLeave"
+                @click="navigate"
+              />
+            </router-link>
           </div>
         </div>
 
@@ -123,7 +133,7 @@ const handleTouchStart = (event) => {
 const handleTouchEnd = (event) => {
   const touchEndY = event.changedTouches[0].clientY;
   const deltaY = touchEndY - touchStartY;
-  
+
   if (deltaY < 0 && swiperInstance.activeIndex === 0) {
     // Scrolling down from the top
     headerStore.setScrolled(true);
@@ -135,7 +145,7 @@ const handleTouchEnd = (event) => {
 
 const onSwiper = (swiper) => {
   swiperInstance = swiper;
-}
+};
 
 const data = [
   { title: "신용카드" },
