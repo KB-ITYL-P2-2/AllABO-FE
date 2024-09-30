@@ -2,18 +2,7 @@
   <div class="h-screen flex flex-col">
     <div class="h-[40vh] bg-white flex flex-col items-center justify-center">
       <div class="flex justify-center mt-[50px]">
-        <div class="text-3xl font-bold text-black"> 개인정보 입력</div>
       </div>
-      <!-- <div class="flex justify-center mt-[25px]">
-        <img alt="circle" src="../assets/images/empty_circle.png" class="mx-8 w-5 h-5" />
-        <img alt="circle" src="../assets/images/full_circle.png" class="mx-8 w-5 h-5" />
-        <img alt="circle" src="../assets/images/empty_circle.png" class="mx-8 w-5 h-5" />
-      </div>
-      <div class="flex justify-center mt-[10px] text-white">
-        <p class="mx-4 text-sm">약관동의</p>
-        <p class="mx-4 text-sm font-semibold">정보입력</p>
-        <p class="mx-4 text-sm">회원가입</p>
-      </div> -->
     </div>
 
     <div class="h-[60vh] bg-white flex flex-col items-center">
@@ -36,8 +25,10 @@
             <label for="email" class="text-font-color">이메일</label>
             <div class="flex">
               <input type="email" id="email" v-model="email" placeholder="이메일을 입력해주세요"
-                     class="text-font-color pl-4 h-[50px] w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"/>
-              <button class="ml-4 h-[50px] w-[120px] rounded-md bg-kb-brown-2 text-white hover:bg-kb-yellow-1 transition duration-200">인증</button>
+              class="text-font-color pl-4 h-[50px] w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"/>
+       <!-- 이메일 유효성 검사 실패 시 경고 문구 표시 -->
+       <p v-if="emailError && emailTouched" class="text-sm text-red-500 mt-2">이메일 형식에 맞게 입력해주세요.</p>
+              <!-- <button class="ml-4 h-[50px] w-[120px] rounded-md bg-kb-brown-2 text-white hover:bg-kb-yellow-1 transition duration-200">인증</button> -->
             </div>
           </div>
 
@@ -81,6 +72,7 @@
       </div>
     </div>
   </div>
+ 
 </template>
 
 <script setup>
@@ -97,18 +89,25 @@ const asset = ref('');
 
 const router = useRouter();
 
-// 비밀번호 유효성 검사
+const emailTouched=ref(false);
+
+//이메일 유효성 
+const emailError = computed(() => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return !emailRegex.test(email.value);
+});
+// 비밀번호 유효성
 const passwordError = computed(() => {
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!#*])[A-Za-z\d~!#*]{8,12}$/;
   return !passwordRegex.test(password.value);
 });
 
-// 비밀번호 확인 유효성 검사
+// 비밀번호 확인 유효성 
 const passwordConfirmError = computed(() => {
   return password.value !== passwordConfirm.value;
 });
 
-// 모든 입력 필드가 채워졌는지 확인하는 computed 속성
+// 모든 입력 필드 채워졌는지 확인 
 const isFormValid = computed(() => {
   return name.value && birthday.value && email.value && !passwordError.value && !passwordConfirmError.value && tel.value && asset.value;
 });
@@ -119,5 +118,8 @@ function submitForm() {
   } else {
     alert('모든 필드를 정확히 입력해주세요.');
   }
+}
+function handleEmailBlur() {
+  emailTouched.value = true;
 }
 </script>
