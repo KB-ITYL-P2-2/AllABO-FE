@@ -1,6 +1,6 @@
 <template>
   <div :class="[`flex flex-col ${LAYOUT_VARIANTS.default}`]">
-    <h1 class="font-bold text-[28px] mb-24 z-20 text-left">{{ `${item.title} TOP3` }}</h1>
+    <h1 class="font-bold text-[28px] md:max-laptop:mb-10 mb-24 z-20 text-left">{{ `${item.title} TOP3` }}</h1>
     <div class="w-full">
       <div class="flex flex-col items-center justify-center w-full h-auto">
         <!-- <ProductsCards v-for="(item, index) in cardData" :item="item" :key="index" :class="[`transition-transform order-${cardOrder[currentIndex][index]}`, cardOrder[currentIndex][index]==2 ? `scale-110` : '']" /> -->

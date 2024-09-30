@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex h-[300px] relative duration-100 gap-3"
+    class=" flex h-[300px] relative duration-100 gap-3"
     :style="{
       width: isNow && isHover ? '450px' : '200px',
       transform: isNow && isHover ? 'translateX(-100px)' : 'none',
