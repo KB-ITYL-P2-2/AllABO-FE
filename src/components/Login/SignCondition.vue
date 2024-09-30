@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="mt-[300px]"></div>
+    <div class="mt-[350px]"></div>
     <div class="mt-[90px] mb-3 flex justify-start mx-auto w-[760px]">
       <p class="text-kb-yellow-2 text-lg font-bold px-3">[필수]</p>
       <p class="text-font-color text-lg font-bold"> 개인정보 수집 및 이용 동의 </p>

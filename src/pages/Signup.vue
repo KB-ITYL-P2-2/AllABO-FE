@@ -2,7 +2,7 @@
   <div class="h-screen flex flex-col">
     <div class="h-[40vh] bg-white flex flex-col items-center justify-center">
       <div class="flex justify-center mt-[50px]">
-        <div class="text-3xl font-bold text-black"> 개인정보 입력</div>
+        <!-- <div class="text-3xl font-bold text-black"> 개인정보 입력</div> -->
       </div>
       <!-- <div class="flex justify-center mt-[25px]">
         <img alt="circle" src="../assets/images/empty_circle.png" class="mx-8 w-5 h-5" />
@@ -81,6 +81,7 @@
       </div>
     </div>
   </div>
+ 
 </template>
 
 <script setup>
