@@ -8,9 +8,10 @@
       </div>
       <div class="">
         <div class="flex justify-center mt-[25px]">
-          <img alt="circle" src="../../assets/images/full_circle.png" class="mx-7 w-5 h-5" />
-          <img alt="circle" src="../../assets/images/empty_circle.png" class="mx-7 w-5 h-5" />
-          <img alt="circle" src="../../assets/images/empty_circle.png" class="mx-7 w-5 h-5" />
+          <!-- btn클릭 따라 똥골 이미지 변경 -->
+          <img alt="circle" :src="currentStep >= 1 ? fullCircle : emptyCircle" class="mx-7 w-5 h-5" />
+          <img alt="circle" :src="currentStep >= 2 ? fullCircle : emptyCircle" class="mx-7 w-5 h-5" />
+          <img alt="circle" :src="currentStep >= 3 ? fullCircle : emptyCircle" class="mx-7 w-5 h-5" />
         </div>
         <div class="flex justify-center mt-[20px] text-white">
           <p class="mx-4 text-[14px] text-white font-semibold">약관동의</p>
@@ -19,7 +20,6 @@
         </div>
       </div>
     </div>
-
     <div class="mt-[350px]"></div>
     <div class="mt-[90px] mb-3 flex justify-start mx-auto w-[760px]">
       <p class="text-kb-yellow-2 text-lg font-bold px-3">[필수]</p>
@@ -57,11 +57,16 @@
 <script setup>
 import { ref } from 'vue';
 import Signup from '../../pages/Signup.vue';
-//스크롤 섹션 정의
-const signupSection=ref(null);
 
-// 스크롤 함수
+const fullCircle = '/images/Signup/full_circle.png';
+const emptyCircle = '/images/Signup/empty_circle.png';
+
+const currentStep = ref(1);
+const signupSection = ref(null);
+
+// 동의하기 버튼 클릭 시
 const scrollToSignup = () => {
+  currentStep.value = 2;
   signupSection.value.scrollIntoView({ behavior: 'smooth' });
 };
 </script>
