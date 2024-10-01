@@ -12,6 +12,7 @@ module.exports = {
         'kb-yellow-1' : "#F4BF42", 
         'kb-yellow-2':"#F6CE46",
         'kb-yellow-3':"#FAE6A2",
+        'kb-yellow-4':"#FFFBE7",
         'kb-brown-1':"#535046",
         'kb-brown-2':"#5F584E",
         'kb-brown-3':"#897552",
@@ -19,8 +20,11 @@ module.exports = {
 
         'kb-gray-1':"#85888B",     
         'kb-gray-2':"#B8B8BC",
+        'kb-gray-3':"#BDBDBD",
         'nav-color':"#FFE89A",
         'font-color' :"#27272a",
+
+        'kb-pink-1':"#FBB3B3"
        
       },
       keyframes:{},
