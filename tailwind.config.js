@@ -19,6 +19,7 @@ module.exports = {
 
         'kb-gray-1':"#85888B",     
         'kb-gray-2':"#B8B8BC",
+        'kb-gray-3':"#BDBDBD",
         'nav-color':"#FFE89A",
         'font-color' :"#27272a",
        

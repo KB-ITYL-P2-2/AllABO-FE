@@ -1,5 +1,6 @@
 <template>
   <swiper
+    ref="mySwiper"
     :direction="'vertical'"
     :slidesPerView="1"
     :spaceBetween="30"
@@ -14,9 +15,8 @@
     }"
     :modules="modules"
     class="w-screen h-screen mySwiper"
+    @swiper="onSwiperInit"
     @slideChange="handleSlideChange"
-    @touchStart="handleTouchStart"
-    @touchEnd="handleTouchEnd"
   >
     <swiper-slide>
       <div class="relative w-screen h-screen overflow-hidden">
@@ -68,19 +68,8 @@
           class="absolute flex flex-col items-center justify-center space-y-0 text-center text-gray-400 transform -translate-x-1/2 bottom-2 left-1/2"
         >
           <p class="text-sm">전체 상품 보러가기</p>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="-mt-1 size-5"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="m19.5 8.25-7.5 7.5-7.5-7.5"
-            />
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="-mt-1 size-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
           </svg>
         </div>
       </div>
@@ -89,6 +78,26 @@
     <swiper-slide v-for="(item, index) in data" :key="index">
       <ProductsAllView :item="item" />
     </swiper-slide>
+
+    <!-- 네비게이션 -->
+    <div
+      class="fixed left-[10%] top-[30%] z-10 flex flex-col border border-[#BDBDBD] bg-white rounded-[10px] overflow-hidden p-2"
+      :class="{
+        'opacity-0': !navigationTrigger,
+        'opacity-100': navigationTrigger,
+        invisible: !navigationTrigger, // opacity 0일 때만 보이지 않게 설정
+        visible: navigationTrigger, // opacity 100일 때만 보이게 설정
+      }"
+      :style="{
+        transition: 'opacity 1000ms',
+      }"
+    >
+      <div v-for="(item, index) in data" :key="index" class="py-1 text-center" :class="index!==data.length-1 && 'border-b-[1px]'">
+        <button ref="navButton" class="rounded-[10px] text-[18px] w-[60px] h-[60px]" :class="item.index === swiperIndex ? 'bg-kb-yellow-3' : 'text-kb-gray-3'" @click="goToSlide(item.index)">
+          <span v-html="formatText(item.title)"></span>
+        </button>
+      </div>
+    </div>
   </swiper>
 </template>
 
@@ -109,38 +118,45 @@ import productCategoryData from "../constant/productCategoryData.js";
 
 const headerStore = useHeaderStore();
 
-let touchStartY = 0;
-let swiperInstance = null;
+const navigationTrigger = ref(false);
+const swiperIndex = ref(0);
 
-const handleSlideChange = (swiper) => {
+const mySwiper = ref(null);
+
+const handleSlideChange = swiper => {
+  swiperIndex.value = swiper.activeIndex;
+  // console.log(swiperIndex.value)
+
   headerStore.setScrolled(swiper.activeIndex > 0);
-};
 
-const handleTouchStart = (event) => {
-  touchStartY = event.touches[0].clientY;
-};
-
-const handleTouchEnd = (event) => {
-  const touchEndY = event.changedTouches[0].clientY;
-  const deltaY = touchEndY - touchStartY;
-  
-  if (deltaY < 0 && swiperInstance.activeIndex === 0) {
-    // Scrolling down from the top
-    headerStore.setScrolled(true);
-  } else if (deltaY > 0 && swiperInstance.activeIndex === 0) {
-    // Scrolling up to the top
-    headerStore.setScrolled(false);
+  if (swiper.activeIndex > 0) {
+    navigationTrigger.value = true;
+  } else {
+    navigationTrigger.value = false;
   }
 };
 
-const onSwiper = (swiper) => {
-  swiperInstance = swiper;
+const onSwiperInit = swiperInstance => {
+  mySwiper.value = swiperInstance; // Swiper 인스턴스 저장
+};
+
+const goToSlide = index => {
+  if (mySwiper.value) {
+    // console.log(mySwiper.value)
+    mySwiper.value.slideTo(index); // Swiper 인스턴스의 slideTo 메서드 호출
+  }
+};
+
+const formatText=(text)=>{
+  return text.replace(/.{2}/g, '$&<br>');
 }
 
 const data = [
-  { title: "신용카드" },
-  { title: "체크카드" },
-  { title: "예/적금" },
+  { title: "신용카드", index: 1 },
+  { title: "체크카드", index: 2 },
+  { title: "예금적금", index: 3 },
+  { title: "보험", index: 4 },
+  { title: "대출", index: 5 },
 ];
 
 const isExpanded = ref(false);
@@ -148,7 +164,7 @@ const hoveredCategory = ref("");
 
 const modules = [Mousewheel, Pagination];
 
-const onCategoryHover = (categoryName) => {
+const onCategoryHover = categoryName => {
   isExpanded.value = true;
   hoveredCategory.value = categoryName;
 };
@@ -168,6 +184,10 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+::v-deep .swiper-pagination {
+  display: none !important;
+}
+
 .swiper-slide {
   text-align: center;
   font-size: 18px;
