@@ -1,13 +1,13 @@
 <template>
   <div class="h-screen flex flex-col">
     <!-- 상단 40% 배경 -->
-    <div class="h-[40vh] bg-kb-brown-1 flex flex-col items-center justify-center">
+    <div class="h-[35vh] bg-kb-brown-1 flex flex-col items-center justify-center">
       <div class="text-3xl font-bold text-white mt-10">F:YL</div>
     </div>
 
     <!-- 나머지 60% 배경 -->
-    <div class="h-[60vh] bg-white flex flex-col items-center justify-start">
-      <div class="mt-12 flex justify-center">
+    <div class="h-[65vh] bg-white flex flex-col items-center justify-start">
+      <div class="mt-10 flex justify-center">
         <form class="w-[400px]">
           <!-- 이메일 -->
           <label for="email" class="block text-kb-gray-2 mb-2">이메일</label>
@@ -50,6 +50,7 @@
         <p class="px-4 text-kb-gray-2 text-sm">간편 로그인</p>
         <hr class="w-40 mt-3 border-kb-gray-2"/> 
       </div>
+    
 
       <!-- 간편 로그인 버튼 -->
       <div class="flex justify-center mt-8 space-x-8">
