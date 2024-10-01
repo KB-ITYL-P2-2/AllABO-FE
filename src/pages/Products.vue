@@ -15,8 +15,6 @@
     :modules="modules"
     class="mySwiper w-screen h-screen"
     @slideChange="handleSlideChange"
-    @touchStart="handleTouchStart"
-    @touchEnd="handleTouchEnd"
   >
     <swiper-slide>
       <div class="w-screen h-screen relative overflow-hidden">
@@ -124,27 +122,6 @@ let swiperInstance = null;
 
 const handleSlideChange = (swiper) => {
   headerStore.setScrolled(swiper.activeIndex > 0);
-};
-
-const handleTouchStart = (event) => {
-  touchStartY = event.touches[0].clientY;
-};
-
-const handleTouchEnd = (event) => {
-  const touchEndY = event.changedTouches[0].clientY;
-  const deltaY = touchEndY - touchStartY;
-
-  if (deltaY < 0 && swiperInstance.activeIndex === 0) {
-    // Scrolling down from the top
-    headerStore.setScrolled(true);
-  } else if (deltaY > 0 && swiperInstance.activeIndex === 0) {
-    // Scrolling up to the top
-    headerStore.setScrolled(false);
-  }
-};
-
-const onSwiper = (swiper) => {
-  swiperInstance = swiper;
 };
 
 const data = [
