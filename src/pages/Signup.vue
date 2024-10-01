@@ -118,7 +118,7 @@ const isFormValid = computed(() => {
 async function submitForm() {
   if (isFormValid.value) {
     try{
-      const response=await axios.post(`https://a059b428-f5bb-4507-8445-30bf0446f918.mock.pstmn.io/sign`,{
+      const response=await axios.post(`https://bfb83b1a-4cbe-4ff9-9de3-ea22e88e7e55.mock.pstmn.io/users/signup`,{
         name:name.value,
         birthday:birthday.value,
         email:email.value,
