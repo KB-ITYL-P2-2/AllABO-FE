@@ -9,6 +9,7 @@ import SignCondition from "../components/Login/SignCondition.vue";
 import Signup from "../pages/Signup.vue";
 import SignSuccess from "../components/Login/SignSuccess.vue";
 import Survey from "../pages/Survey.vue";
+import SurveyLoading from "../pages/SurveyLoading.vue";
 
 
 const router=createRouter({
@@ -17,6 +18,7 @@ const router=createRouter({
         {path:'/',component:MainPage},
         {path:'/products',component:Products},
         {path:'/products/survey',component:Survey},
+        {path:'/products/survey/loading',component:SurveyLoading},
         {path:'/asset-detail',component:AssetDetail},
         {path:'/asset-plan',component:AssetPlan},
         {path:'/mypage',component:MyPage},

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-[#5F584E] h-1/2 flex flex-col items-center justify-center px-4 py-8 relative"
+    class="bg-[#5F584E] h-[47%] flex flex-col items-center justify-center px-4 py-8 relative"
   >
     <ProgressBar :progress="progress" />
 
@@ -29,4 +29,6 @@ const props = defineProps({
 })
 </script>
 
-<style scope></style>
+<style scope>
+
+</style>

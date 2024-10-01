@@ -1,16 +1,19 @@
 <template>
-  <div class="survey-container flex flex-col h-screen">
-    <!-- 상단 고정 부분 (항상 50% 높이) -->
+  <div class="flex flex-col h-screen">
+    <!-- 상단 고정 부분 -->
     <SurveyTop :progress="progress" :currentQuestion="currentQuestion" />
 
-    <!-- 하단 선택지 부분 (나머지 50% 높이) -->
+    <!-- 하단 선택지 부분 (나머지 50% 높이, 스크롤 가능) -->
     <div
-      ref="answerContainer"
-      class="bg-white h-1/2 flex flex-col items-center px-4 py-8 overflow-y-auto"
+      ref="optionsContainer"
+      class="bg-white h-[53%] overflow-y-auto scrollbar-hide"
+      @scroll="handleScroll"
     >
-      <div v-for="(question, index) in questions" :key="index" class="w-full mb-8">
-        <AnswerButton
-          :question="question"
+      <div v-for="(data, index) in surveyData" :key="data.id" class="h-full flex items-center justify-center">
+        <OptionButton
+          :dataOptions="data.options"
+          :currentQuestionIndex="currentQuestionIndex"
+          :questionIndex="index"
           @select-option="selectOption"
         />
       </div>
@@ -19,90 +22,75 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
-import { useRoute } from "vue-router";
+import { ref, computed, onMounted, nextTick } from "vue";
+import { useRouter } from "vue-router";
 import SurveyTop from "../components/Survey/SurveyTop.vue";
-import AnswerButton from "../components/Survey/AnswerButton.vue";
+import OptionButton from "../components/Survey/OptionButton.vue";
 
-const route = useRoute();
-const category = computed(() => route.query.category || 1);
+import surveyData from '../constant/surveyData.js'
 
+const router = useRouter();
 const currentQuestionIndex = ref(0);
-const answerContainer = ref(null);
+const optionsContainer = ref(null);
+const answers = ref([]);
 
-const questions = [
-  {
-    text: "본인의 나이를 선택해주세요.",
-    options: ["10대", "20대", "30대", "40대", "50대", "60대 이상"],
-  },
-  {
-    text: "원하는 카드의 유형을 선택해주세요.",
-    options: ["신용카드", "체크카드"],
-  },
-  {
-    text: "희망하는 연회비를 선택해주세요.",
-    options: [
-      "없음",
-      "1만원 이하",
-      "1만원 ~ 3만원",
-      "3만원 ~ 10만원",
-      "10만원 이상",
-    ],
-  },
-  {
-    text: "원하는 형태의 혜택을 선택해주세요.",
-    options: ["할인형", "적립형", "마일리지형"],
-  },
-  {
-    text: "주로 소비하는 유형을 선택해주세요.",
-    options: [
-      "여행",
-      "쇼핑",
-      "렌탈",
-      "주유/충전",
-      "의료",
-      "통신",
-      "교육",
-      "공공/정부지원",
-    ],
-  },
-  // 추가 질문을 여기에 넣을 수 있습니다.
-];
-
-const currentQuestion = computed(() => questions[currentQuestionIndex.value]);
-
+const currentQuestion = computed(() => surveyData[currentQuestionIndex.value]);
 const progress = computed(
-  () => ((currentQuestionIndex.value + 1) / questions.length) * 100
+  () => ((currentQuestionIndex.value + 1) / surveyData.length) * 100
 );
 
-const selectOption = (option) => {
-  console.log(`Selected option: ${option}`);
-
-  if (currentQuestionIndex.value < questions.length - 1) {
-    currentQuestionIndex.value++;
+const selectOption = (index, option) => {
+  answers.value[index] = option;
+  if (index < surveyData.length - 1) {
+    nextTick(() => {
+      scrollToQuestion(index + 1);
+    });
   } else {
-    console.log("Survey completed");
-    // 여기에 결과 페이지로 이동하는 로직을 추가할 수 있습니다.
+    console.log("Survey completed", answers.value);
+    router.push('/products/survey/loading');
   }
 };
 
-const scrollToNextQuestion = () => {
-  if (answerContainer.value) {
-    const nextQuestionElement =
-      answerContainer.value.children[currentQuestionIndex.value];
-    if (nextQuestionElement) {
-      nextQuestionElement.scrollIntoView({ behavior: "smooth" });
+const scrollToQuestion = (index) => {
+  if (optionsContainer.value) {
+    const targetScroll = index * optionsContainer.value.clientHeight;
+    optionsContainer.value.scrollTo({
+      top: targetScroll,
+      behavior: 'smooth'
+    });
+  }
+};
+
+const handleScroll = () => {
+  if (optionsContainer.value) {
+    const scrollPosition = optionsContainer.value.scrollTop;
+    const questionHeight = optionsContainer.value.clientHeight;
+    const newIndex = Math.round(scrollPosition / questionHeight);
+    if (newIndex <= surveyData.length - 1) {
+      currentQuestionIndex.value = newIndex;
     }
   }
-};
+}
 
-watch(currentQuestionIndex, () => {
-  scrollToNextQuestion();
+onMounted(() => {
+  if (optionsContainer.value) {
+    optionsContainer.value.style.scrollSnapType = 'y mandatory';
+    const questionDivs = optionsContainer.value.children;
+    for (let div of questionDivs) {
+      div.style.scrollSnapAlign = 'start';
+    }
+  }
 });
 </script>
 
 <style scoped>
-.survey-container {
-  height: calc(100vh - 60px); /* 헤더의 높이를 60px로 가정 */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
 </style>
