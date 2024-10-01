@@ -17,11 +17,11 @@ const router=createRouter({
         {path:'/products',component:Products},
         {path:'/asset-detail',component:AssetDetail},
         {path:'/asset-plan',component:AssetPlan},
-        {path:'/mypage',component:MyPage},
-        {path:'/login',component:Login},
+        {path:'/mypage',name: 'MyPage',component:MyPage,props:true},
+        {path:'/login',name: 'Login',component:Login},
         {path:'/signup-condition',component:SignCondition},
         {path:'/signup',component:Signup},
-        {path:'/signup-success',component:SignSuccess}
+        {path:'/signup-success',name:'SingSucess',component:SignSuccess}
 
 
     ]
