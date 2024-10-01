@@ -61,7 +61,7 @@
                    class="pl-4 text-font-colorpl-4 h-[50px] w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"/>
           </div>
 
-          <div class="flex justify-center mt-[50px]">
+          <div class="flex justify-center mt-[50px] mb-[50px]">
             <button @click="$router.push('/login')"
                     class="h-[50px] w-[150px] rounded-md bg-white text-kb-brown-2 border border-kb-brown-2 mr-4 hover:bg-gray-100 transition duration-200">취소</button>
             <button :class="[isFormValid ? 'bg-kb-brown-2 hover:bg-kb-yellow-1' : 'bg-kb-gray-2']" 
