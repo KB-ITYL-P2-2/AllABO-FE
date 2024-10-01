@@ -1,79 +1,70 @@
 <template>
   <div class="survey-container flex flex-col h-screen">
     <!-- 상단 고정 부분 (항상 50% 높이) -->
-    <div
-      class="bg-[#5F584E] h-1/2 flex flex-col items-center justify-center px-4 py-8 relative"
-    >
-      <!-- 프로그레스 바 -->
-      <div
-        class="progress-bar-container absolute w-full max-w-[528px] left-1/2 transform -translate-x-1/2"
-        style="top: 50%"
-      >
-        <div class="progress-bar bg-gray-300 h-2 rounded-full overflow-hidden">
-          <div
-            class="bg-yellow-400 h-full"
-            :style="{ width: `${progress}%` }"
-          ></div>
-        </div>
-      </div>
-
-      <!-- 질문 텍스트 -->
-      <h2
-        class="text-white text-3xl font-bold text-center absolute w-full max-w-[528px]"
-        style="top: 66.7%;"
-      >
-        {{ currentQuestion.text }}
-      </h2>
-
-      <!-- 구분선 -->
-      <div
-        class="w-full max-w-[760px] h-px bg-white opacity-50 absolute left-1/2 transform -translate-x-1/2"
-        style="bottom: 16.6%"
-      ></div>
-    </div>
+    <SurveyTop :progress="progress" :currentQuestion="currentQuestion" />
 
     <!-- 하단 선택지 부분 (나머지 50% 높이) -->
     <div
-      class="bg-white h-1/2 flex items-center justify-center px-4 py-8 overflow-y-auto"
+      ref="answerContainer"
+      class="bg-white h-1/2 flex flex-col items-center px-4 py-8 overflow-y-auto"
     >
-      <div class="w-full max-w-md space-y-4">
-        <button
-          v-for="option in currentQuestion.options"
-          :key="option"
-          @click="selectOption(option)"
-          class="w-full py-3 px-6 bg-gray-200 text-font-color hover:bg-kb-yellow-2 rounded-[15px] transition duration-300"
-        >
-          {{ option }}
-        </button>
+      <div v-for="(question, index) in questions" :key="index" class="w-full mb-8">
+        <AnswerButton
+          :question="question"
+          @select-option="selectOption"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
+import SurveyTop from "../components/Survey/SurveyTop.vue";
+import AnswerButton from "../components/Survey/AnswerButton.vue";
 
 const route = useRoute();
 const category = computed(() => route.query.category || 1);
 
 const currentQuestionIndex = ref(0);
+const answerContainer = ref(null);
+
 const questions = [
   {
-    text: "어떤 카드를 찾으시나요?",
+    text: "본인의 나이를 선택해주세요.",
+    options: ["10대", "20대", "30대", "40대", "50대", "60대 이상"],
+  },
+  {
+    text: "원하는 카드의 유형을 선택해주세요.",
     options: ["신용카드", "체크카드"],
   },
   {
-    text: "주로 어디서 카드를 사용하시나요?",
-    options: ["국내", "해외", "온라인 쇼핑"],
+    text: "희망하는 연회비를 선택해주세요.",
+    options: [
+      "없음",
+      "1만원 이하",
+      "1만원 ~ 3만원",
+      "3만원 ~ 10만원",
+      "10만원 이상",
+    ],
   },
   {
-    text: "어떤 혜택을 원하시나요?",
-    options: ["적립", "할인", "캐시백", "마일리지"],
+    text: "원하는 형태의 혜택을 선택해주세요.",
+    options: ["할인형", "적립형", "마일리지형"],
   },
   {
-    text: "연회비는 얼마가 적당하신가요?",
-    options: ["없음", "1만원 이하", "1만원~3만원", "3만원 이상"],
+    text: "주로 소비하는 유형을 선택해주세요.",
+    options: [
+      "여행",
+      "쇼핑",
+      "렌탈",
+      "주유/충전",
+      "의료",
+      "통신",
+      "교육",
+      "공공/정부지원",
+    ],
   },
   // 추가 질문을 여기에 넣을 수 있습니다.
 ];
@@ -94,21 +85,24 @@ const selectOption = (option) => {
     // 여기에 결과 페이지로 이동하는 로직을 추가할 수 있습니다.
   }
 };
+
+const scrollToNextQuestion = () => {
+  if (answerContainer.value) {
+    const nextQuestionElement =
+      answerContainer.value.children[currentQuestionIndex.value];
+    if (nextQuestionElement) {
+      nextQuestionElement.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+};
+
+watch(currentQuestionIndex, () => {
+  scrollToNextQuestion();
+});
 </script>
 
 <style scoped>
 .survey-container {
   height: calc(100vh - 60px); /* 헤더의 높이를 60px로 가정 */
-}
-
-.progress-bar-container {
-  width: 100%;
-  max-width: 528px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.progress-bar {
-  border-radius: 40px;
 }
 </style>
