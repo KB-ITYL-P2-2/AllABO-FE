@@ -4,7 +4,7 @@
       v-for="option in dataOptions"
       :key="option"
       @click="selectOption(option)"
-      class="w-full py-3 px-6 bg-gray-200 text-font-color hover:bg-kb-yellow-2 rounded-[15px] transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+      class="w-full py-3 px-6 bg-gray-200 text-font-color hover:bg-kb-yellow-2 rounded-[15px] transition duration-300 disabled:opacity-50"
     >
       {{ option }}
     </button>
@@ -25,4 +25,6 @@
   };
 </script>
 
-<style scope></style>
+<style scope>
+
+</style>
