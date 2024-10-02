@@ -1,6 +1,6 @@
 <template>
   <div :class="[`flex flex-col ${LAYOUT_VARIANTS.default}`]">
-    <h1 class="font-bold text-[28px] mb-24 z-10">{{ item.title }}</h1>
+    <h1 class="font-bold text-[28px] md:max-laptop:mb-10 mb-24 z-20 text-left">{{ `${item.title} TOP3` }}</h1>
     <div class="w-full">
       <div class="flex flex-col items-center justify-center w-full h-auto">
         <!-- <ProductsCards v-for="(item, index) in cardData" :item="item" :key="index" :class="[`transition-transform order-${cardOrder[currentIndex][index]}`, cardOrder[currentIndex][index]==2 ? `scale-110` : '']" /> -->
@@ -8,8 +8,8 @@
           <div
             v-for="(item, index) in item.title.includes('카드') ? cardData : assetData"
             :key="index"
-            class="px-4 flex-none basis-[300px] flex items-center justify-center"
-            :class="[index == currentIndex && 'z-10', isAnimate && 'transition-all']"
+            class="px-4 flex-none basis-[300px] flex items-center justify-center z-10"
+            :class="[index == currentIndex && 'z-20', isAnimate && 'transition-all']"
             :style="{
               transform: `translateX(-${(currentIndex - 1) * 300}px) scale(${currentIndex === index ? (!isHover ? 1.1 : 1.1) : 1})`,
             }"
@@ -19,30 +19,14 @@
               :isHover="isHover"
               :isNow="currentIndex == index"
               class=""
-              @click="
-                (e) => {
-                  carouselItemClickHandler(index);
-                }
-              "
-              @mouseover="
-                () => {
-                  if (index == currentIndex) {
-                    isHover = true;
-                  }
-                }
-              "
-              @mouseout="
-                () => {
-                  if (index == currentIndex) {
-                    isHover = false;
-                  }
-                }
-              "
+              @click="carouselItemClickHandler(index)"
+              @mouseover="productMouseOverHandler(index)"
+              @mouseleave="productMouseLeaveHandler"
             />
           </div>
         </div>
 
-        <div class="flex gap-3 mt-7">
+        <div class="z-10 flex gap-3 mt-7">
           <button
             v-for="(item, index) in buttonIndex"
             :key="index"
@@ -54,11 +38,16 @@
         <!-- 동그라미 효과 -->
         <div
           class="absolute w-[589px] h-[589px] md:max-laptop:w-[489px] md:max-laptop:h-[489px] border border-kb-yellow-3 rounded-full flex justify-center items-center transition-all"
-          :class="isHover ? 'scale-[2.5] -z-0' : '-z-10'"
+          :class="isHover ? 'scale-[2.5] z-10' : 'z-0'"
         >
           <div class="w-[496px] h-[496px] md:max-laptop:w-[389px] md:max-laptop:h-[389px] bg-kb-yellow-3 absolute rounded-full blur-sm"></div>
         </div>
       </div>
+    </div>
+
+    <!-- 전체 조회 버튼 -->
+    <div class="z-0 mt-8">
+      <button class="p-2 border border-gray-400 rounded-[10px] text-font-color bg-white">{{ `${item.title} 전체 조회` }}</button>
     </div>
   </div>
 </template>
@@ -125,6 +114,16 @@ const assetData = ref([
   },
 ]);
 
+const productMouseOverHandler = index => {
+  if (index == currentIndex.value) {
+    isHover.value = true;
+  }
+};
+
+const productMouseLeaveHandler = () => {
+  isHover.value = false;
+};
+
 onBeforeMount(() => {
   const cardStart = cardData.value.slice(0, 2);
   const cardEnd = cardData.value.slice(-2);
@@ -154,15 +153,15 @@ watch(currentIndex, () => {
   }, 200);
 });
 
-const carouselItemClickHandler = (index)=>{
+const carouselItemClickHandler = index => {
   // 캐러셀 넘어갈때 클릭 빠르게 하면 item 벗어나는 거 막음
   if (!isClickable.value) return; // 클릭이 막혀 있으면 이벤트를 무시
-  
+
   currentIndex.value = index;
   isClickable.value = false; // 클릭 이벤트 막기
-  
+
   setTimeout(() => {
     isClickable.value = true; // 150ms 후 다시 클릭 가능
   }, 200);
-}
+};
 </script>
