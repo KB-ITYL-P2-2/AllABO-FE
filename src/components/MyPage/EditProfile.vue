@@ -1,5 +1,5 @@
 <template>
-    <div class="h-[70px] bg-kb-brown-1 mb-[160px]"></div>
+    <div class="h-[70px] bg-kb-brown-1 mb-[100px]"></div>
   <div class="flex">
     <SideBar/>
 
