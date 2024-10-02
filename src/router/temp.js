@@ -11,7 +11,6 @@ import SignSuccess from "../components/Login/SignSuccess.vue";
 import EditProfile from "../components/MyPage/EditProfile.vue";
 import EditPassword from "../components/MyPage/EditPassword.vue";
 import WithdrawMember from "../components/MyPage/WithdrawMember.vue";
-
 const router=createRouter({
     history:createWebHistory(), //라우팅 모드 
     routes:[
@@ -25,8 +24,8 @@ const router=createRouter({
         {path:'/signup',component:Signup},
         {path:'/signup-success',component:SignSuccess},
         {path:'/mypage-profile',component:EditProfile},
-        {path:'/mypage-passwrod',component:EditPassword},
-        {path:'/mypage-withdraw'}
+        {path:'/mypage-password',component:EditPassword},
+        {path:'/mypage-withdraw',component:WithdrawMember}
     ]
 })
 export default router;
