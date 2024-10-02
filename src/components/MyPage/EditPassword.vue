@@ -1,5 +1,5 @@
 <template>
-  <div class="h-[70px] bg-kb-brown-1 mb-[100px]"></div>
+  <div class="h-[70px] bg-kb-brown-1 mb-[120px]"></div>
   <!--사이드바-->
   <div class="flex">
     <SideBar />
@@ -13,7 +13,7 @@
             id="password1"
             v-model="password1"
             placeholder="기존 비밀번호를 입력해주세요"
-            class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
+            class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200 mb-2"
           />
         </div>
         <!--새로운 비밀번호 입력-->
@@ -24,9 +24,9 @@
             id="password"
             v-model="password"
             placeholder="새 비밀번호를 입력해주세요"
-            class="text-font-color pl-4 h-[50px] w-[500px]rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
+            class="text-font-color pl-4 h-[50px] w-[500px]rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200 "
           />
-          <p v-if="passwordError" class="text-sm text-kb-gray-2">
+          <p v-if="passwordError" class="text-sm text-kb-gray-2 mb-2">
             비밀번호는 특수문자, 영문, 숫자를 포함하여 8~12자로 설정해주세요.
           </p>
         </div>

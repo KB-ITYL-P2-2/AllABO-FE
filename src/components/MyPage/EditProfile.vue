@@ -1,5 +1,5 @@
 <template>
-    <div class="h-[70px] bg-kb-brown-1 mb-[100px]"></div>
+    <div class="h-[70px] bg-kb-brown-1 mb-[120px]"></div>
   <div class="flex">
     <SideBar/>
 
@@ -14,7 +14,7 @@
             <div class="flex flex-col">
               <label for="name" class="block text-font-color mb-1">이름</label>
               <input type="text" id="name" v-model="name" placeholder="이름을 입력해주세요" 
-                     class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200 mb-10"/>
+                     class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200 mb-6"/>
             </div>
     
             <!-- 생년월일 -->
@@ -25,7 +25,7 @@
                 id="birthday"
                 v-model="birthday"
                 placeholder="YYYY.MM.DD 형식으로 입력해주세요"
-                class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200 mb-10"/>          
+                class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200 mb-6"/>          
               </div>
             <!-- 이메일 -->
             <div class="flex flex-col">
@@ -35,7 +35,7 @@
                 id="email"
                 v-model="email"
                 placeholder="이메일을 입력해주세요"
-                class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200 mb-10"/>        
+                class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200 mb-6"/>        
             </div>
             <!-- 전화번호 -->
             <div class="flex flex-col">

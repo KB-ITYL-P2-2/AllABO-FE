@@ -61,10 +61,12 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router=useRouter();
 const selectedCategory = ref('category0'); 
 
 const logout = () => {
-  console.log('로그아웃');
+  router.push("/");
 };
 </script>
