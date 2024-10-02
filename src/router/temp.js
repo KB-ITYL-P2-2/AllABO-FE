@@ -8,8 +8,9 @@ import MainPage from "../pages/MainPage.vue";
 import SignCondition from "../components/Login/SignCondition.vue";
 import Signup from "../pages/Signup.vue";
 import SignSuccess from "../components/Login/SignSuccess.vue";
-import Profile from "../components/MyPage/Profile.vue";
-
+import EditProfile from "../components/MyPage/EditProfile.vue";
+import EditPassword from "../components/MyPage/EditPassword.vue";
+import WithdrawMember from "../components/MyPage/WithdrawMember.vue";
 
 const router=createRouter({
     history:createWebHistory(), //라우팅 모드 
@@ -23,7 +24,9 @@ const router=createRouter({
         {path:'/signup-condition',component:SignCondition},
         {path:'/signup',component:Signup},
         {path:'/signup-success',component:SignSuccess},
-        {path:'/mypage-profile',component:Profile}
+        {path:'/mypage-profile',component:EditProfile},
+        {path:'/mypage-passwrod',component:EditPassword},
+        {path:'/mypage-withdraw'}
     ]
 })
 export default router;
