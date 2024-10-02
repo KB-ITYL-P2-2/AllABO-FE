@@ -2,7 +2,11 @@
   <div
     class="bg-[#5F584E] h-[47%] flex flex-col items-center justify-center px-4 py-8 relative"
   >
-    <ProgressBar :progress="progress" />
+    <ProgressBar
+      :progress="progress"
+      :currentStep="currentStep"
+      :totalStep="totalSteps"
+      />
 
     <!-- 질문 텍스트 -->
     <h2
@@ -26,6 +30,8 @@ import ProgressBar from './SurveyTop/ProgressBar.vue'
 const props = defineProps({
     progress: Number,
     currentQuestion: Object,
+    currentStep: Number,
+    totalSteps: Number,
 })
 </script>
 

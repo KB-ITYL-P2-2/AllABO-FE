@@ -1,7 +1,12 @@
 <template>
   <div class="flex flex-col h-screen">
     <!-- 상단 고정 부분 -->
-    <SurveyTop :progress="progress" :currentQuestion="currentQuestion" />
+    <SurveyTop 
+      :progress="progress"
+      :currentQuestion="currentQuestion"
+      :currentStep="currentQuestionIndex + 1"
+      :totalSteps="surveyData.length"
+      />
 
     <!-- 하단 선택지 부분 (나머지 50% 높이, 스크롤 가능) -->
     <div
