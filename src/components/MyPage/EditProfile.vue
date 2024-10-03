@@ -3,24 +3,22 @@
   <div class="flex">
     <SideBar />
 
-    <div class="flex-col justify-center">
-      <div class="flex justify-center">
+    <div class="flex-col justify-center relative">
+      <div class="flex justify-center relative">
         <img
           :src="selectedIcon"
           alt="프로필 이미지"
-          class="justify-center w-32 h-32 rounded-full ml-[450px] mb-[50px]"
+          class="justify-center w-32 h-32 rounded-full ml-[450px] mb-[50px] relative"
         />
-      </div>
-
-      <div class="flex justify-center mb-4">
         <button
           @click="showIconPicker = true"
-          class="p-0 border-none bg-transparent"
+          class="absolute bottom-[50px] right-[0px] p-0 border-none bg-transparent"
         >
           <img src="/images/Mypage/imgEditBtn.png" alt="연필 아이콘" class="w-8 h-8" />
         </button>
       </div>
 
+      <!-- 아이콘 선택 모달 -->
       <div v-if="showIconPicker" class="flex flex-wrap justify-center mb-6">
         <div
           v-for="(icon, index) in icons"
@@ -134,19 +132,18 @@ const editForm = () => {
   }
 };
 
-//아이콘 선택 창
+// 아이콘 선택 관련 로직
 const showIconPicker = ref(false);
 const selectedIcon = ref('/images/Mypage/user1.png');
 const icons = [
-'/images/Mypage/user.png',
- '/images/Mypage/user1.png',
- '/images/Mypage/user2.png',
- '/images/Mypage/user3.png',
+  '/images/Mypage/user.png',
+  '/images/Mypage/user1.png',
+  '/images/Mypage/user2.png',
+  '/images/Mypage/user3.png',
 ];
 
 const selectIcon = (icon) => {
   selectedIcon.value = icon;
-  showIconPicker.value = false; 
+  showIconPicker.value = false;
 };
 </script>
-

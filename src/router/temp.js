@@ -11,6 +11,7 @@ import SignSuccess from "../components/Login/SignSuccess.vue";
 import EditProfile from "../components/MyPage/EditProfile.vue";
 import EditPassword from "../components/MyPage/EditPassword.vue";
 import WithdrawMember from "../components/MyPage/WithdrawMember.vue";
+
 const router=createRouter({
     history:createWebHistory(), //라우팅 모드 
     routes:[
@@ -18,8 +19,8 @@ const router=createRouter({
         {path:'/products',component:Products},
         {path:'/asset-detail',component:AssetDetail},
         {path:'/asset-plan',component:AssetPlan},
-        {path:'/mypage',component:MyPage},
-        {path:'/login',component:Login},
+        {path:'/mypage',name: 'MyPage',component:MyPage,props:true},
+        {path:'/login',name: 'Login',component:Login},
         {path:'/signup-condition',component:SignCondition},
         {path:'/signup',component:Signup},
         {path:'/signup-success',component:SignSuccess},
