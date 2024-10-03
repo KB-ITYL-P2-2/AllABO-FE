@@ -8,22 +8,27 @@ import MainPage from "../pages/MainPage.vue";
 import SignCondition from "../components/Login/SignCondition.vue";
 import Signup from "../pages/Signup.vue";
 import SignSuccess from "../components/Login/SignSuccess.vue";
-
+import Survey from "../pages/Survey.vue";
+import EditProfile from "../components/MyPage/EditProfile.vue";
+import EditPassword from "../components/MyPage/EditPassword.vue";
+import WithdrawMember from "../components/MyPage/WithdrawMember.vue";
 
 const router=createRouter({
     history:createWebHistory(), //라우팅 모드 
     routes:[
         {path:'/',component:MainPage},
         {path:'/products',component:Products},
+        {path:'/products/survey',component:Survey},
         {path:'/asset-detail',component:AssetDetail},
         {path:'/asset-plan',component:AssetPlan},
         {path:'/mypage',name: 'MyPage',component:MyPage,props:true},
         {path:'/login',name: 'Login',component:Login},
         {path:'/signup-condition',component:SignCondition},
         {path:'/signup',component:Signup},
-        {path:'/signup-success',name:'SingSucess',component:SignSuccess}
-
-
+        {path:'/signup-success',component:SignSuccess},
+        {path:'/mypage-profile',component:EditProfile},
+        {path:'/mypage-password',component:EditPassword},
+        {path:'/mypage-withdraw',component:WithdrawMember}
     ]
 })
 export default router;

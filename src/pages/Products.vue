@@ -54,12 +54,22 @@
               aspectRatio: '1 / 1',
             }"
           >
-            <CategoryButton
-              :categoryName="category.name"
-              :backgroundColor="category.color"
-              @mouseenter="onCategoryHover(category.name)"
-              @mouseleave="onCategoryLeave"
-            />
+            <router-link
+              :to="{
+                path: 'products/survey',
+                query: { category: category.id },
+              }"
+              custom
+              v-slot="{ navigate }"
+            >
+              <CategoryButton
+                :categoryName="category.name"
+                :backgroundColor="category.color"
+                @mouseenter="onCategoryHover(category.name)"
+                @mouseleave="onCategoryLeave"
+                @click="navigate"
+              />
+            </router-link>
           </div>
         </div>
 
