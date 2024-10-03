@@ -8,6 +8,7 @@ import MainPage from "../pages/MainPage.vue";
 import SignCondition from "../components/Login/SignCondition.vue";
 import Signup from "../pages/Signup.vue";
 import SignSuccess from "../components/Login/SignSuccess.vue";
+import Survey from "../pages/Survey.vue";
 import EditProfile from "../components/MyPage/EditProfile.vue";
 import EditPassword from "../components/MyPage/EditPassword.vue";
 import WithdrawMember from "../components/MyPage/WithdrawMember.vue";
@@ -17,6 +18,7 @@ const router=createRouter({
     routes:[
         {path:'/',component:MainPage},
         {path:'/products',component:Products},
+        {path:'/products/survey',component:Survey},
         {path:'/asset-detail',component:AssetDetail},
         {path:'/asset-plan',component:AssetPlan},
         {path:'/mypage',name: 'MyPage',component:MyPage,props:true},
