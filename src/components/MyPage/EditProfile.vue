@@ -12,18 +12,18 @@
         />
         <button
           @click="showIconPicker = true"
-          class="absolute bottom-[50px] right-[0px] p-0 border-none bg-transparent"
+          class="absolute bottom-[50px] right-[85px] p-0 border-none bg-transparent"
         >
           <img src="/images/Mypage/imgEditBtn.png" alt="연필 아이콘" class="w-8 h-8" />
         </button>
       </div>
 
-      <!-- 아이콘 선택 모달 -->
+      <!-- 아이콘 변경 모달-->
       <div v-if="showIconPicker" class="flex flex-wrap justify-center mb-6">
         <div
           v-for="(icon, index) in icons"
           :key="index"
-          class="cursor-pointer p-2"
+          class="cursor-pointer p-3"
           @click="selectIcon(icon)"
         >
           <img :src="icon" class="w-16 h-16 rounded-full" />
@@ -33,7 +33,6 @@
       <!-- 정보 수정 폼 -->
       <div class="w-4/5 flex flex-col items-center mb-[100px] ml-[250px]">
         <form @submit.prevent="editForm" class="w-2/3">
-          <!-- 이름 -->
           <div class="flex flex-col">
             <label for="name" class="block text-font-color mb-1">이름</label>
             <input
@@ -44,8 +43,6 @@
               class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200 mb-6"
             />
           </div>
-
-          <!-- 생년월일 -->
           <div class="flex flex-col">
             <label for="birthday" class="block text-font-color mb-1">생년월일</label>
             <input
@@ -56,8 +53,6 @@
               class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200 mb-6"
             />
           </div>
-
-          <!-- 이메일 -->
           <div class="flex flex-col">
             <label for="email" class="block text-font-color mb-1">이메일</label>
             <input
@@ -68,8 +63,6 @@
               class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200 mb-6"
             />
           </div>
-
-          <!-- 전화번호 -->
           <div class="flex flex-col">
             <label for="tel" class="block text-font-color mb-1">전화번호</label>
             <input
@@ -80,8 +73,6 @@
               class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200"
             />
           </div>
-
-          <!-- 버튼 -->
           <div class="flex mt-8 ml-[80px]">
             <button
               type="button"
