@@ -5,7 +5,7 @@
     <div class="w-full max-w-5xl">
       <div class="flex items-center mb-[30px]">
         <div class="flex flex-col">
-          <img src="../assets/images/user.png" class="w-36 h-36 rounded-full" alt="user profile" />
+          <img src="/images/Mypage/user.png" class="w-36 h-36 rounded-full mb-[10px]" alt="user profile" />
           <button @click="$router.push('/mypage-profile')" class="text-kb-gray-2 underline">내 정보 수정</button>
         </div>
 

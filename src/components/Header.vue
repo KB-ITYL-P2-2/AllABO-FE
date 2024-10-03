@@ -32,8 +32,8 @@
           </ul>
 
           <!-- 프로필 아이콘_마이페이지 이동 -->
-          <router-link to="/mypage" class="hover:text-kb-brown-1">
-            <img src="../assets/images/user.png" class="w-6 h-6"/>
+          <router-link to="/mypage" :class="[isScrolled ? 'text-font-color' : 'text-white']" class="hover:text-kb-brown-1">
+            <img src="/images/Mypage/user.png" class="w-6 h-6"/>
           </router-link>
         </div>
       </div>
