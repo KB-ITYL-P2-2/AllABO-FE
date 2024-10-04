@@ -1,16 +1,16 @@
 <template>
-  <div class="h-screen flex flex-col">
+  <div class="flex flex-col h-screen">
     <!-- 상단 40% 배경 -->
     <div class="h-[35vh] bg-kb-brown-1 flex flex-col items-center justify-center">
-      <div class="text-3xl font-bold text-white mt-10">F:YL</div>
+      <div class="mt-10 text-3xl font-bold text-white">F:YL</div>
     </div>
 
     <!-- 나머지 60% 배경 -->
     <div class="h-[65vh] bg-white flex flex-col items-center justify-start">
-      <div class="mt-10 flex justify-center">
+      <div class="flex justify-center mt-10">
         <form class="w-[400px]">
           <!-- 이메일 -->
-          <label for="email" class="block text-kb-gray-2 mb-2">이메일</label>
+          <label for="email" class="block mb-2 text-kb-gray-2">이메일</label>
           <input 
             id="email"
             type="email"
@@ -19,7 +19,7 @@
           />
           
           <!-- 비밀번호 -->
-          <label for="password" class="block mt-4 text-kb-gray-2 mb-2">비밀번호</label>
+          <label for="password" class="block mt-4 mb-2 text-kb-gray-2">비밀번호</label>
           <input 
             id="password"
             type="password" 
@@ -36,7 +36,7 @@
           </button>
           
           <!-- 추가 옵션 -->
-          <div class="mt-4 flex justify-center space-x-6 text-sm text-kb-gray-2">
+          <div class="flex justify-center mt-4 space-x-6 text-sm text-kb-gray-2">
             <button @click.prevent="openEmailModal" type="button" class="underline">이메일 찾기</button>
             <button @click.prevent="openPasswordModal" type="button" class="underline">비밀번호 찾기</button>
             <button @click="$router.push('/signup-condition')" type="button" class="underline">회원가입</button>
@@ -47,14 +47,16 @@
       <!-- 간편 로그인 -->
       <div class="flex justify-center mt-12">
         <hr class="w-40 mt-3 border-kb-gray-2"/> 
-        <p class="px-4 text-kb-gray-2 text-sm">간편 로그인</p>
+        <p class="px-4 text-sm text-kb-gray-2">간편 로그인</p>
         <hr class="w-40 mt-3 border-kb-gray-2"/> 
       </div>
     
 
       <!-- 간편 로그인 버튼 -->
       <div class="flex justify-center mt-8 space-x-8">
-        <button class="w-[55px] h-[55px] rounded-full bg-[#FEE500] flex items-center justify-center hover:shadow-lg transition duration-150">
+        <button class="w-[55px] h-[55px] rounded-full bg-[#FEE500] flex items-center justify-center hover:shadow-lg transition duration-150"
+          @click="kakaoLoginRequestCodeHandler"
+          >
           <img src="../assets/images/kakaoBtn.png" alt="카카오 로그인" class="w-10 h-10">
         </button>
         <button class="w-[55px] h-[55px] rounded-full border-[1px] border-gray-200 flex items-center justify-center hover:shadow-lg transition duration-150">
@@ -73,6 +75,7 @@
 import { ref } from 'vue';
 import EmailModal from '../components/Login/EmailModal.vue';
 import PasswordModal from '../components/Login/PasswordModal.vue';
+import { kakaoLoginRequestCodeHandler } from '../apis/api/kakao';
 
 // 모달 상태
 const showEmailModal = ref(false);
