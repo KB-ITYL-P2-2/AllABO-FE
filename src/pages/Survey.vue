@@ -4,8 +4,8 @@
     <SurveyTop 
       :progress="progress"
       :currentQuestion="currentQuestion"
-      :currentStep="currentQuestionIndex + 1"
-      :totalSteps="surveyData.length"
+      :currentStep="currentStep"
+      :totalQuestion="totalQuestion"
       />
 
     <!-- 하단 선택지 부분 (나머지 50% 높이, 스크롤 가능) -->
@@ -14,11 +14,12 @@
       class="bg-white h-[53%] overflow-y-auto scrollbar-hide"
       @scroll="handleScroll"
     >
-      <div v-for="(data, index) in surveyData" :key="data.id" class="h-full flex items-center justify-center">
+      <div v-if="currentQuestion" class="h-full flex items-center justify-center">
         <OptionButton
-          :dataOptions="data.options"
+          :dataOptions="currentQuestion.options"
           :currentQuestionIndex="currentQuestionIndex"
-          :questionIndex="index"
+          :questionIndex="currentQuestion.id"
+          :selectedOption="answers[currentQuestion.id]"
           @select-option="selectOption"
         />
       </div>
@@ -27,32 +28,69 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from "vue";
-import { useRouter } from "vue-router";
+import { ref, computed, onMounted, nextTick} from "vue";
+import { useRouter, useRoute } from "vue-router";
 import SurveyTop from "../components/Survey/SurveyTop.vue";
 import OptionButton from "../components/Survey/OptionButton.vue";
 
-import surveyData from '../constant/surveyData.js'
+import { insuranceSurvey, cardSurvey, loanSurvey, savingSurvey } from "../constant/surveyData";
 
 const router = useRouter();
+const route = useRoute();
 const currentQuestionIndex = ref(0);
 const optionsContainer = ref(null);
-const answers = ref([]);
+const answers = ref({});
 
-const currentQuestion = computed(() => surveyData[currentQuestionIndex.value]);
-const progress = computed(
-  () => ((currentQuestionIndex.value + 1) / surveyData.length) * 100
+const totalQuestion = computed(() => {
+  const category = route.query.category;
+
+  switch (category) {
+    case '카드': return 4;
+    case '예/적금': return 5;
+    case '대출': return 3;
+    case '보험': return 4;
+  }
+})
+
+const surveyData = computed(() => {
+  const category = route.query.category;
+
+  switch (category) {
+    case '카드': return cardSurvey;
+    case '예/적금': return savingSurvey;
+    case '대출': return loanSurvey;
+    case '보험': return insuranceSurvey;
+  }
+});
+
+const currentQuestion = computed(() => 
+  surveyData.value.find(q => q.id === currentQuestionIndex.value) || {}
 );
+
+const currentStep = computed(() => {
+  return surveyData.value.findIndex(q => q.id === currentQuestionIndex.value) + 1;
+});
+
+const progress = computed(() => (currentStep.value / totalQuestion.value) * 100);
 
 const selectOption = (index, option) => {
   answers.value[index] = option;
-  if (index < surveyData.length - 1) {
-    nextTick(() => {
-      scrollToQuestion(index + 1);
-    });
-  } else {
-    console.log("Survey completed", answers.value);
-    router.push('/products/survey/loading');
+  const question = surveyData.value.find(q => q.id === index);
+
+  if (question) {
+    const nextQuestionId = typeof question.nextQuestion === 'function'
+      ? question.nextQuestion(option)
+      : question.nextQuestion;
+    
+    if (nextQuestionId !== null) {
+      currentQuestionIndex.value = nextQuestionId;
+      nextTick(() => {
+        scrollToQuestion(nextQuestionId);
+      });
+    } else {
+      console.log('Survey completed', answers.value);
+      router.push('/asset-detail');
+    }
   }
 };
 
@@ -71,7 +109,7 @@ const handleScroll = () => {
     const scrollPosition = optionsContainer.value.scrollTop;
     const questionHeight = optionsContainer.value.clientHeight;
     const newIndex = Math.round(scrollPosition / questionHeight);
-    if (newIndex <= surveyData.length - 1) {
+    if (newIndex < surveyData.value.length) {
       currentQuestionIndex.value = newIndex;
     }
   }
