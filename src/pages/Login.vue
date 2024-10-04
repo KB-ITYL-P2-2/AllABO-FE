@@ -71,7 +71,7 @@
 </template>
 
 <script setup>
-import { signInWithPopup } from "firebase/auth";
+import { signInWithRedirect } from "firebase/auth";
 import { auth, provider } from"../apis/utils/firebase.js";
 import { ref } from 'vue';
 import EmailModal from '../components/Login/EmailModal.vue';
@@ -106,9 +106,7 @@ const sendTokenToBackend = async (idToken) => {
 
 const handleGoogleLogin = async () => {
   try {
-    const result = await signInWithPopup(auth, provider);
-    const idToken = await result.user.getIdToken();  // Firebase ID Token
-    await sendTokenToBackend(idToken);  // 백엔드로 토큰 전송
+    await signInWithRedirect(auth, provider);
   } catch (error) {
     console.error("로그인 실패:", error);
   }
