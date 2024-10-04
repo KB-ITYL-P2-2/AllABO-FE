@@ -57,7 +57,8 @@
         <button class="w-[55px] h-[55px] rounded-full bg-[#FEE500] flex items-center justify-center hover:shadow-lg transition duration-150">
           <img src="../assets/images/kakaoBtn.png" alt="카카오 로그인" class="w-10 h-10">
         </button>
-        <button class="w-[55px] h-[55px] rounded-full border-[1px] border-gray-200 flex items-center justify-center hover:shadow-lg transition duration-150">
+        <button @click="handleGoogleLogin"
+          class="w-[55px] h-[55px] rounded-full border-[1px] border-gray-200 flex items-center justify-center hover:shadow-lg transition duration-150">
           <img src="../assets/images/googleBtn.png" alt="구글 로그인" class="w-6 h-6">
         </button>
       </div>
@@ -70,6 +71,8 @@
 </template>
 
 <script setup>
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from"../apis/utils/firebase.js";
 import { ref } from 'vue';
 import EmailModal from '../components/Login/EmailModal.vue';
 import PasswordModal from '../components/Login/PasswordModal.vue';
@@ -85,6 +88,33 @@ const openEmailModal = () => {
 const openPasswordModal = () => {
   showPasswordModal.value = true;
 };
+const sendTokenToBackend = async (idToken) => {
+  try {
+    const response = await fetch("/api/auth/google", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: idToken }),
+    });
+    const data = await response.json();
+    console.log("서버 응답:", data);
+  } catch (error) {
+    console.error("토큰 전송 실패:", error);
+  }
+};
+
+const handleGoogleLogin = async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const idToken = await result.user.getIdToken();  // Firebase ID Token
+    await sendTokenToBackend(idToken);  // 백엔드로 토큰 전송
+  } catch (error) {
+    console.error("로그인 실패:", error);
+  }
+};
+
+
 </script>
 
 <style>
