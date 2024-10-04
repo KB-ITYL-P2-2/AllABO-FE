@@ -13,6 +13,8 @@ import EditProfile from "../components/MyPage/EditProfile.vue";
 import EditPassword from "../components/MyPage/EditPassword.vue";
 import WithdrawMember from "../components/MyPage/WithdrawMember.vue";
 
+import KakaoRedirectPage from "../pages/RedirectPages/KakaoRedirectPage.vue";
+
 const router=createRouter({
     history:createWebHistory(), //라우팅 모드 
     routes:[
@@ -28,7 +30,8 @@ const router=createRouter({
         {path:'/signup-success',component:SignSuccess},
         {path:'/mypage-profile',component:EditProfile},
         {path:'/mypage-password',component:EditPassword},
-        {path:'/mypage-withdraw',component:WithdrawMember}
+        {path:'/mypage-withdraw',component:WithdrawMember},
+        {path:'/kakao-redirect',component:KakaoRedirectPage},
     ]
 })
 export default router;
