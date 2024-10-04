@@ -79,6 +79,7 @@ import { ref } from 'vue';
 import EmailModal from '../components/Login/EmailModal.vue';
 import PasswordModal from '../components/Login/PasswordModal.vue';
 import { kakaoLoginRequestCodeHandler } from '../apis/api/kakao';
+import { googleLoginHandler,sendTokenToBackend } from "../apis/api/firebaseGoogle.js";
 
 // 모달 상태
 const showEmailModal = ref(false);
@@ -91,27 +92,13 @@ const openEmailModal = () => {
 const openPasswordModal = () => {
   showPasswordModal.value = true;
 };
-const sendTokenToBackend = async (idToken) => {
-  try {
-    const response = await fetch("/api/auth/google", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token: idToken }),
-    });
-    const data = await response.json();
-    console.log("서버 응답:", data);
-  } catch (error) {
-    console.error("토큰 전송 실패:", error);
-  }
-};
-
 const handleGoogleLogin = async () => {
   try {
-    await signInWithRedirect(auth, provider);
+    const idToken = await googleLoginHandler();  // 구글 로그인 수행
+    const response = await sendTokenToBackend(idToken);  // 토큰을 백엔드로 전송
+    console.log("로그인 성공:", response);
   } catch (error) {
-    console.error("로그인 실패:", error);
+    console.error("로그인 처리 중 오류 발생:", error);
   }
 };
 
