@@ -73,8 +73,6 @@
 </template>
 
 <script setup>
-import { signInWithRedirect } from "firebase/auth";
-import { auth, provider } from"../apis/utils/firebase.js";
 import { ref } from 'vue';
 import EmailModal from '../components/Login/EmailModal.vue';
 import PasswordModal from '../components/Login/PasswordModal.vue';

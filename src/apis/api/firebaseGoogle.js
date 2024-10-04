@@ -1,10 +1,11 @@
 import { signInWithPopup } from "firebase/auth";
-import { auth, provider } from "../utils/firebase"; // firebase 설정 파일 import
+import { auth, provider } from "../utils/firebase";
 
 export const googleLoginHandler = async () => {
   try {
     const result = await signInWithPopup(auth, provider);
-    const idToken = await result.user.getIdToken(); // Firebase ID Token 가져오기
+    const idToken = await result.user.getIdToken(); 
+    console.log(idToken)//토큰값 확인
     return idToken;
   } catch (error) {
     console.error("Google 로그인 실패:", error);
