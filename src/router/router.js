@@ -30,7 +30,8 @@ const router=createRouter({
         {path:'/signup-success',component:SignSuccess},
         {path:'/mypage-profile',component:EditProfile},
         {path:'/mypage-password',component:EditPassword},
-        {path:'/mypage-withdraw',component:WithdrawMember}
+        {path:'/mypage-withdraw',component:WithdrawMember},
+        {path:'/kakao-redirect',component:KakaoRedirectPage},
     ]
 })
 export default router;
