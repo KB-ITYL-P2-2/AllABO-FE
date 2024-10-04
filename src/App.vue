@@ -1,6 +1,6 @@
 <template>
     <Header />
-  <AnalyzeLoading v-if="true" />
+  <AnalyzeLoading v-if="false" />
   <RecommendLoading v-if="false" />
   <router-view></router-view>
 </template>
