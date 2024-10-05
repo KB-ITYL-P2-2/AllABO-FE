@@ -18,7 +18,16 @@
 
         <!-- 조건에 따른 렌더링 -->
         <div v-if="selectedCategory === 'category1'" class="mt-10">
-          <p class="text-[20px] text-center text-font-color mr-[450px]">카드 상품이 없습니다.</p>
+          <!-- <p class="text-[20px] text-center text-font-color mr-[450px]">카드 상품이 없습니다.</p> -->
+           <!--있는경우-->
+           <div v-for="(card, index) in likeCards" :key="index" class="w-[900px] flex items-center justify-between border p-4 mb-4 ml-[70px] rounded-[15px]">
+            <img :src="card.icon" alt="카드 이미지" class="w-14 h-20 rounded-md" />
+            <p class="text-[20px] text-font-color">{{ card.name }}</p>
+            <button class="p-3 ml-4 bg-white rounded-full">
+              <font-awesome-icon :icon="['far', 'heart']" class="text-kb-yellow-3" size="xl" />
+            </button>
+          </div>
+
         </div>
         <div v-else-if="selectedCategory === 'category2'" class="mt-8">
           <p class="text-[20px] text-center text-font-color mr-[450px]">예/적금 상품이 없습니다.</p>
@@ -28,20 +37,32 @@
         </div>
         <div v-else-if="selectedCategory === 'category4'" class="mt-8">
           <p class="text-[20px] text-center text-font-color mr-[450px]">대출 상품이 없습니다.</p>
+          <button  @click="router.push('/products')" class="text-center mt-8 underline text-kb-gray-2 ml-[190px]">상품 보러가기 &gt;</button>
+
         </div>
         <div v-else class="mt-8">
           <p class="text-[20px] text-center text-font-color mr-[450px]">아직 찜한 상품이 없어요.</p>
+          <button  @click="router.push('/products')" class="text-center mt-8 underline text-kb-gray-2 ml-[190px]">상품 보러가기 &gt;</button>
         </div>
         <!--추후에 전체 상품으로 연결-->
-        <button  @click="$router.push('/products')" class="text-center mt-8 underline text-kb-gray-2 ml-[190px]">상품 보러가기 &gt;</button>
       </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { ref } from 'vue';
 
-const selectedCategory = ref('category0'); 
 const router=useRouter();
+const selectedCategory = ref('category0'); 
+const likeCards=ref([
+  {name:'WE:SH All 카드', icon: '/images/Products/card1.png' },
+  {name:'톡톡 pay카드 ', icon: '/images/Products/card2.png' },
+  {name:'우리동네 체크카드(키뮤)', icon: '/images/Products/card3.png' },
+  {name:'우리동네 체크카드(키뮤)', icon: '/images/Products/card3.png' },
+  {name:'우리동네 체크카드(키뮤)', icon: '/images/Products/card3.png' },
+
+
+])
+
 
 </script>
