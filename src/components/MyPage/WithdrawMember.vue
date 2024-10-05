@@ -19,7 +19,7 @@
   
         <!-- 약관 동의 -->
         <div class="flex justify-center ml-[150px] mt-[50px] w-[950px] h-[250px] rounded-[15px] border-2">
-          <p class="p-2 mr-[180px] text-font-color text-[16px]">
+          <p class="p-2 mr-[180px] text-kb-gray-1 text-[16px]">
             <br><br>
             회원 탈퇴시 개인 정보 및 Allabo에서 만들어진 모든 데이터는 삭제됩니다.<br>
             (단, 아래 항목은 표기된 법률에 따라 특정 기간 동안 보관됩니다.)<br>
@@ -31,7 +31,7 @@
   
         <p class="text-[16px] text-kb-gray-2 ml-[150px] mt-[20px]">유의 사항</p>
         <div class="flex ml-[150px] mt-[10px] w-[950px] h-[100px] rounded-[15px] border-2">
-          <p class="px-8 text-font-color text-[16px]">
+          <p class="px-8 text-kb-gray-1 text-[16px]">
             <br>
             회원 탈퇴 처리 후에는 회원님의 개인정보를 복원할 수 없으며, 회원탈퇴 진행 시 해당 이메일은 영구적으로 삭제되어 재가입이 불가능합니다.<br>
             동일한 이메일이나 휴대폰 번호로는 30일 동안 재가입 및 등록할 수 없습니다.
