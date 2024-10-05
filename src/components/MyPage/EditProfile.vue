@@ -14,12 +14,19 @@
           @click="showIconPicker = true"
           class="absolute bottom-[50px] right-[85px] p-0 border-none bg-transparent"
         >
-          <img src="/images/Mypage/imgEditBtn.png" alt="연필 아이콘" class="w-8 h-8" />
+          <img
+            src="/images/Mypage/imgEditBtn.png"
+            alt="연필 아이콘"
+            class="w-8 h-8"
+          />
         </button>
       </div>
 
       <!-- 아이콘 변경 모달-->
-      <div v-if="showIconPicker" class="flex flex-wrap justify-center mb-6">
+      <div
+        v-if="showIconPicker"
+        class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-wrap justify-center bg-white p-6 rounded-lg shadow-lg"
+      >
         <div
           v-for="(icon, index) in icons"
           :key="index"
@@ -28,6 +35,12 @@
         >
           <img :src="icon" class="w-16 h-16 rounded-full" />
         </div>
+        <button
+          @click="showIconPicker = false"
+          class="absolute top-2 right-2 bg-gray-200 p-2 rounded-full"
+        >
+          ✕
+        </button>
       </div>
 
       <!-- 정보 수정 폼 -->
@@ -42,10 +55,12 @@
               placeholder="이름을 입력해주세요"
               class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200 mb-6"
               readonly
-              />
+            />
           </div>
           <div class="flex flex-col">
-            <label for="birthday" class="block text-font-color mb-1">생년월일</label>
+            <label for="birthday" class="block text-font-color mb-1"
+              >생년월일</label
+            >
             <input
               type="text"
               id="birthday"
@@ -53,7 +68,7 @@
               placeholder="YYYY.MM.DD 형식으로 입력해주세요"
               class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200 mb-6"
               readonly
-              />
+            />
           </div>
           <div class="flex flex-col">
             <label for="email" class="block text-font-color mb-1">이메일</label>
@@ -85,7 +100,11 @@
             </button>
             <button
               type="submit"
-              :class="[isFormValid ? 'bg-kb-brown-2 hover:bg-kb-yellow-1' : 'bg-kb-gray-2']"
+              :class="[
+                isFormValid
+                  ? 'bg-kb-brown-2 hover:bg-kb-yellow-1'
+                  : 'bg-kb-gray-2',
+              ]"
               :disabled="!isFormValid"
               class="h-[50px] w-[150px] rounded-md text-white transition duration-200"
             >
@@ -99,14 +118,14 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import SideBar from './SideBar.vue';
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
+import SideBar from "./SideBar.vue";
 
-const name = ref('김가나');
-const birthday = ref('1999.01.01');
-const email = ref('abc@gmail.com');
-const tel = ref('010-1234-1234');
+const name = ref("김가나");
+const birthday = ref("1999.01.01");
+const email = ref("abc@gmail.com");
+const tel = ref("010-1234-1234");
 const router = useRouter();
 
 const isFormValid = computed(() => {
@@ -115,24 +134,24 @@ const isFormValid = computed(() => {
 
 const editForm = () => {
   if (isFormValid.value) {
-    console.log('폼 제출:', {
+    console.log("폼 제출:", {
       name: name.value,
       birthday: birthday.value,
       email: email.value,
       tel: tel.value,
     });
-    router.push('/mypage');
+    router.push("/mypage");
   }
 };
 
 // 아이콘 선택 관련 로직
 const showIconPicker = ref(false);
-const selectedIcon = ref('/images/Mypage/user1.png');
+const selectedIcon = ref("/images/Mypage/user1.png");
 const icons = [
-  '/images/Mypage/user.png',
-  '/images/Mypage/user1.png',
-  '/images/Mypage/user2.png',
-  '/images/Mypage/user3.png',
+  "/images/Mypage/user.png",
+  "/images/Mypage/user1.png",
+  "/images/Mypage/user2.png",
+  "/images/Mypage/user3.png",
 ];
 
 const selectIcon = (icon) => {

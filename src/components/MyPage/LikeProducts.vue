@@ -14,7 +14,7 @@
       </div>
 
       
-      <div class="border-t-2 border-kb-brown-1 w-full mt-4">
+      <div class="border-t-2 border-kb-gray-2 w-full mt-4">
 
         <!-- 조건에 따른 렌더링 -->
         <div v-if="selectedCategory === 'category1'" class="mt-10">
@@ -31,9 +31,11 @@
         </div>
         <div v-else-if="selectedCategory === 'category2'" class="mt-8">
           <p class="text-[20px] text-center text-font-color mr-[450px]">예/적금 상품이 없습니다.</p>
+          <button  @click="router.push('/products')" class="text-center mt-8 underline text-kb-gray-2 ml-[190px]">상품 보러가기 &gt;</button>
         </div>
         <div v-else-if="selectedCategory === 'category3'" class="mt-8">
           <p class="text-[20px] text-center text-font-color mr-[450px]">보험 상품이 없습니다.</p>
+          <button  @click="router.push('/products')" class="text-center mt-8 underline text-kb-gray-2 ml-[190px]">상품 보러가기 &gt;</button>
         </div>
         <div v-else-if="selectedCategory === 'category4'" class="mt-8">
           <p class="text-[20px] text-center text-font-color mr-[450px]">대출 상품이 없습니다.</p>
