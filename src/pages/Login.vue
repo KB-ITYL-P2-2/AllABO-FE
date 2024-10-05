@@ -59,7 +59,8 @@
           >
           <img src="../assets/images/kakaoBtn.png" alt="카카오 로그인" class="w-10 h-10">
         </button>
-        <button class="w-[55px] h-[55px] rounded-full border-[1px] border-gray-200 flex items-center justify-center hover:shadow-lg transition duration-150">
+        <button @click="handleGoogleLogin"
+          class="w-[55px] h-[55px] rounded-full border-[1px] border-gray-200 flex items-center justify-center hover:shadow-lg transition duration-150">
           <img src="../assets/images/googleBtn.png" alt="구글 로그인" class="w-6 h-6">
         </button>
       </div>
@@ -76,6 +77,7 @@ import { ref } from 'vue';
 import EmailModal from '../components/Login/EmailModal.vue';
 import PasswordModal from '../components/Login/PasswordModal.vue';
 import { kakaoLoginRequestCodeHandler } from '../apis/api/kakao';
+import { googleLoginHandler,sendTokenToBackend } from "../apis/api/firebaseGoogle.js";
 
 // 모달 상태
 const showEmailModal = ref(false);
@@ -88,6 +90,17 @@ const openEmailModal = () => {
 const openPasswordModal = () => {
   showPasswordModal.value = true;
 };
+const handleGoogleLogin = async () => {
+  try {
+    const idToken = await googleLoginHandler();  // 구글 로그인 수행
+    const response = await sendTokenToBackend(idToken);  // 토큰을 백엔드로 전송
+    console.log("로그인 성공:", response);
+  } catch (error) {
+    console.error("로그인 처리 중 오류 발생:", error);
+  }
+};
+
+
 </script>
 
 <style>

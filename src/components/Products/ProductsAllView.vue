@@ -6,7 +6,7 @@
         <!-- <ProductsCards v-for="(item, index) in cardData" :item="item" :key="index" :class="[`transition-transform order-${cardOrder[currentIndex][index]}`, cardOrder[currentIndex][index]==2 ? `scale-110` : '']" /> -->
         <div class="flex flex-row h-[350px] items-center w-[900px] overflow-hidden" id="carousel-container">
           <div
-            v-for="(item, index) in item.title.includes('카드') ? cardData : assetData"
+            v-for="(item, index) in item.title.includes('카드') ? newCardData : newAssetData"
             :key="index"
             class="px-4 flex-none basis-[300px] flex items-center justify-center z-10"
             :class="[index == currentIndex && 'z-20', isAnimate && 'transition-all']"
@@ -28,10 +28,10 @@
 
         <div class="z-10 flex gap-3 mt-7">
           <button
-            v-for="(item, index) in buttonIndex"
+            v-for="(item, index) in item.title.includes('카드') ? cardData : assetData"
             :key="index"
-            :class="['w-3 h-3 rounded-full', item.id == currentIndex ? 'bg-kb-yellow-1' : 'bg-kb-gray-2']"
-            @click="currentIndex = item.id"
+            :class="['w-3 h-3 rounded-full', index+2 == currentIndex ? 'bg-kb-yellow-1' : 'bg-kb-gray-2']"
+            @click="currentIndex = index+2"
           ></button>
         </div>
 
@@ -70,8 +70,6 @@ const isHover = ref(false);
 const currentIndex = ref(2);
 const isClickable = ref(true); // 클릭 가능 여부
 
-const buttonIndex = [{ id: 2 }, { id: 3 }, { id: 4 }];
-
 const cardOrder = [
   [3, 1, 2], // 1일때
   [1, 2, 3], // 2일때
@@ -94,7 +92,14 @@ const cardData = ref([
     cardName: "3번째카드",
     cardContent: "다 같이 돌자 동네 한 바퀴",
   },
+  {
+    cardImageUrl: "/images/Products/asset.png",
+    cardName: "예적금",
+    cardContent: "다 같이 돌자 동네 한 바퀴",
+  },
 ]);
+
+const newCardData = ref([]);
 
 const assetData = ref([
   {
@@ -114,6 +119,8 @@ const assetData = ref([
   },
 ]);
 
+const newAssetData = ref([]);
+
 const productMouseOverHandler = index => {
   if (index == currentIndex.value) {
     isHover.value = true;
@@ -127,16 +134,16 @@ const productMouseLeaveHandler = () => {
 onBeforeMount(() => {
   const cardStart = cardData.value.slice(0, 2);
   const cardEnd = cardData.value.slice(-2);
-  cardData.value = [...cardEnd, ...cardData.value, ...cardStart];
+  newCardData.value = [...cardEnd, ...cardData.value, ...cardStart];
 
   const assetStart = assetData.value.slice(0, 2);
   const assetEnd = assetData.value.slice(-2);
-  assetData.value = [...assetEnd, ...assetData.value, ...assetStart];
+  newAssetData.value = [...assetEnd, ...assetData.value, ...assetStart];
   // console.log(cardData);
 });
 
 watch(currentIndex, () => {
-  if (currentIndex.value == 5) {
+  if (currentIndex.value == cardData.value.length+2) {
     setTimeout(() => {
       isAnimate.value = false;
       currentIndex.value = 2;
@@ -144,7 +151,7 @@ watch(currentIndex, () => {
   } else if (currentIndex.value == 1) {
     setTimeout(() => {
       isAnimate.value = false;
-      currentIndex.value = 4;
+      currentIndex.value = cardData.value.length+1;
     }, 150);
   }
 

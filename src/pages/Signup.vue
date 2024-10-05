@@ -76,6 +76,8 @@
 </template>
 
 <script setup>
+
+import axios from 'axios';
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -112,14 +114,32 @@ const isFormValid = computed(() => {
   return name.value && birthday.value && email.value && !passwordError.value && !passwordConfirmError.value && tel.value && asset.value;
 });
 
-function submitForm() {
+//axios 비동기 처리 
+async function submitForm() {
   if (isFormValid.value) {
-    router.push("/signup-success");
+    try{
+      const response=await axios.post(`https://bfb83b1a-4cbe-4ff9-9de3-ea22e88e7e55.mock.pstmn.io/users/signup`,{
+        name:name.value,
+        birthday:birthday.value,
+        email:email.value,
+        tel:tel.value,
+        asset:asset.value,
+        "Content-Type": "application/x-www-form-urlencoded" 
+      });
+      console.log(response.data)
+      router.push({ name: 'SingSucess', params: { userData: response.data } });
+    } catch (error) {
+      console.error('서버 오류:', error);
+      alert('서버와의 통신에 문제가 발생했습니다.');
+    }
   } else {
     alert('모든 필드를 정확히 입력해주세요.');
   }
 }
+
 function handleEmailBlur() {
   emailTouched.value = true;
 }
+
+
 </script>

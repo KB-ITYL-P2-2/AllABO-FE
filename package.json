@@ -17,6 +17,7 @@
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.7",
     "gsap": "^3.12.5",
+    "firebase": "^10.14.0",
     "pinia": "^2.2.2",
     "postcss": "^8.4.47",
     "swiper": "^11.1.14",
