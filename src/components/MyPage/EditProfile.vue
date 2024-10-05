@@ -41,7 +41,8 @@
               v-model="name"
               placeholder="이름을 입력해주세요"
               class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200 mb-6"
-            />
+              readonly
+              />
           </div>
           <div class="flex flex-col">
             <label for="birthday" class="block text-font-color mb-1">생년월일</label>
@@ -51,7 +52,8 @@
               v-model="birthday"
               placeholder="YYYY.MM.DD 형식으로 입력해주세요"
               class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200 mb-6"
-            />
+              readonly
+              />
           </div>
           <div class="flex flex-col">
             <label for="email" class="block text-font-color mb-1">이메일</label>
