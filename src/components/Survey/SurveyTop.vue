@@ -5,12 +5,12 @@
     <ProgressBar
       :progress="progress"
       :currentStep="currentStep"
-      :totalStep="totalSteps"
+      :totalQuestion="totalQuestion"
       />
 
     <!-- 질문 텍스트 -->
     <h2
-      class="text-white text-3xl font-bold text-center absolute w-full max-w-[528px]"
+      class="text-white text-3xl font-bold text-center absolute w-full max-w-[760px]"
       style="top: 66.7%"
     >
       {{ currentQuestion.text }}
@@ -31,7 +31,7 @@ const props = defineProps({
     progress: Number,
     currentQuestion: Object,
     currentStep: Number,
-    totalSteps: Number,
+    totalQuestion: Number,
 })
 </script>
 

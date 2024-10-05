@@ -3,8 +3,14 @@
     <button
       v-for="option in dataOptions"
       :key="option"
-      @click="selectOption(option)"
-      :class="[buttonClass, 'py-3 px-6 bg-gray-300 text-font-color hover:bg-kb-yellow-2 rounded-[15px] transition duration-300 disabled:opacity-50']"
+      @click="onSelectOption(option)"
+      :class="[
+        buttonClass,
+        'py-3 px-6 bg-gray-300 text-font-color hover:bg-kb-yellow-2 rounded-[15px] transition duration-300 disabled:opacity-50',
+        selectedOption === option
+          ? 'bg-kb-yellow-2 border-inherit'
+          : 'bg-gray-200 hover:bg-kb-yellow-2'
+        ]"
     >
       {{ option }}
     </button>
@@ -18,6 +24,7 @@
     dataOptions: Array,
     currentQuestionIndex: Number,
     questionIndex: Number,
+    selectedOption: String,
   })
 
   const emit = defineEmits(['select-option']);
@@ -35,7 +42,7 @@
       ? 'w-full' : ''
   );
 
-  const selectOption = (option) => {
+  const onSelectOption = (option) => {
     emit('select-option', props.questionIndex, option);
   };
 </script>

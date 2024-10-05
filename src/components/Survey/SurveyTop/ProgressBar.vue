@@ -4,7 +4,7 @@
     style="top: 50%"
   >
     <div class="absolute top-[-24px] left-0 text-white text-sm">
-      {{ currentStep }} / {{ totalStep }}
+      {{ currentStep }} / {{ totalQuestion }}
     </div>
     <div class="progress-bar bg-gray-300 h-2 rounded-full overflow-hidden">
       <div
@@ -19,7 +19,7 @@
 const props = defineProps({
   progress: Number,
   currentStep: Number,
-  totalStep: Number,
+  totalQuestion: Number,
 });
 </script>
 

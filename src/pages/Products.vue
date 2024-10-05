@@ -57,7 +57,7 @@
             <router-link
               :to="{
                 path: 'products/survey',
-                query: { category: category.id },
+                query: { category: category.name },
               }"
               custom
               v-slot="{ navigate }"
