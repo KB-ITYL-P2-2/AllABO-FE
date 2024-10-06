@@ -1,9 +1,9 @@
 <template>
-    <div class="relative w-full h-[400px] flex items-center justify-center">
+    <div class="relative w-full h-[500px] flex items-center justify-center">
       <!-- 큰 원 테두리 -->
-      <div class="absolute w-[480px] h-[480px] rounded-full border-2 border-kb-gray-2 top-40 right-44"></div>
-  
-      <!-- 작은 원들, 텍스트 추가 -->
+      <div class="absolute w-[500px] h-[500px] rounded-full border-2 border-gray-300"></div>
+    
+      <!-- 작은 원들 -->
       <div
         class="absolute w-[155px] h-[155px] bg-kb-blue-2 rounded-full flex items-center justify-center flex-col text-center text-font-color"
         :style="getPosition(0)"
@@ -57,31 +57,28 @@
   </template>
   
   <script setup>
-import { ref } from 'vue';
-
-const data = ref({
-  income: 7000, //연 소득
-  assets: 1390000, //계좌자산
-  pension: 10, //연금준비
-  insurance: 5, //보험납부
-  investment: 3300, //투자평가
-  credit: 130, //카드이용
-  debt: 3000, //부채금
-});
-
+  import { ref } from 'vue';
+  
+  const data = ref({
+    income: 7000, //연 소득
+    assets: 1390000, //계좌자산
+    pension: 10, //연금준비
+    insurance: 5, //보험납부
+    investment: 3300, //투자평가
+    credit: 130, //카드이용
+    debt: 3000, //부채금
+  });
+  
   const getPosition = (index) => {
-    const angleOffset = -Math.PI / 2; 
+    const angleOffset = -Math.PI / 2;
     const angle = (index / 7) * 2 * Math.PI + angleOffset;
-    const radius = 250; // 큰 원의 반지름
-    const x = radius * Math.cos(angle) - 100;
-    const y = radius * Math.sin(angle) + 200;
+    const radius = 250; // 반지름 조정
+    const x = radius * Math.cos(angle);
+    const y = radius * Math.sin(angle);
   
     return {
       transform: `translate(${x}px, ${y}px)`,
     };
   };
   </script>
-  
-  <style scoped>
-  </style>
   
