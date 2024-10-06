@@ -10,8 +10,10 @@ import { faHeart as faHeart1 } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeart2 } from '@fortawesome/free-regular-svg-icons'
 import { faHeart as faHeart3 } from '@fortawesome/free-regular-svg-icons/faHeart'
 import { faHeart as faHeart4 } from '@fortawesome/free-solid-svg-icons/faHeart'
+import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons'
+import { faQuoteRight } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faHeart1, faHeart2, faHeart3, faHeart4)
+library.add(faHeart1, faHeart2, faHeart3, faHeart4 ,faQuoteLeft,faQuoteRight)
 
 const app=createApp(App)
 const pinia = createPinia()

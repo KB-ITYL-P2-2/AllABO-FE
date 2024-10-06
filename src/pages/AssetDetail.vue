@@ -12,7 +12,9 @@
       </div>
 
       <div class="absolute top-[70%] z-40">
-        <MainPageButton :text="'분석하러 가기'" />
+        <MainPageButton :text="'분석하러 가기'"
+        @click="goToAnalyze"
+        />
       </div>
 
       <!-- 첫번째 원 -->
@@ -57,6 +59,12 @@
 </template>
 <script setup>
 import MainPageButton from '../components/MainPage/MainPageButton.vue';
+import { useRouter } from 'vue-router';
+
+const router=useRouter();
+const goToAnalyze=()=>{
+  router.push("/asset-analyze")
+}
 </script>
 
 <style scoped>
