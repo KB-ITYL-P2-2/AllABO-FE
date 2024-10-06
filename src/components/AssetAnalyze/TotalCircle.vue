@@ -2,7 +2,19 @@
     <div class="relative w-full h-[500px] flex items-center justify-center">
       <!-- 큰 원 테두리 -->
       <div class="absolute w-[500px] h-[500px] rounded-full border-2 border-gray-300"></div>
-    
+  
+      <!-- =여긴 로그인 하고 바뀌는 부분 -->
+    <div class="absolute w-[200px] h-[200px] flex flex-col items-center justify-center">
+    <div class="w-[200px] h-[200px] rounded-full overflow-hidden">
+      <img src="/images/Mypage/user3.png" alt="User Image" class="w-full h-full object-cover" />
+    </div>
+    <p class="text-center text-lg font-bold mt-2 whitespace-nowrap">
+      <span class="text-kb-blue-3 text-[24px]">문준일</span>님의 포트폴리오
+    </p>
+  </div>
+  
+      
+  
       <!-- 작은 원들 -->
       <div
         class="absolute w-[155px] h-[155px] bg-kb-blue-2 rounded-full flex items-center justify-center flex-col text-center text-font-color"

@@ -36,6 +36,7 @@ module.exports = {
 
         'kb-blue-1':"#BBE4E7",
         'kb-blue-2':"#D6E0F8",
+        "kb-blue-3":"#4E4ECD",
 
         'kb-green-1':"#DBF2BB"
        

@@ -1,21 +1,21 @@
 <template>
     <div class="flex flex-col justify-center h-full p-8 ">
     <font-awesome-icon icon="quote-left" class="w-10 h-10 mb-8 " />
-   <div class="px-10">
-    <p class="text-[32px]">
+   <div class="px-8">
+    <p class="text-[32px] py-2">
         전반적으로
         <span class="text-gradient text-[44px]">{{ data.text1 }}</span>
       </p>
-      <p class="text-[32px]">
+      <p class="text-[32px] py-2">
         <span class="text-gradient text-[44px]">{{ data.text2 }}</span>
-        성향을 가지고 있습니다.
+        을 가지고 있습니다.
       </p>
-      <p class="text-[32px]">
+      <p class="text-[32px] py-2">
         자산 대비로는
         <span class="text-gradient text-[44px]">{{ data.text3 }}</span>
         투자를 보이며
       </p>
-      <p class="text-[32px]">
+      <p class="text-[32px] py-2">
         <span class="text-gradient text-[44px]">{{ data.text4 }}</span>
         편입니다.
       </p>

@@ -1,9 +1,9 @@
 <template>
   <div class="h-[100vh] flex flex-col bg-asset-back">
     <div class="h-[70px] bg-kb-brown-1"></div>
-    <div class="flex justify-center gap-x-4"> 
-      <TotalCircle class="w-1/2 ml-32 mt-48" />  
-      <TotalText class="w-1/2 mt-[40px]" />  
+    <div class="flex justify-center items-center mt-32"> 
+      <TotalCircle class="w-1/2" />  
+      <TotalText class="w-1/2 mr-40" />  
     </div>
   </div>
 </template>
