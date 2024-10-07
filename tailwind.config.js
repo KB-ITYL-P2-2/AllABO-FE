@@ -16,12 +16,14 @@ module.exports = {
         'kb-yellow-5':"#FBE9C8",
         'kb-yellow-6':"#E1CD9F",
         "kb-yellow-7":"#FFDB20",
+        "kb-yellow-8":"#FFF8CE",
 
 
         'kb-brown-1':"#535046",
         'kb-brown-2':"#5F584E",
         'kb-brown-3':"#897552",
         'kb-brown-4':"#563A3A",
+        'kb-brown-5':"#635D38",
 
         'kb-gray-1':"#85888B",     
         'kb-gray-2':"#B8B8BC",
@@ -33,10 +35,14 @@ module.exports = {
         'kb-pink-2':"#FBDFFF",
         'kb-pink-3':"#FFC2AF",
         'kb-pink-4':"#FF40B3",
+        'kb-pink-5':"#F8D8D8",
+        'kb-pink-6':"#885757",
 
         'kb-blue-1':"#BBE4E7",
         'kb-blue-2':"#D6E0F8",
         "kb-blue-3":"#4E4ECD",
+        "kb-blue-4":"#B7D4EF",
+        "kb-blue-5":"#367D9B",
 
         'kb-green-1':"#DBF2BB",
        /* 분석 총 자산  색깔 바뀔 수도있어서 일단 이름 이렇게 저장  */
