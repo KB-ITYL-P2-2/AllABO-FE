@@ -38,8 +38,12 @@ module.exports = {
         'kb-blue-2':"#D6E0F8",
         "kb-blue-3":"#4E4ECD",
 
-        'kb-green-1':"#DBF2BB"
-       
+        'kb-green-1':"#DBF2BB",
+       /* 분석 총 자산  색깔 바뀔 수도있어서 일단 이름 이렇게 저장  */
+        'kb-total-1':"#69571A",
+        'kb-total-2':"#A19567",
+        'kb-total-3':"#C5BD9F"
+
       },
       keyframes:{},
       screens:{
