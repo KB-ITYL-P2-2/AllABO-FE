@@ -20,8 +20,9 @@ body{-ms-overflow-style:none; }body::-webkit-scrollbar { display:none; }
 @layer utilities {
   .bg-asset-back {
     background-image: url('/images/AssetAnalyze/asset-backImg.png');
-    background-size: 80% 80%;
+    background-size: 100% 96%;
     background-position: center;
     background-repeat: no-repeat;
   }
+
 }
