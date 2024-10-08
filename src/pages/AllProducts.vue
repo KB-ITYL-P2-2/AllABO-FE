@@ -3,17 +3,33 @@
     <div class="h-[70px] bg-kb-brown-1"></div>
 
     <!-- py-16 px-[20%] -->
-    <h1 class="font-bold text-[28px] md:max-laptop:mb-10 mb-24 z-20 text-left bg-kb-yellow-4 h-[160px]" :class="`${LAYOUT_VARIANTS.default}`">{{ `신용카드` }}</h1>
-    <div >
-      
-      <ProductItem v-for="(item, index) in cardData" :key="index" :items="item" />
+    <h1 class="font-bold text-[28px] md:max-laptop:mb-10 mb-24 z-20 text-left bg-kb-yellow-4 h-[160px]" :class="`${LAYOUT_VARIANTS.default}`">
+      {{ `신용카드` }}
+    </h1>
+    <div>
+      <ProductItem
+        v-for="(item, index) in depositData"
+        :key="index"
+        :items="item"
+        :index="index"
+        :nowItemIndex="nowItemIndex"
+        @click="
+          () => {
+            nowItemIndex = index;
+          }
+        "
+      />
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
+
 import LAYOUT_VARIANTS from "../constant/layout";
 import ProductItem from "../components/AllProducts/ProductItem.vue";
+
+const nowItemIndex = ref(null);
 
 const cardData = [
   {
@@ -75,8 +91,8 @@ const cardData = [
 const depositData = [
   {
     name: "KB Star 정기예금",
+    content: "Digital KB의 대표 정기예금",
     data: {
-      content: "Digital KB의 대표 정기예금",
       category: "예금",
       date: "1~36개월",
       interestRate: "연 2.7% ~ 3.4%",
@@ -88,8 +104,8 @@ const depositData = [
   },
   {
     name: "KB Star 정기예금",
+    content: "Digital KB의 대표 정기예금",
     data: {
-      content: "Digital KB의 대표 정기예금",
       category: "예금",
       date: "1~36개월",
       interestRate: "연 2.7% ~ 3.4%",
@@ -101,8 +117,8 @@ const depositData = [
   },
   {
     name: "KB Star 정기예금",
+    content: "Digital KB의 대표 정기예금",
     data: {
-      content: "Digital KB의 대표 정기예금",
       category: "예금",
       date: "1~36개월",
       interestRate: "연 2.7% ~ 3.4%",
@@ -114,8 +130,8 @@ const depositData = [
   },
   {
     name: "KB Star 정기예금",
+    content: "Digital KB의 대표 정기예금",
     data: {
-      content: "Digital KB의 대표 정기예금",
       category: "예금",
       date: "1~36개월",
       interestRate: "연 2.7% ~ 3.4%",
@@ -127,21 +143,8 @@ const depositData = [
   },
   {
     name: "KB Star 정기예금",
+    content: "Digital KB의 대표 정기예금",
     data: {
-      content: "Digital KB의 대표 정기예금",
-      category: "예금",
-      date: "1~36개월",
-      interestRate: "연 2.7% ~ 3.4%",
-    },
-    url: {
-      imageUrl: "https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/01760_img.png",
-      pageUrl: "https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=N&prcode=DP01000938",
-    },
-  },
-  {
-    name: "KB Star 정기예금",
-    data: {
-      content: "Digital KB의 대표 정기예금",
       category: "예금",
       date: "1~36개월",
       interestRate: "연 2.7% ~ 3.4%",

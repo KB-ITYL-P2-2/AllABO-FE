@@ -1,8 +1,8 @@
 <template>
-  <div class="border-b px-[20%]">
-    <div class="relative flex w-full gap-4 p-5 cursor-pointer hover:bg-gray-50">
+  <div class="px-[20%]">
+    <div class="relative flex w-full gap-4 p-5 cursor-pointer hover:bg-gray-50" :class="index!=nowItemIndex && 'border-b'">
       <!-- 이미지 -->
-      <div class="relative w-20 h-20 ">
+      <div class="relative w-20 h-20">
         <div class="absolute w-full h-full rounded-full bg-kb-yellow-3 blur-sm"></div>
         <img :src="items.url.imageUrl" class="absolute rotate-90 top-[14px]" alt="" />
       </div>
@@ -25,9 +25,9 @@
     </div>
 
     <!-- 클릭시 콘텐츠 노출 -->
-    <div>
+    <div :class="index != nowItemIndex && 'hidden'" class="border-b">
       <div class="flex">
-        <div v-for="(item, index) in items.data" :key="index" class="flex-1 p-10 text-center" :class="index !== dataLength ? `border-r` : ''">
+        <div v-for="(item, key, itemIndex) in items.data" :key="key" class="flex-1 p-10 text-center" :class="itemIndex != dataLength && `border-r`">
           <h3 class="text-kb-gray-1">카테고리</h3>
           <h3 class="text-[20px] mt-2">{{ item }}</h3>
         </div>
@@ -45,6 +45,14 @@ import CommonButton from "../common/CommonButton.vue";
 const props = defineProps({
   items: {
     type: Object,
+    required: true,
+  },
+  index: {
+    type: Number,
+    required: true,
+  },
+  nowItemIndex: {
+    type: Number,
     required: true,
   },
 });
