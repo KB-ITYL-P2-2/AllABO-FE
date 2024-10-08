@@ -27,8 +27,8 @@
     </div>
 
     <div class="flex justify-center my-5">
-      <button v-if="pageIndex > 0" @click="prevPagingHandler">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6">
+      <button :disabled="pageIndex <= 0" @click="prevPagingHandler">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6 text-kb-gray-1" :class="pageIndex <= 0 && 'text-kb-gray-3'">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
         </svg>
       </button>
@@ -36,7 +36,7 @@
       <button
         v-for="(item, index) in pageArray[pageWrapIndex]"
         :key="index"
-        @click="pagingHandler(index)"
+        @click="pagingHandler(index + pageWrapIndex * 5)"
         class="px-4 py-2 rounded-[10px] text-kb-gray-1"
         :class="pageIndex == index + pageWrapIndex * 5 && 'text-kb-yellow-1 bg-kb-yellow-4'"
       >
@@ -44,8 +44,8 @@
         <!-- 버튼 컴포넌트 값 변경을 위함 -->
         {{ index + 1 + pageWrapIndex * 5 }}
       </button>
-      <button v-if="pageIndex < pageCount - 1" @click="nextPagingHandler">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6">
+      <button :disabled="pageIndex >= pageCount - 1" @click="nextPagingHandler">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6 text-kb-gray-1" :class="pageIndex >= pageCount - 1 && 'text-kb-gray-3'">
           <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
         </svg>
       </button>
@@ -102,7 +102,7 @@ onBeforeMount(() => {
       pageArray.push(new Array(Math.ceil(pageCount.value % 5)).fill(null));
     }
   }
-  console.log(pageArray);
+  // console.log(pageArray);
 });
 
 const cardData = [
