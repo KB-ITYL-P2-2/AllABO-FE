@@ -81,8 +81,10 @@
         </div>
       </div>
     </div>
-
   </div>
+  <p class="  mt-10 flex justify-center text-[20px] text-kb-gray-2">
+    자세한 결과를 보고 싶다면 결과를 눌러주세요 >
+  </p>
 </template>
 
 <script setup>

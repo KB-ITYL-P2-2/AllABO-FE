@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-center items-end h-[200px] mt-8 relative space-x-10">
-      <!-- '나' 연 소득 대비 부채 비율 그래프 -->
+      <!-- 내 연 소득 대비 부채 비율 그래프 -->
         <div class="flex flex-col items-center">
             <p class="text-center text-[14px] text-font-color">
                 {{ incomeDebtRatio }}%

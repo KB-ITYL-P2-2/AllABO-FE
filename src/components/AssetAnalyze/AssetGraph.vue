@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center items-end h-[300px] space-x-10">
-    <!-- '나' 자산총액 그래프 -->
+    <!-- 내자산총액 그래프 -->
     <div class="flex flex-col items-center">
       <p class="text-center text-[14px] text-font-color">
         {{ userTotalAssets }}만원
@@ -31,7 +31,6 @@
 <script setup>
 import { computed, defineProps } from "vue";
 
-// 부모 컴포넌트에서 props 받아옴
 const props = defineProps({
   userTotalAssets: {
     type: Number,
