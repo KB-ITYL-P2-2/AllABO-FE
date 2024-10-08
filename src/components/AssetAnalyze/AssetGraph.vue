@@ -6,7 +6,7 @@
         {{ userTotalAssets }}만원
       </p>
       <div
-        class="w-[70px] rounded-t-lg bg-gradient-to-t from-kb-blue-2 to-kb-blue-5 hover-grow"
+        class="w-[70px] rounded-t-lg bg-gradient-to-t from-kb-blue-6 to-kb-blue-5 hover-grow"
         :style="{ height: `${normalizedUserHeight}px` }"
       >
       </div>
@@ -19,7 +19,7 @@
         {{ averageTotalAssets }}만원
       </p>
       <div
-        class="w-[70px] rounded-t-lg bg-gradient-to-t from-gray-200 to-gray-500"
+        class="w-[70px] rounded-t-lg bg-gradient-to-t from-kb-blue-6 via-gray-300 to-kb-gray-4 "
         :style="{ height: `${normalizedAverageHeight}px` }"
       >
       </div>
@@ -44,7 +44,7 @@ const props = defineProps({
 });
 
 // 최대값을 기준으로 그래프 높이 비율 계산 (임의로 최대 높이를 200px로 설정)
-const maxGraphHeight = 200; // 그래프의 최대 높이 (px)
+const maxGraphHeight = 150; // 그래프의 최대 높이 (px)
 const maxAssets = Math.max(props.userTotalAssets, props.averageTotalAssets); // 최대 자산 값
 
 // 자산 값을 비율로 환산하여 그래프 높이 계산

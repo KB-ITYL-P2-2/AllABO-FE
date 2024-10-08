@@ -20,7 +20,7 @@
                 {{ averageIncomeRatio }}%
               </p>
               <div
-                class="w-[70px] rounded-t-lg bg-gradient-to-t from-gray-200 to-gray-500"
+                class="w-[70px] rounded-t-lg bg-gradient-to-t from-kb-pink-5 via-gray-300 to-kb-gray-4"
                 :style="{ height: `${normalizedAverageGraphHeight}px` }"
               >
               </div>

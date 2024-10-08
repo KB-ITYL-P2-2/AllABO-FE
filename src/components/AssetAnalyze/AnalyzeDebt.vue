@@ -17,12 +17,12 @@
         <div
           class="absolute w-full h-full backface-hidden bg-kb-blue-6 rounded-[50px] flex flex-col p-10"
         >
-          <p class="text-center text-[24px] text-font-color">총 자산</p>
-          <p class="text-center text-[20px] text-gray-700">
+        <button class="p-2 w-[200px] h-10 rounded-[30px] bg-kb-blue-5 text-[20px] text-white mb-6 font-light">총 자산</button>
+          <p class="text-[20px] text-kb-brown-1">
             20대 평균 총 자산보다
           </p>
-          <p class="text-center text-[36px] font-bold text-font-color">
-            약 {{ totalRatio }}배 높습니다
+          <p class="text-[36px] font-bold text-font-color mb-2">
+            약 {{ compateTotal }}배 높습니다
           </p>
 
           <!-- 첫 번째 카드에만 AssetGraph (총 자산) -->
@@ -72,14 +72,13 @@
         <div
           class="absolute w-full h-full backface-hidden bg-kb-yellow-8 rounded-[50px] flex flex-col p-10"
         >
-          <p class="text-center text-[24px] text-font-color">
-            자산 대비 부채 비율
-          </p>
-          <p class="text-center text-[20px] text-gray-700">
+        <button class="p-2 w-[200px] h-10 rounded-[30px] bg-kb-brown-5 text-[20px] text-white mb-6 font-light">자산 대비 부채 비율</button>
+
+          <p class="text-[20px] text-kb-brown-1">
             20대 평균 자산 대비 부채 비율보다
           </p>
-          <p class="text-center text-[36px] font-bold text-font-color">
-            약 168.59% 낮습니다
+          <p class="text-[36px] font-bold text-font-color mb-2">
+            약 {{compareAssetDebt}}% 낮습니다
           </p>
 
           <!-- 두 번째 카드(자산 대비 부채율) -->
@@ -131,14 +130,13 @@
         <div
           class="absolute w-full h-full backface-hidden bg-kb-pink-5 rounded-[50px] flex flex-col p-10"
         >
-          <p class="text-center text-[24px] text-font-color">
-            연 소득 대비 부채 비율
-          </p>
-          <p class="text-center text-[20px] text-gray-700">
+        <button class="p-2 w-[200px] h-10 rounded-[30px] bg-kb-pink-6 text-[20px] text-white mb-6 font-light">연 소득 대비 부채 비율</button>
+
+          <p class="text-[20px] text-kb-brown-1">
             20대 평균 연 소득 대비 부채 비율보다
           </p>
-          <p class="text-center text-[36px] font-bold text-font-color">
-            약 44.74% 낮습니다
+          <p class="text-[36px] font-bold text-font-color mb-2">
+            약 {{ compareIncomeDebt }}% 낮습니다
           </p>
 
           <!-- 세 번째 그래프 (연 소득 대비 부채 비율) -->
@@ -189,10 +187,12 @@ import { ref } from "vue";
 
 // 데이터 상태 관리
 const flipped = ref([false, false, false]);
-const totalRatio = ref("3.31");
+const compateTotal = ref("3.31");
+const compareAssetDebt=ref("168.59");
+const compareIncomeDebt=ref("44.74")
 
 // 첫번째 값
-const userTotalAssets = ref(15970);
+const userTotalAssets = ref(12070);
 const averageTotalAssets = ref(6579);
 
 // 두번째 값

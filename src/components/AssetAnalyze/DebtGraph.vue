@@ -19,7 +19,7 @@
     {{ averageDebtRatio }}%
   </p>
   <div
-    class="w-[70px] rounded-t-lg bg-gradient-to-t from-gray-200 to-gray-500"
+    class="w-[70px] rounded-t-lg bg-gradient-to-t from-kb-yellow-8 via-gray-300 to-kb-gray-4"
     :style="{ height: `${normalizedAverageDebtHeight}px` }"
   >
   </div>
