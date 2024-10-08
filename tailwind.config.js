@@ -37,12 +37,15 @@ module.exports = {
         'kb-pink-4':"#FF40B3",
         'kb-pink-5':"#F8D8D8",
         'kb-pink-6':"#885757",
+        "kb-pink-7":"#FF8484",
 
         'kb-blue-1':"#BBE4E7",
         'kb-blue-2':"#D6E0F8",
         "kb-blue-3":"#4E4ECD",
         "kb-blue-4":"#B7D4EF",
         "kb-blue-5":"#367D9B",
+        "kb-blue-6":"#D7E9FA",
+      
 
         'kb-green-1':"#DBF2BB",
        /* 분석 총 자산  색깔 바뀔 수도있어서 일단 이름 이렇게 저장  */
