@@ -15,9 +15,7 @@ import WithdrawMember from "../components/MyPage/WithdrawMember.vue";
 
 import KakaoRedirectPage from "../pages/RedirectPages/KakaoRedirectPage.vue";
 import AssetAnalyze from "../pages/AssetAnalyze.vue";
-
-
-
+import AllProducts from "../pages/AllProducts.vue";
 
 const router=createRouter({
     history:createWebHistory(), //라우팅 모드 
@@ -35,8 +33,10 @@ const router=createRouter({
         {path:'/mypage-profile',component:EditProfile},
         {path:'/mypage-password',component:EditPassword},
         {path:'/mypage-withdraw',component:WithdrawMember},
+        {path:'/asset-analyze',component:AssetAnalyze},
+        {path:'/all-products', component: AllProducts},
+        
         {path:'/kakao-redirect',component:KakaoRedirectPage},
-        {path:'/asset-analyze',component:AssetAnalyze}
     ]
 })
 export default router;
