@@ -88,9 +88,9 @@
 </template>
 
 <script setup>
-import AssetGraph from "./AssetGraph.vue";
-import DebtGraph from "./DebtGraph.vue";
-import IncomeGraph from "./IncomeGraph.vue";
+import AssetGraph from "./graph/AssetGraph.vue";
+import DebtGraph from "./graph/DebtGraph.vue";
+import IncomeGraph from "./graph/IncomeGraph.vue";
 import { ref } from "vue";
 
 // 데이터 상태 관리

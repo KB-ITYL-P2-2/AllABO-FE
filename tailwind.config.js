@@ -24,6 +24,7 @@ module.exports = {
         'kb-brown-3':"#897552",
         'kb-brown-4':"#563A3A",
         'kb-brown-5':"#635D38",
+        'kb-brown-6':"#69571A",
 
         'kb-gray-1':"#85888B",     
         'kb-gray-2':"#B8B8BC",
@@ -49,10 +50,10 @@ module.exports = {
       
 
         'kb-green-1':"#DBF2BB",
-       /* 분석 총 자산  색깔 바뀔 수도있어서 일단 이름 이렇게 저장  */
-        'kb-total-1':"#69571A",
-        'kb-total-2':"#A19567",
-        'kb-total-3':"#C5BD9F"
+
+        // 'kb-total-1':"#69571A",
+        // 'kb-total-2':"#A19567",
+        // 'kb-total-3':"#C5BD9F"
 
       },
       keyframes:{},
