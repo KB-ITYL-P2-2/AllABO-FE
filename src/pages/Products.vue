@@ -194,7 +194,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-::v-deep .swiper-pagination {
+:deep .swiper-pagination {
   display: none !important;
 }
 
