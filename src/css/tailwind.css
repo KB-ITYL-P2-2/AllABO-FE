@@ -25,4 +25,11 @@ body{-ms-overflow-style:none; }body::-webkit-scrollbar { display:none; }
     background-repeat: no-repeat;
   }
 
+  .bg-insurance-back {
+    background-image: url('/images/AssetPlan/insurance-back');
+    background-size: 100% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
 }
