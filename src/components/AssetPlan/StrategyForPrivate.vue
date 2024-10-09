@@ -35,11 +35,23 @@
         :class="scrollY > 800 ? 'opacity-100' : 'opacity-0'"
         class="sticky top-0 border-x-[1px] border-kb-brown-3 h-[100vh] animation flex items-center justify-center"
       >
-        <div class="flex justify-center h-full py-32 flex-3">
+        <div class="flex justify-center h-full pt-32 pb-24 flex-3">
           <div class="absolute top-0 left-[21.1%] -z-10 w-[1px] h-full bg-[#6D6262]"></div>
           <div class="flex flex-col items-center justify-between">
-            <StrategyDept class="" :text="'우선순위'" />
-            <StrategyDept class="" :text="'우선순위'" />
+            <StrategyDept :class="scrollY < 1400 ? 'opacity-100' : 'opacity-0 '" class="absolute animation" :text="'우선순위'" />
+            <StrategyDeptSolution
+              :class="scrollY >= 1400 ? 'opacity-100' : 'opacity-0 '"
+              class="absolute animation"
+              :title="`우선순위`"
+              :content="'주택 담보 대출 상환을 우선적으로 고려'"
+            />
+            <StrategyDept :class="scrollY < 1600 ? 'opacity-100' : 'opacity-0 '" class="absolute bottom-24 animation" :text="'우선순위'" />
+            <StrategyDeptSolution
+              :class="scrollY >= 1600 ? 'opacity-100' : 'opacity-0 '"
+              class="absolute bottom-24 animation"
+              :title="`우선순위`"
+              :content="'주택 담보 대출 상환을 우선적으로 고려'"
+            />
           </div>
         </div>
 
@@ -50,9 +62,21 @@
 
         <div class="flex justify-center h-full pt-40 pb-12 flex-3">
           <div class="absolute top-0 right-[21%] -z-10 w-[1px] h-full bg-[#6D6262]"></div>
-          <div class="flex flex-col items-center justify-between">
-            <StrategyDept class="" :text="'우선순위'" />
-            <StrategyDept class="" :text="'우선순위'" />
+          <div class="relative flex flex-col items-center justify-between">
+            <StrategyDept :class="scrollY < 1500 ? 'opacity-100' : 'opacity-0'" class="absolute animation" :text="'우선순위'" />
+            <StrategyDeptSolution
+              :class="scrollY >= 1500 ? 'opacity-100' : 'opacity-0'"
+              class="absolute animation"
+              :title="`우선순위`"
+              :content="'주택 담보 대출 상환을 우선적으로 고려'"
+            />
+            <StrategyDept :class="scrollY < 1700 ? 'opacity-100' : 'opacity-0'" class="absolute bottom-0 animation" :text="'우선순위'" />
+            <StrategyDeptSolution
+              :class="scrollY >= 1700 ? 'opacity-100' : 'opacity-0'"
+              class="absolute bottom-0 animation"
+              :title="`우선순위`"
+              :content="'주택 담보 대출 상환을 우선적으로 고려'"
+            />
           </div>
         </div>
       </div>
@@ -67,6 +91,7 @@ import StrategyCircle from "./StrategyForPrivate/StrategyCircle.vue";
 import StrategyText from "./StrategyForPrivate/StrategyText.vue";
 import StrategyRecommend from "./StrategyForPrivate/StrategyRecommend.vue";
 import StrategyDept from "./StrategyForPrivate/StrategyDept.vue";
+import StrategyDeptSolution from "./StrategyForPrivate/StrategyDeptSolution.vue";
 
 const goalData = [
   { title: "목표 저축률", percent: `${25}%` },
