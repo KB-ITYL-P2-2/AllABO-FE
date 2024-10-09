@@ -9,7 +9,7 @@
       @mouseleave="handleMouseLeave">
       <div class="mx-[340px] h-full flex items-center justify-between">
         <!-- 로고 -->
-        <router-link to="/" :class="{ 'text-font-color' : isScrolledOrHovered, 'text-white' : !isScrolledOrHovered }" class="text-2xl font-bold">
+        <router-link to="/" :class="{ 'text-font-color' : isScrolledOrHovered, 'text-font-color' : !isScrolledOrHovered }" class="text-2xl font-bold">
           F:YL
         </router-link>
 
@@ -18,21 +18,21 @@
           <!-- 네비게이션 메뉴 -->
           <ul class="flex items-center space-x-6"> <!-- 아이템 간 간격 줄이기 -->
             <li v-for="item in navItems" :key="item.route" class="relative group">
-              <router-link :to="item.route" :class="{ 'text-font-color' : isScrolledOrHovered, 'text-white' : !isScrolledOrHovered }" class="block px-3 py-1.5 hover:bg-stone-500 group-hover:bg-stone-500 rounded-md transition duration-300">
+              <router-link :to="item.route" :class="{ 'text-font-color' : isScrolledOrHovered, 'text-font-color' : !isScrolledOrHovered }" class="block px-3 py-1.5 hover:bg-stone-500 group-hover:bg-stone-500 rounded-md transition duration-300">
                 {{ item.name }}
               </router-link>
             </li>
             
-            <p :class="{ 'text-font-color' : isScrolledOrHovered, 'text-white' : !isScrolledOrHovered }">|</p>
+            <p :class="{ 'text-font-color' : isScrolledOrHovered, 'text-font-color' : !isScrolledOrHovered }">|</p>
             <li class="relative group">
-              <router-link to="/login" :class="{ 'text-font-color' : isScrolledOrHovered, 'text-white' : !isScrolledOrHovered }" class="block px-3 py-1.5 hover:bg-stone-500 group-hover:bg-stone-500 rounded-md transition duration-300">
+              <router-link to="/login" :class="{ 'text-font-color' : isScrolledOrHovered, 'text-font-color' : !isScrolledOrHovered }" class="block px-3 py-1.5 hover:bg-stone-500 group-hover:bg-stone-500 rounded-md transition duration-300">
                 로그인
               </router-link>
             </li>
           </ul>
 
           <!-- 프로필 아이콘_마이페이지 이동 -->
-          <router-link to="/mypage" :class="[isScrolledOrHovered ? 'text-font-color' : 'text-white']" class="hover:text-kb-brown-1">
+          <router-link to="/mypage" :class="[isScrolledOrHovered ? 'text-font-color' : 'text-font-color']" class="hover:text-kb-brown-1">
             <img src="/images/Mypage/user.png" class="w-6 h-6"/>
           </router-link>
         </div>

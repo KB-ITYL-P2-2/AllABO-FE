@@ -1,5 +1,5 @@
 <template>
-  <div class="h-[70px] bg-kb-brown-1 mb-[160px]"></div>
+  <div class="h-[70px] bg-kb-yellow-4 mb-[160px]"></div>
   <!-- 마이페이지-->
   <div class="flex justify-center">
     <div class="w-full max-w-5xl">

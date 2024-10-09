@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="h-[70px] bg-kb-brown-1"></div>
+    <div class="h-[70px] bg-kb-yellow-4"></div>
 
     <!-- py-16 px-[20%] -->
     <h1 class="font-bold text-[28px] z-20 text-left bg-kb-yellow-4 h-[160px]" :class="`${LAYOUT_VARIANTS.default}`">

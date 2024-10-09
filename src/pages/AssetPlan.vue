@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen">
-    <div class="h-[70px] bg-kb-brown-1"></div>
+    <div class="h-[70px] bg-kb-yellow-4"></div>
 
     <StrategyForPrivate />
   </div>
