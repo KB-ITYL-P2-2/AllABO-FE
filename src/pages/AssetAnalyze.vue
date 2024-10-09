@@ -19,7 +19,7 @@
     <div class="section h-screen  items-center bg-asset-back">
       <AnalyzeRange/>
     </div>
-    <div class="section h-screen  items-center bg-asset-back">
+    <div class="section h-[50%]  items-center my-20">
       <AnalyzeButton/>
     </div>
 

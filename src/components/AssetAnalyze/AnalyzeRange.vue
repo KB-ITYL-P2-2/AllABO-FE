@@ -42,7 +42,7 @@
           <div 
             v-for="(tag, index) in hashtags" 
             :key="index" 
-            class="text-font-color p-4 rounded-lg transition-all duration-300 hover:bg-kb-yellow-11"
+            class="text-font-color p-4 rounded-lg transition-all duration-300 hover:bg-kb-yellow-10"
           >
             <p class=" font-semibold text-[20px] text-font-color">#{{ tag }}</p>
           </div>
