@@ -2,9 +2,9 @@
   <div class="h-screen">
     <div class="h-[70px] bg-kb-brown-1"></div>
 
-    <AssetPlanNavigation />
+    <StrategyForPrivate />
   </div>
 </template>
 <script setup>
-import AssetPlanNavigation from '../components/AssetPlan/AssetPlanNavigation.vue';
+import StrategyForPrivate from '../components/AssetPlanStrategy/StrategyForPrivate.vue';
 </script>
