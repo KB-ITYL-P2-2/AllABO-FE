@@ -15,6 +15,10 @@
     <div class="section h-screen  items-center bg-asset-back">
       <AnalyzeDebt />
     </div>
+    <!--소득 분위별 분석-->
+    <div class="section h-screen  items-center bg-asset-back">
+      <AnalyzeRange/>
+    </div>
 
 </template>
 
@@ -23,6 +27,7 @@ import TotalCircle from "../components/AssetAnalyze/TotalCircle.vue";
 import TotalText from "../components/AssetAnalyze/TotalText.vue";
 import AnalyzeDebt from "../components/AssetAnalyze/AnalyzeDebt.vue";
 import AnalyzeSavings from "../components/AssetAnalyze/AnalyzeSavings.vue";
+import AnalyzeRange from "../components/AssetAnalyze/AnalyzeRange.vue";
 
 </script>
 
