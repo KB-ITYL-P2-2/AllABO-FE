@@ -1,7 +1,7 @@
 <template>
   <div id="graphContainer" class="relative w-full flex justify-center space-y-4">
     <!-- 첫 번째 그래프: 파란색(사용자) + 회색(평균) -->
-    <div class="relative w-full max-w-[600px] h-[60px]">
+    <div class="relative w-full max-w-[600px] h-[60px] ml-[400px]">
       <div
         class="absolute h-[60px] bg-kb-gray-2 rounded-r-lg origin-left"
         :style="{ width: `${animatedAverageWidth}px`, left: '50%', transform: 'scaleX(-1)' }"
@@ -40,7 +40,7 @@ const props = defineProps({
 });
 
 // 최대 막대 너비 (화면 크기 대비 계산, 가로 그래프니까 width로 설정)
-const maxBarWidth = 300;
+const maxBarWidth = 400;
 const animatedUserWidth = ref(0);
 const animatedAverageWidth = ref(0);
 const animatedUserWidth2 = ref(0);
