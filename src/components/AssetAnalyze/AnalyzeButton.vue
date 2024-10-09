@@ -6,7 +6,7 @@
       <div>
         <button
           @click="goToAssetPlan"
-          class="w-[180px] h-[50px] px-6 py-3 text-gray-600 font-bold bg-white border border-kb-gray-1 rounded-[10px] shadow-md hover:shadow-lg hover:bg-kb-yellow-9 transition duration-300 ease-in-out"
+          class="w-[180px] h-[50px] px-6 py-3 text-gray-600 font-bold bg-white border border-kb-gray-1 rounded-[10px] shadow-md hover:shadow-lg hover:bg-kb-yellow-10 transition duration-300 ease-in-out"
         >
           자산설계하러가기
         </button>

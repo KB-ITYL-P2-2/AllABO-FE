@@ -9,7 +9,7 @@
     <div class="relative flex flex-col justify-center items-center" ref="yellowCircle">
       <div class="relative">
         <!-- 큰 노란 원 -->
-        <div class="flex flex-col justify-center rounded-full bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-9 shadow-lg h-[550px] w-[550px] text-center px-8" :class="{ 'grow-animation': isVisible }">
+        <div class="flex flex-col justify-center rounded-full bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 shadow-lg h-[550px] w-[550px] text-center px-8" :class="{ 'grow-animation': isVisible }">
           <p class="text-lg">사용자 월 소득 :<span class="font-bold">{{ userMonthlyIncome }}</span> 만원</p>
           <p class="text-lg">연간 소득 : <span class="font-bold">{{ userAnnualIncome }}</span> 만 원</p>
           <p class="mt-2 text-lg" > 
@@ -19,7 +19,7 @@
           </p>
         </div>
         <!-- 주황색 원 (5분위) -->
-        <div class="absolute top-[-30px] right-[50px] transform translate-x-10 translate-y-10 rounded-full bg-gradient-to-b from-kb-yellow-10 to-kb-yellow-9 shadow-md h-[150px] w-[150px] flex items-center justify-center">
+        <div class="absolute top-[-30px] right-[50px] transform translate-x-10 translate-y-10 rounded-full bg-gradient-to-b from-kb-yellow-10 to-kb-yellow-10 shadow-md h-[150px] w-[150px] flex items-center justify-center">
           <p class="font-semibold text-center text-[40px]">{{incomeRange}}분위</p>
         </div>
       </div>
@@ -42,7 +42,7 @@
           <div 
             v-for="(tag, index) in hashtags" 
             :key="index" 
-            class="text-font-color p-4 rounded-lg transition-all duration-300 hover:bg-kb-yellow-9"
+            class="text-font-color p-4 rounded-lg transition-all duration-300 hover:bg-kb-yellow-10"
           >
             <p class=" font-semibold text-[20px] text-font-color">#{{ tag }}</p>
           </div>
