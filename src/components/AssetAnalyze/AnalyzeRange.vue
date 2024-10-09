@@ -22,27 +22,50 @@
           <p class="font-semibold text-center text-[40px]">5분위</p>
         </div>
       </div>
-      <!-- 소득 및 지출 비율 차이 작은 원 -->
-      <div class="absolute top-[130px] right-[-80px] rounded-full bg-gradient-to-b from-kb-pink-5 to-kb-pink-8 shadow-md h-[180px] w-[180px] flex items-center justify-center">
-        <p class="text-[16px] font-semibold text-center">소득 및 지출 비율 차이<br />36만 원</p>
-      </div>
+     <!-- 소득 및 지출 비율 차이 작은 원 -->
+     <div 
+       class="absolute top-[130px] right-[-80px] rounded-full bg-gradient-to-b from-kb-pink-8 to-kb-pink-5 shadow-md h-[180px] w-[180px] flex items-center justify-center cursor-pointer"
+       @click="toggleHashTags"
+     >
+       <p class="text-[20px] font-semibold text-center">36% 초과 조절 필요</p>
+     </div>
     </div>
 
-    <!-- 오른쪽 해시태그 분석 -->
-    <div class="flex flex-col space-y-4">
-      <!-- 해시태그 부분 -->
-      <div v-for="(tag, index) in hashtags" :key="index" class="bg-yellow-300 hover:bg-yellow-400 p-4 rounded-lg shadow-md transition-colors duration-300">
-        <p class="font-semibold text-lg text-gray-700">#{{ tag }}</p>
+    <!-- 해시태그 부분이 자연스럽게 확장 -->
+    <div class="relative mt-20">
+      <!-- 확장될 영역 -->
+      <div 
+        class="bg-white shadow-md rounded-lg transition-all duration-500 ease-in-out overflow-hidden"
+        :class="isExpanded ? 'w-[400px] h-[400px] opacity-100' : 'w-[0px] h-[0px] opacity-0'"
+      >
+        <!-- 해시태그가 확장된 후에 보여지도록 설정 -->
+        <div v-if="isExpanded" class="flex flex-col space-y-4 p-6">
+          <div 
+            v-for="(tag, index) in hashtags" 
+            :key="index" 
+            class="bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-9 hover:bg-yellow-400 p-4 rounded-lg shadow-md transition-all duration-300"
+          >
+            <p class="font-semibold text-[20px] text-font-color">#{{ tag }}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
 // 해시태그 목록 (백엔드에서 받아온다고 가정)
 const hashtags = ["지출관리필요", "소득대비소비지출높음", "20대재정리스크", "소득대비지출초과"];
+const isExpanded = ref(false);
+
+// 원 클릭 시 해시태그와 확장 영역을 토글하는 함수
+const toggleHashTags = () => {
+  isExpanded.value = !isExpanded.value;
+};
 </script>
 
 <style scoped>
-/* 해시태그에 적용될 스타일을 더 추가할 수 있습니다. */
+/* 추가적인 입체감을 주기 위한 스타일 */
 </style>
