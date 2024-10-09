@@ -10,16 +10,17 @@
       <div class="relative">
         <!-- 큰 노란 원 -->
         <div class="flex flex-col justify-center rounded-full bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-9 shadow-lg h-[550px] w-[550px] text-center px-8" :class="{ 'grow-animation': isVisible }">
-          <p>사용자의 월 소득은 <span class="font-bold">{{ userMonthlyIncome }}</span> 만 원으로,<br> 연간 소득은 약 <span class="font-bold">{{ userAnnualIncome }}</span> 만 원입니다.</p>
-          <p class="mt-2"> 
-            이는 소득 5분위를 기준으로 <span class="font-bold">{{ incomeRange }}</span> 에 속합니다.<br>
-            <span class="font-bold">{{ incomeRange }}</span> 에 속하는<br>
-            평균 연간 소득 <span class="font-bold">{{ averageAnnualIncome }}</span> 원과 비교할 때,<br> 사용자의 소득은 평균과 비슷한 수준입니다.
+          <p class="text-lg">사용자 월 소득 :<span class="font-bold">{{ userMonthlyIncome }}</span> 만원</p>
+          <p class="text-lg">연간 소득 : <span class="font-bold">{{ userAnnualIncome }}</span> 만 원</p>
+          <p class="mt-2 text-lg" > 
+          소득 5분위를 기준으로 <span class="font-bold">000 님은 {{ incomeRange }}분위</span> 에 속합니다.<br>
+            <span class="font-bold">{{ incomeRange }}분위</span> 에 속하는
+            평균 연간 소득 <span class="font-bold">{{ averageAnnualIncome }}</span> 원과 비교할 때,<br> 사용자의 소득은 평균을 초과합니다.
           </p>
         </div>
         <!-- 주황색 원 (5분위) -->
         <div class="absolute top-[-30px] right-[50px] transform translate-x-10 translate-y-10 rounded-full bg-gradient-to-b from-kb-yellow-10 to-kb-yellow-9 shadow-md h-[150px] w-[150px] flex items-center justify-center">
-          <p class="font-semibold text-center text-[40px]">5분위</p>
+          <p class="font-semibold text-center text-[40px]">{{incomeRange}}분위</p>
         </div>
       </div>
       <!-- 소득 및 지출 비율 차이 작은 원 -->
@@ -27,7 +28,7 @@
         class="absolute top-[130px] right-[-80px] rounded-full bg-gradient-to-b from-kb-pink-8 to-kb-pink-5 shadow-md h-[180px] w-[180px] flex items-center justify-center cursor-pointer"
         @click="toggleHashTags"
       >
-        <p class="text-[20px] font-semibold text-center">36% 초과<br>개선하고 싶다면?<br>(클릭)</p>
+        <p class="text-[20px] font-semibold text-center">36% 초과<br>개선하고 싶다면?<br> click</p>
       </div>
     </div>
 
@@ -37,13 +38,13 @@
         class="bg-white shadow-md rounded-lg transition-all duration-500 ease-in-out overflow-hidden"
         :class="isExpanded ? 'w-[400px] h-[400px] opacity-100' : 'w-[0px] h-[0px] opacity-0'"
       >
-        <div v-if="isExpanded" class="flex flex-col space-y-4 p-6">
+        <div v-if="isExpanded" class="flex flex-col space-y-4 p-6 items-center">
           <div 
             v-for="(tag, index) in hashtags" 
             :key="index" 
             class="text-font-color p-4 rounded-lg transition-all duration-300 hover:bg-kb-yellow-9"
           >
-            <p class="font-semibold text-[20px] text-font-color">#{{ tag }}</p>
+            <p class=" font-semibold text-[20px] text-font-color">#{{ tag }}</p>
           </div>
         </div>
       </div>
