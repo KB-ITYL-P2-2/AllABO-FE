@@ -16,76 +16,86 @@
     </div>
   </div>
 
-  <div class="border-t-2  w-full mt-4">
+  <div class="border-t-2 w-full mt-4">
     <div v-if="selectedCategory === 'category1'" class="mt-10">
-      <!-- <p class="text-[20px] text-center text-font-color mr-[450px]">카드 상품이 없습니다.</p> -->
-      <!--있는경우-->
-      <div
-        v-for="(card, index) in likeCards"
-        :key="index"
-        class="w-[850px] flex items-center justify-between border p-4 mb-4 ml-[90px] rounded-[15px]"
-      >
-        <img :src="card.icon" alt="카드 이미지" class="w-14 h-20 rounded-md" />
-        <p class="text-[20px] text-font-color">{{ card.name }}</p>
-        <button class="p-3 ml-4 bg-white rounded-full">
-          <font-awesome-icon
-            :icon="['far', 'heart']"
-            class="text-kb-yellow-3"
-            size="xl"
-          />
-        </button>
+      <div v-for="(card, index) in cardData" :key="index"
+        class="relative flex w-full gap-4 p-5 cursor-pointer hover:bg-gray-50"
+        :class="index != nowItemIndex && 'border-b'">
+
+        <!-- 이미지 -->
+        <div class="relative w-20 h-20 rotate-90">
+          <div class="absolute w-full h-full rounded-full bg-kb-yellow-3 blur-sm"></div>
+          <img :src="card.url.imageUrl" class="absolute top-[14px]" alt="카드 이미지" />
+        </div>
+
+        <!-- 내용 -->
+        <div class="flex flex-col justify-center">
+          <h1 class="text-[18px]">{{ card.name }}</h1>
+          <h3 class="text-[14px] mt-2 text-kb-gray-1">{{ card.content }}</h3>
+        </div>
+
+        <div class="absolute right-3 top-[30%] flex items-center gap-2">
+          <button class="p-2 ml-4 bg-white rounded-full shadow-lg">
+            <font-awesome-icon :icon="['far', 'heart']" class="text-kb-yellow-3" size="xl" />
+          </button>
+          <button>
+            <svg v-if="index != nowItemIndex" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6 text-kb-gray-1">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
+
+            <svg v-if="index == nowItemIndex" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-6 text-kb-gray-1">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
-    <div v-else-if="selectedCategory === 'category2'" class="mt-8">
-      <div
-        v-for="(deposit, index) in likeDeposit"
-        :key="index"
-        class="w-[850px] flex items-center justify-between border p-4 mb-4 ml-[90px] rounded-[15px] bg-kb-yellow-4"
-      >
-        <p class="text-[20px] text-font-color">{{ deposit.name }}</p>
-        <button class="p-3 ml-4 bg-white rounded-full">
-          <font-awesome-icon
-            :icon="['far', 'heart']"
-            class="text-kb-yellow-3"
-            size="xl"
-          />
-        </button>
+
+    <div v-else-if="selectedCategory === 'category2'" class="mt-10">
+      <div v-for="(deposit, index) in depositData" :key="index"
+        class="relative flex w-full gap-4 p-5 cursor-pointer hover:bg-gray-50"
+        :class="index != nowItemIndex && 'border-b'">
+
+        <!-- 이미지 -->
+        <div class="relative w-20 h-20">
+          <!-- <div class="absolute w-full h-full rounded-full bg-kb-yellow-3 blur-sm"></div> -->
+          <img :src="deposit.url.imageUrl" class="absolute top-[14px]" alt="예금 이미지" />
+        </div>
+
+        <!-- 내용 -->
+        <div class="flex flex-col justify-center">
+          <h1 class="text-[18px]">{{ deposit.name }}</h1>
+          <h3 class="text-[14px] mt-2 text-kb-gray-1">{{ deposit.content }}</h3>
+        </div>
+
+        <div class="absolute right-3 top-[30%] flex items-center gap-2">
+          <button class="p-2 ml-4 bg-white rounded-full shadow-lg">
+            <font-awesome-icon :icon="['far', 'heart']" class="text-kb-yellow-3" size="xl" />
+          </button>
+        </div>
       </div>
     </div>
+
     <div v-else-if="selectedCategory === 'category3'" class="mt-8">
-      <p class="text-[20px] text-center text-font-color mr-[450px]">
-        보험 상품이 없습니다.
-      </p>
-      <button
-        @click="router.push('/products')"
-        class="text-center mt-8 underline text-kb-gray-2 ml-[190px]"
-      >
-        상품 보러가기 &gt;
+      <p class="text-[20px] text-center text-font-color mr-[450px]">찜한 보험 상품이 없어요.</p>
+      <button @click="router.push('/all-products')" class="text-center mt-2 underline text-kb-gray-2 ml-[190px]">
+        전체 상품 보러가기 &gt;
       </button>
     </div>
+
     <div v-else-if="selectedCategory === 'category4'" class="mt-8">
-      <p class="text-[20px] text-center text-font-color mr-[450px]">
-        대출 상품이 없습니다.
-      </p>
-      <button
-        @click="router.push('/products')"
-        class="text-center mt-8 underline text-kb-gray-2 ml-[190px]"
-      >
-        상품 보러가기 &gt;
+      <p class="text-[20px] text-center text-font-color mr-[433px]">찜한 대출 상품이 없습니다.</p>
+      <button @click="router.push('/all-products')" class="text-center  mt-2 underline text-kb-gray-2 ml-[190px]">
+        전체 상품 보러가기 &gt;
       </button>
     </div>
+
     <div v-else class="mt-8">
-      <p class="text-[20px] text-center text-font-color mr-[450px]">
-        아직 찜한 상품이 없어요.
-      </p>
-      <button
-        @click="router.push('/products')"
-        class="text-center mt-8 underline text-kb-gray-2 ml-[190px]"
-      >
-        상품 보러가기 &gt;
+      <p class="text-[20px] text-center text-font-color mr-[450px]">아직 찜한 상품이 없어요.</p>
+      <button @click="router.push('/all-products')" class="text-center mt-2 underline text-kb-gray-2 ml-[190px]">
+        전체 상품 보러가기 &gt;
       </button>
     </div>
-    <!--추후에 전체 상품으로 연결-->
   </div>
 </template>
 
@@ -95,19 +105,145 @@ import { ref } from "vue";
 
 const router = useRouter();
 const selectedCategory = ref("category0");
-const likeCards = ref([
-  { name: "WE:SH All 카드", icon: "/images/Products/card1.png" },
-  { name: "톡톡 pay카드 ", icon: "/images/Products/card2.png" },
-  { name: "우리동네 체크카드(키뮤)", icon: "/images/Products/card3.png" },
-  { name: "우리동네 체크카드(키뮤)", icon: "/images/Products/card3.png" },
-  { name: "우리동네 체크카드(키뮤)", icon: "/images/Products/card3.png" },
+const nowItemIndex = ref(null); // 현재 아이템 인덱스
+const cardData = ref([
+  {
+    name: "첵첵 체크카드(마루는강쥐)",
+    content: "마루와 함께 혜택도 첵첵!",
+    data: {
+      category: "할인",
+    },
+    url: {
+      imageUrl: "https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/01760_img.png",
+      pageUrl: "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=01760",
+    },
+  },
+  {
+    name: "첵첵 체크카드(마루는강쥐)",
+    content: "마루와 함께 혜택도 첵첵!",
+    data: {
+      category: "할인",
+    },
+    url: {
+      imageUrl: "https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/01760_img.png",
+      pageUrl: "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=01760",
+    },
+  },
+  {
+    name: "첵첵 체크카드(마루는강쥐)",
+    content: "마루와 함께 혜택도 첵첵!",
+    data: {
+      category: "할인",
+    },
+    url: {
+      imageUrl: "https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/01760_img.png",
+      pageUrl: "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=01760",
+    },
+  },
+  {
+    name: "첵첵 체크카드(마루는강쥐)",
+    content: "마루와 함께 혜택도 첵첵!",
+    data: {
+      category: "할인",
+    },
+    url: {
+      imageUrl: "https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/01760_img.png",
+      pageUrl: "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=01760",
+    },
+  },
+  {
+    name: "첵첵 체크카드(마루는강쥐)",
+    content: "마루와 함께 혜택도 첵첵!",
+    data: {
+      category: "할인",
+    },
+    url: {
+      imageUrl: "https://img1.kbcard.com/ST/img/cxc/kbcard/upload/img/product/01760_img.png",
+      pageUrl: "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=01760",
+    },
+  }
+
 ]);
-const likeDeposit = ref([
-  { name: "KB Star 정기예금" },
-  { name: "국민수퍼정기예금(개인)" },
-  { name: "KB국민UP정기예금" },
-  { name: "KB차차차 적금" },
-  { name: "KB맑은하늘적금" },
-  { name: "KB장병내일준비적금" },
-]);
+const depositData =ref([
+  {
+    name: "KB Star 정기예금1",
+    content: "Digital KB의 대표 정기예금",
+    data: {
+      category: "예금",
+      date: "1~36개월",
+      interestRate: "연 2.7% ~ 3.4%",
+    },
+    url: {
+      imageUrl: "/images/Mypage/my_deposit.png",
+      pageUrl: "https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=N&prcode=DP01000938",
+    },
+  },
+  {
+    name: "KB Star 정기예금2",
+    content: "Digital KB의 대표 정기예금",
+    data: {
+      category: "예금",
+      date: "1~36개월",
+      interestRate: "연 2.7% ~ 3.4%",
+    },
+    url: {
+      imageUrl: "/images/Mypage/my_deposit.png",
+      pageUrl: "https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=N&prcode=DP01000938",
+    },
+  },
+  {
+    name: "KB Star 정기예금3",
+    content: "Digital KB의 대표 정기예금",
+    data: {
+      category: "예금",
+      date: "1~36개월",
+      interestRate: "연 2.7% ~ 3.4%",
+    },
+    url: {
+      imageUrl: "/images/Mypage/my_deposit.png",
+      pageUrl: "https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=N&prcode=DP01000938",
+    },
+  },
+  {
+    name: "KB Star 정기예금4",
+    content: "Digital KB의 대표 정기예금",
+    data: {
+      category: "예금",
+      date: "1~36개월",
+      interestRate: "연 2.7% ~ 3.4%",
+    },
+    url: {
+      imageUrl: "/images/Mypage/my_deposit.png",
+      pageUrl: "https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=N&prcode=DP01000938",
+    },
+  },
+  {
+    name: "KB Star 정기예금5",
+    content: "Digital KB의 대표 정기예금",
+    data: {
+      category: "예금",
+      date: "1~36개월",
+      interestRate: "연 2.7% ~ 3.4%",
+    },
+    url: {
+      imageUrl: "/images/Mypage/my_deposit.png",
+      pageUrl: "https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=N&prcode=DP01000938",
+    },
+  },
+  {
+    name: "KB Star 정기예금6",
+    content: "Digital KB의 대표 정기예금",
+    data: {
+      category: "예금",
+      date: "1~36개월",
+      interestRate: "연 2.7% ~ 3.4%",
+    },
+    url: {
+      imageUrl: "/images/Mypage/my_deposit.png",
+      pageUrl: "https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=N&prcode=DP01000938",
+    },
+  },
+  ]);
+
+
 </script>
