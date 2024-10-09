@@ -86,7 +86,7 @@
     </swiper-slide>
 
     <swiper-slide v-for="(item, index) in data" :key="index">
-      <ProductsAllView :item="item" />
+      <Top3Products :item="item" />
     </swiper-slide>
 
     <!-- 네비게이션 -->
@@ -121,7 +121,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import CategoryButton from "../components/Products/CategoryButton.vue";
-import ProductsAllView from "../components/Products/ProductsAllView.vue";
+import Top3Products from "../components/Products/Top3Products.vue";
 
 import LAYOUT_VARIANTS from "../constant/layout.js";
 import productCategoryData from "../constant/productCategoryData.js";
@@ -194,7 +194,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-:deep .swiper-pagination {
+:deep(.swiper-pagination) {
   display: none !important;
 }
 

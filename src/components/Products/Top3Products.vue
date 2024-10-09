@@ -47,13 +47,16 @@
 
     <!-- 전체 조회 버튼 -->
     <div class="z-0 mt-8">
-      <button class="p-2 border border-gray-400 rounded-[10px] text-font-color bg-white">{{ `${item.title} 전체 조회` }}</button>
+      <button class="p-2 border border-gray-400 rounded-[10px] text-font-color bg-white" @click="()=>{router.push('/all-products')}">{{ `${item.title} 전체 조회` }}</button>
     </div>
   </div>
 </template>
 
 <script setup>
 import { computed, onBeforeMount, ref, watch } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter()
 
 import ProductsCards from "./ProductsAllView/ProductsCards.vue";
 import LAYOUT_VARIANTS from "../../constant/layout";
