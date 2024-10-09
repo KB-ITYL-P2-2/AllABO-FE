@@ -21,10 +21,16 @@ const router=createRouter({
     history:createWebHistory(), //라우팅 모드 
     routes:[
         {path:'/',component:MainPage},
+
         {path:'/products',component:Products},
         {path:'/products/survey',component:Survey},
+        {path:'/all-products', component: AllProducts},
+
         {path:'/asset-detail',component:AssetDetail},
+        {path:'/asset-analyze',component:AssetAnalyze},
+
         {path:'/asset-plan',component:AssetPlan},
+
         {path:'/mypage',name: 'MyPage',component:MyPage,props:true},
         {path:'/login',name: 'Login',component:Login},
         {path:'/signup-condition',component:SignCondition},
@@ -33,8 +39,6 @@ const router=createRouter({
         {path:'/mypage-profile',component:EditProfile},
         {path:'/mypage-password',component:EditPassword},
         {path:'/mypage-withdraw',component:WithdrawMember},
-        {path:'/asset-analyze',component:AssetAnalyze},
-        {path:'/all-products', component: AllProducts},
         
         {path:'/kakao-redirect',component:KakaoRedirectPage},
     ]
