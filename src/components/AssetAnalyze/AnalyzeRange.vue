@@ -19,7 +19,7 @@
           </p>
         </div>
         <!-- 주황색 원 (5분위) -->
-        <div class="absolute top-[-30px] right-[50px] transform translate-x-10 translate-y-10 rounded-full bg-gradient-to-b from-kb-yellow-10 to-kb-yellow-10 shadow-md h-[150px] w-[150px] flex items-center justify-center">
+        <div class="absolute top-[-30px] right-[50px] transform translate-x-10 translate-y-10 rounded-full bg-gradient-to-b from-kb-yellow-9 to-kb-yellow-10 shadow-md h-[150px] w-[150px] flex items-center justify-center">
           <p class="font-semibold text-center text-[40px]">{{incomeRange}}분위</p>
         </div>
       </div>
@@ -42,7 +42,7 @@
           <div 
             v-for="(tag, index) in hashtags" 
             :key="index" 
-            class="text-font-color p-4 rounded-lg transition-all duration-300 hover:bg-kb-yellow-10"
+            class="text-font-color p-4 rounded-lg transition-all duration-300 hover:bg-kb-yellow-11"
           >
             <p class=" font-semibold text-[20px] text-font-color">#{{ tag }}</p>
           </div>
