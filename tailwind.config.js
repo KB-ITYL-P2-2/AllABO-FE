@@ -17,6 +17,8 @@ module.exports = {
         'kb-yellow-6':"#E1CD9F",
         "kb-yellow-7":"#FFDB20",
         "kb-yellow-8":"#FFF8CE",
+        "kb-yellow-9":"#FBEDA4",
+        "kb-yellow-10":"#FFCD4E",
 
 
         'kb-brown-1':"#535046",
@@ -40,6 +42,7 @@ module.exports = {
         'kb-pink-5':"#F8D8D8",
         'kb-pink-6':"#885757",
         "kb-pink-7":"#FF8484",
+        'kb-pink-8':"#FF8863",
 
         'kb-blue-1':"#BBE4E7",
         'kb-blue-2':"#D6E0F8",
