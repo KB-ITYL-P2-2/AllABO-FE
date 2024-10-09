@@ -1,9 +1,9 @@
 <template>
   <div class="h-screen flex flex-col">
-    <div class="fixed w-full h-[35vh] bg-kb-brown-1 flex flex-col items-center justify-center">
+    <div class="fixed w-full h-[35vh] bg-kb-yellow-4 flex flex-col items-center justify-center">
       <div class="h-[70px]"></div>
       <div class="flex justify-center mt-[30px]">
-        <div class="text-3xl font-bold text-white">회원가입</div>
+        <div class="text-3xl font-bold text-kb-brown-1">회원가입</div>
         <div class="h-[80px] bg-kb-brown-1"></div>
       </div>
       <div class="">
@@ -13,9 +13,9 @@
           <img alt="circle" :src="currentStep >= 2 ? fullCircle : emptyCircle" class="mx-7 w-5 h-5" />
           <img alt="circle" :src="currentStep >= 3 ? fullCircle : emptyCircle" class="mx-7 w-5 h-5" />
         </div>
-        <div class="flex justify-center mt-[20px] text-white">
-          <p class="mx-4 text-[14px] text-white font-semibold">약관동의</p>
-          <p class="mx-4 text-[14px] text-white">정보입력</p>
+        <div class="flex justify-center mt-[20px] text-kb-brown-1">
+          <p class="mx-4 text-[14px]font-semibold">약관동의</p>
+          <p class="mx-4 text-[14px]">정보입력</p>
           <p class="mx-4 text-[14px] mb-[10px]">회원가입</p>
         </div>
       </div>

@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col h-screen">
     <!-- 상단 40% 배경 -->
-    <div class="h-[35vh] bg-kb-brown-1 flex flex-col items-center justify-center">
-      <div class="mt-10 text-3xl font-bold text-white">F:YL</div>
+    <div class="h-[35vh] bg-kb-yellow-4 flex flex-col items-center justify-center">
+      <div class="mt-10 text-3xl font-bold text-brown-1">F:YL</div>
     </div>
 
     <!-- 나머지 60% 배경 -->
