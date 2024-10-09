@@ -77,23 +77,23 @@
     </div>
 
     <div v-else-if="selectedCategory === 'category3'" class="mt-8">
-      <p class="text-[20px] text-center text-font-color mr-[450px]">보험 상품이 없습니다.</p>
-      <button @click="router.push('/products')" class="text-center mt-8 underline text-kb-gray-2 ml-[190px]">
-        상품 보러가기 &gt;
+      <p class="text-[20px] text-center text-font-color mr-[450px]">찜한 보험 상품이 없어요.</p>
+      <button @click="router.push('/all-products')" class="text-center mt-2 underline text-kb-gray-2 ml-[190px]">
+        전체 상품 보러가기 &gt;
       </button>
     </div>
 
     <div v-else-if="selectedCategory === 'category4'" class="mt-8">
-      <p class="text-[20px] text-center text-font-color mr-[450px]">대출 상품이 없습니다.</p>
-      <button @click="router.push('/products')" class="text-center mt-8 underline text-kb-gray-2 ml-[190px]">
-        상품 보러가기 &gt;
+      <p class="text-[20px] text-center text-font-color mr-[433px]">찜한 대출 상품이 없습니다.</p>
+      <button @click="router.push('/all-products')" class="text-center  mt-2 underline text-kb-gray-2 ml-[190px]">
+        전체 상품 보러가기 &gt;
       </button>
     </div>
 
     <div v-else class="mt-8">
       <p class="text-[20px] text-center text-font-color mr-[450px]">아직 찜한 상품이 없어요.</p>
-      <button @click="router.push('/products')" class="text-center mt-8 underline text-kb-gray-2 ml-[190px]">
-        상품 보러가기 &gt;
+      <button @click="router.push('/all-products')" class="text-center mt-2 underline text-kb-gray-2 ml-[190px]">
+        전체 상품 보러가기 &gt;
       </button>
     </div>
   </div>
