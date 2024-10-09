@@ -19,6 +19,9 @@
     <div class="section h-screen  items-center bg-asset-back">
       <AnalyzeRange/>
     </div>
+    <div class="section h-screen  items-center bg-asset-back">
+      <AnalyzeButton/>
+    </div>
 
 </template>
 
@@ -28,6 +31,7 @@ import TotalText from "../components/AssetAnalyze/TotalText.vue";
 import AnalyzeDebt from "../components/AssetAnalyze/AnalyzeDebt.vue";
 import AnalyzeSavings from "../components/AssetAnalyze/AnalyzeSavings.vue";
 import AnalyzeRange from "../components/AssetAnalyze/AnalyzeRange.vue";
+import AnalyzeButton from "../components/AssetAnalyze/AnalyzeButton.vue";
 
 </script>
 

@@ -86,7 +86,6 @@ onMounted(() => { //원 보일때 애니메이션
   }
 });
 
-// 원 클릭 시 해시태그와 확장 영역을 토글하는 함수
 const toggleHashTags = () => {
   isExpanded.value = !isExpanded.value;
 };
