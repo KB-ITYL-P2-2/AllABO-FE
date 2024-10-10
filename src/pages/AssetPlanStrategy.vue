@@ -1,7 +1,5 @@
 <template>
   <div class="h-screen">
-    <div class="h-[70px] bg-kb-brown-1"></div>
-
     <StrategyForPrivate />
   </div>
 </template>

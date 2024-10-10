@@ -25,6 +25,6 @@ const router = useRouter()
 const navItem = [
   { id: "01", text: "맞춤 개선 전략", url: "/asset-plan/strategy"},
   { id: "02", text: "1년 후 예상 자산", url: ""},
-  { id: "03", text: "보험 리밸런싱", url: ""},
+  { id: "03", text: "보험 리밸런싱", url: "asset-plan/insurance"},
 ];
 </script>

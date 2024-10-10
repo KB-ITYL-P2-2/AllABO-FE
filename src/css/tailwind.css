@@ -4,6 +4,7 @@
 
 *{
   box-sizing: border-box;
+  user-select: none;
 }
 
 body{-ms-overflow-style:none; }body::-webkit-scrollbar { display:none; }
@@ -29,9 +30,9 @@ body{-ms-overflow-style:none; }body::-webkit-scrollbar { display:none; }
     background-repeat: no-repeat;
   }
 
-  .bg-insurance-back {
-    background-image: url('/images/AssetPlan/insurance-back');
-    background-size: 100% auto;
+  .bg-rebalancing-back {
+    background-image: url('/images/AssetPlan/rebalancing-back.png');
+    background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
   }
