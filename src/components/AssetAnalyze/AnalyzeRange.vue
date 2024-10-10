@@ -38,25 +38,21 @@
       </div>
       <!-- 소득 및 지출 비율 차이 작은 원 -->
       <div 
-        class="absolute top-[130px] right-[-80px] rounded-full bg-gradient-to-b from-kb-pink-8 to-kb-pink-5 shadow-md h-[180px] w-[180px] flex items-center justify-center cursor-pointer"
-        @click="toggleHashTags"
-      >
-        <p class="text-[20px] font-semibold text-center">36% 초과<br>개선하고 싶다면?<br> click</p>
+        class="absolute top-[130px] right-[-80px] rounded-full bg-gradient-to-b from-kb-pink-8 to-kb-pink-5 shadow-md h-[180px] w-[180px] flex items-center justify-center">
+        <p class="text-[32px] font-semibold text-center">36% 초과</p>
       </div>
     </div>
 
     <!-- 해시태그 -->
     <div class="relative mt-20">
       <div 
-        class="bg-white shadow-md rounded-lg transition-all duration-500 ease-in-out overflow-hidden"
-        :class="isExpanded ? 'w-[400px] h-[400px] opacity-100' : 'w-[0px] h-[0px] opacity-0'"
-      >
-        <div v-if="isExpanded" class="flex flex-col space-y-4 p-6 items-center">
+        class="bg-white shadow-md rounded-lg transition-all duration-500 ease-in-out overflow-hidden grow-animation-hash" 
+        :class="isVisible ? 'w-[400px] h-[400px] opacity-100' : 'w-[0px] h-[0px] opacity-0'">
+        <div v-if="isVisible" class="flex flex-col space-y-4 p-6 items-center">
           <div 
             v-for="(tag, index) in hashtags" 
             :key="index" 
-            class="text-font-color p-4 rounded-lg transition-all duration-300 hover:bg-kb-yellow-10"
-          >
+            class="text-font-color p-4 rounded-lg transition-all duration-300 hover:bg-kb-yellow-10">
             <p class=" font-semibold text-[20px] text-font-color">#{{ tag }}</p>
           </div>
         </div>
@@ -69,12 +65,10 @@
 import { ref, onMounted } from 'vue';
 
 const hashtags = ["지출관리필요", "소득대비소비지출높음", "20대재정리스크", "소득대비지출초과"];
-const isExpanded = ref(false);
 const userMonthlyIncome = 3000000; 
 const userAnnualIncome = userMonthlyIncome * 12;
 const incomeRange = 5; 
 const averageAnnualIncome = 28000000; 
-
 const isVisible = ref(false);
 const yellowCircle = ref(null);
 
@@ -89,7 +83,7 @@ const observerCallback = (entries) => {
 
 let observer;
 
-onMounted(() => { //원 보일때 애니메이션
+onMounted(() => { 
   observer = new IntersectionObserver(observerCallback, {
     threshold: 0.1
   });
@@ -98,10 +92,6 @@ onMounted(() => { //원 보일때 애니메이션
     observer.observe(yellowCircle.value); // yellowCircle 요소를 옵저버에 추가
   }
 });
-
-const toggleHashTags = () => {
-  isExpanded.value = !isExpanded.value;
-};
 </script>
 
 <style scoped>
@@ -117,6 +107,21 @@ const toggleHashTags = () => {
 }
 
 .grow-animation {
-  animation: grow 1s ease-out forwards; 
+  animation: grow 1.5s ease-out forwards; 
+}
+
+@keyframes grow-hash {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.grow-animation-hash {
+  animation: grow-hash 1.5s ease-out forwards; 
 }
 </style>
