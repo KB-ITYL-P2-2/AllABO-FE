@@ -12,9 +12,13 @@
               @click="handleClick(index)"  
               :class="getButtonClass(index)"
               :style="getButtonStyle(index)"
-              class="ml-8"
-            >
+              class="ml-10 mt-16 relative flex items-center"
+            >    
               {{ btn }}
+              <span 
+              class="block w-3 h-3 rounded-full" 
+              :class="{'bg-kb-yellow-1': focusedIndex === index, 'bg-kb-gray-2': focusedIndex !== index}"
+            ></span>
             </button>
           </div>
         </div>
@@ -33,10 +37,13 @@
         </div>
       </div>
 
-      <!-- 오른쪽 노트북 이미지 -->
-      <div class="flex items-center justify-center">
-        <div class="bg-[url('/images/MainPage/macbook.png')] w-[1000px] h-[400px] bg-contain bg-no-repeat"></div>
-      </div>
+  <!-- 오른쪽 노트북 이미지 -->
+  <div class="flex items-center justify-center">
+    <div
+      :style="{ backgroundImage: `url(${currentItem.image})` }"
+      class="bg-contain bg-no-repeat w-[1000px] h-[400px]"
+    ></div>
+  </div>
     </div>
   </div>
 </template>
@@ -52,44 +59,49 @@ const data = ref([
     mainContent: "사용자 맞춤 상품 추천",
     subContent: "예금, 적금 부터 보험 대출 그리고 카드까지\n사용자 맞춤형 서비스 제공",
     buttonText: "상품 추천 받으러 가기",
+    image: "/images/MainPage/macbook1.png", 
+
   },
   {
     title: "자산 분석 서비스",
     mainContent: "개인 자산 분석 비교 한번에",
     subContent: "연령, 소득, 소비 등\n사용자에 맞는 개인 자산 분석 비교 결과 제공",
     buttonText: "자산 분석 하러 가기",
+    image: "/images/MainPage/macbook2.png", 
+
   },
   {
     title: "자산 설계 서비스",
     mainContent: "개인 자산 맞춤 설계",
     subContent: "소비 패턴, 투자 성향 등을 토대로\n개인 자산 맞춤 설계 서비스 제공",
     buttonText: "자산 설계 하러 가기",
+    image: "/images/MainPage/macbook3.png", 
+
   },
 ]);
 
 // 버튼 목록
 const buttons = ref(["맞춤\n상품", "자산\n분석", "자산\n설계"]);
-const focusedIndex = ref(0);  // 선택된 인덱스를 저장
+const focusedIndex = ref(0); 
 
 // 클릭 시 인덱스를 업데이트하는 함수
 const handleClick = (index) => {
-  focusedIndex.value = index;  // 클릭된 버튼의 인덱스를 업데이트
+  focusedIndex.value = index;
 };
 
-// 현재 선택된 데이터를 가져오는 함수
+// 현재 선택된 데이터 가져오기 
 const currentItem = computed(() => data.value[focusedIndex.value]);
 
-// 버튼의 위치를 계산하는 함수 (작은 원 안에 배치)
 const getButtonStyle = (index) => {
-  const radius = 90;  // 작은 원 반지름
-  const angle = (index * (120 / buttons.value.length) - focusedIndex.value * (90 / buttons.value.length)) * (Math.PI / 180);
+  const radius = 120; //작은 원 반지름
+  const angle = (index * (120 / buttons.value.length) - focusedIndex.value * (150 / buttons.value.length)) * (Math.PI / 180);
   const x = radius * Math.cos(angle);
   const y = radius * Math.sin(angle);
 
   return {
     position: 'absolute',
-    left: `${x + 150}px`,
-    top: `${y + 150}px`,
+    left: `${x + 100}px`,
+    top: `${y + 100}px`,
     transform: 'translate(-50%, -50%)',
     transition: 'all 0.5s ease',
   };
