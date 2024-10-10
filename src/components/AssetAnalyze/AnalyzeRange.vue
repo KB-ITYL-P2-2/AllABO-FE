@@ -9,29 +9,18 @@
     <div class="relative flex flex-col justify-center items-center" ref="yellowCircle">
       <div class="relative">
         <!-- 큰 노란 원 -->
-        <div class="flex flex-col items-start justify-center rounded-full bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 shadow-lg h-[550px] w-[550px] text-left px-8" :class="{ 'grow-animation': isVisible }">
-          <div class="ml-10">
-            <p class="text-[20px]">사용자 월 소득 :
-              <span class="text-[32px] font-semibold">{{ userMonthlyIncome }}</span> 만 원
-            </p>
-            <p class="text-[20px]">연간 소득 :
-              <span class="text-[32px] font-semibold">{{ userAnnualIncome }}</span> 만 원
-            </p>
+        <div class="flex flex-col items-center justify-center rounded-full bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 shadow-lg h-[550px] w-[550px] text-center px-8" :class="{ 'grow-animation': isVisible }">
+          <div class="flex flex-col space-y-4 p-6 items-center">
+            <div 
+              v-for="(tag, index) in hashtags" 
+              :key="index" 
+              class="text-font-color p-4 rounded-lg transition-all duration-300 hover:bg-kb-yellow-10">
+              <p class="font-semibold text-kb-brown-1 text-[24px]">#{{ tag }}</p>
+            </div>
           </div>
-         <div class="mt-4 ml-8">
-          <p class="text-[20px]">소득 5분위를 기준으로<br>
-            <span class="font-semibold text-[32px]">000 </span><span class="text-[24px]"> 님은 </span>
-            <span class="font-semibold text-[32px]">{{ incomeRange }} 분위</span>에 속합니다.<br>
-           <div class="mt-4">
-            <span class="font-semibold text-[32px]">{{ incomeRange }} 분위</span>에 속하는<br>
-            평균 연간 소득 <span class="font-semibold text-[32px]">{{ averageAnnualIncome }}</span> 원과 비교할 때,<br>
-            사용자의 소득은 평균을 <span class="font-semibold text-[32px]">초과</span> 합니다.
-           </div>
-          </p>
-         </div>
         </div>
         
-        <!-- 주황색 원 (5분위) -->
+        <!-- 주황색 원  -->
         <div class="absolute top-[-30px] right-[50px] transform translate-x-10 translate-y-10 rounded-full bg-gradient-to-b from-kb-yellow-9 to-kb-yellow-10 shadow-md h-[150px] w-[150px] flex items-center justify-center">
           <p class="font-semibold text-center text-[40px]">{{incomeRange}}분위</p>
         </div>
@@ -43,18 +32,28 @@
       </div>
     </div>
 
-    <!-- 해시태그 -->
-    <div class="relative mt-20">
-      <div 
-        class="bg-white shadow-md rounded-lg transition-all duration-500 ease-in-out overflow-hidden grow-animation-hash" 
-        :class="isVisible ? 'w-[400px] h-[400px] opacity-100' : 'w-[0px] h-[0px] opacity-0'">
-        <div v-if="isVisible" class="flex flex-col space-y-4 p-6 items-center">
-          <div 
-            v-for="(tag, index) in hashtags" 
-            :key="index" 
-            class="text-font-color p-4 rounded-lg transition-all duration-300 hover:bg-kb-yellow-10">
-            <p class=" font-semibold text-[20px] text-font-color">#{{ tag }}</p>
-          </div>
+    <!-- 텍스트 영역 -->
+    <div class="relative mt-16">
+      <div class="bg-white shadow-md rounded-lg transition-all duration-500 ease-in-out overflow-hidden grow-animation-hash" 
+        :class="isVisible ? 'w-[500px] h-[500px] opacity-100' : 'w-[0px] h-[0px] opacity-0'">
+        <div v-if="isVisible" class="flex flex-col space-y-4 p-6 items-start ml-10">
+          <p class="mt-8 text-[20px]">사용자 월 소득 :
+            <span class="text-kb-brown-1 text-[28px] font-semibold">{{ userMonthlyIncome }}</span> 만 원
+          </p>
+          <p class="text-[20px]">연간 소득 :
+            <span class="text-kb-brown-1 text-[28px] font-semibold">{{ userAnnualIncome }}</span> 만 원
+          </p>
+         <div>
+         <div class="mt-10">
+          <p class="text-[20px] mt-4">소득 5분위를 기준으로<br>
+            <span class="font-semibold text-[28px] text-kb-brown-1">000 </span><span class="text-[24px]"> 님은 </span>
+            <span class="text-kb-yellow-1 font-semibold text-[28px]">{{ incomeRange }} 분위</span>에 속합니다.<br>
+            <span class="text-kb-yellow-1 font-semibold text-[28px]">{{ incomeRange }} 분위</span>에 속하는<br>
+            평균 연간 소득 <span class="text-kb-brown-1 font-semibold text-[28px]">{{ averageAnnualIncome }}</span> 원과 비교할 때,<br>
+            사용자의 소득은 평균을 <span class="text-kb-pink-8 font-semibold text-[28px]">초과</span> 합니다.
+          </p>
+         </div>
+         </div>
         </div>
       </div>
     </div>
@@ -107,7 +106,7 @@ onMounted(() => {
 }
 
 .grow-animation {
-  animation: grow 1.5s ease-out forwards; 
+  animation: grow 2s ease-out forwards; 
 }
 
 @keyframes grow-hash {
@@ -122,6 +121,6 @@ onMounted(() => {
 }
 
 .grow-animation-hash {
-  animation: grow-hash 1.5s ease-out forwards; 
+  animation: grow-hash 2s ease-out forwards; 
 }
 </style>
