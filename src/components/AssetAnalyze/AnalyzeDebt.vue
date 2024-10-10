@@ -83,14 +83,14 @@
     </div>
   </div>
   <p class="  mt-10 flex justify-center text-[20px] text-kb-gray-2">
-    자세한 결과를 보고 싶다면 결과를 눌러주세요 >
+    자세한 결과를 보고 싶다면 분석 결과를 클릭하여 확인하세요
   </p>
 </template>
 
 <script setup>
-import AssetGraph from "./AssetGraph.vue";
-import DebtGraph from "./DebtGraph.vue";
-import IncomeGraph from "./IncomeGraph.vue";
+import AssetGraph from "./graph/AssetGraph.vue";
+import DebtGraph from "./graph/DebtGraph.vue";
+import IncomeGraph from "./graph/IncomeGraph.vue";
 import { ref } from "vue";
 
 // 데이터 상태 관리
@@ -100,7 +100,7 @@ const compareAssetDebt = ref("168.59");
 const compareIncomeDebt = ref("44.74");
 
 // 첫 번째 값 (총 자산)
-const userTotalAssets = ref(12070);
+const userTotalAssets = ref(15000);
 const averageTotalAssets = ref(6579);
 
 // 두 번째 값 (자산 대비 부채율)

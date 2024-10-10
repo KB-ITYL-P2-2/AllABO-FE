@@ -17,6 +17,9 @@ module.exports = {
         'kb-yellow-6':"#E1CD9F",
         "kb-yellow-7":"#FFDB20",
         "kb-yellow-8":"#FFF8CE",
+        "kb-yellow-9":"#FFEA7F",
+        "kb-yellow-10":"#FBEDA4",
+        "kb-yellow-11":"#FFCD4E",
 
 
         'kb-brown-1':"#535046",
@@ -24,6 +27,7 @@ module.exports = {
         'kb-brown-3':"#897552",
         'kb-brown-4':"#563A3A",
         'kb-brown-5':"#635D38",
+        'kb-brown-6':"#69571A",
 
         'kb-gray-1':"#85888B",     
         'kb-gray-2':"#B8B8BC",
@@ -39,6 +43,7 @@ module.exports = {
         'kb-pink-5':"#F8D8D8",
         'kb-pink-6':"#885757",
         "kb-pink-7":"#FF8484",
+        'kb-pink-8':"#FF8863",
 
         'kb-blue-1':"#BBE4E7",
         'kb-blue-2':"#D6E0F8",
@@ -49,10 +54,10 @@ module.exports = {
       
 
         'kb-green-1':"#DBF2BB",
-       /* 분석 총 자산  색깔 바뀔 수도있어서 일단 이름 이렇게 저장  */
-        'kb-total-1':"#69571A",
-        'kb-total-2':"#A19567",
-        'kb-total-3':"#C5BD9F"
+
+        // 'kb-total-1':"#69571A",
+        // 'kb-total-2':"#A19567",
+        // 'kb-total-3':"#C5BD9F"
 
       },
       keyframes:{},

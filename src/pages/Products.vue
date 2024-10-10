@@ -21,20 +21,20 @@
     <swiper-slide>
       <div class="relative w-screen h-screen overflow-hidden">
         <div
-          class="w-full transition-all duration-300 ease-in-out bg-[#5F584E] absolute top-0 left-0"
+          class="w-full transition-all duration-300 ease-in-out bg-kb-yellow-4 absolute top-0 left-0"
           :style="{
             height: isExpanded ? '100%' : '50%',
           }"
         >
           <h1
-            class="absolute w-full px-4 text-xl font-bold text-center text-white transform -translate-x-1/2 left-1/2 sm:text-2xl md:text-3xl"
+            class="absolute w-full px-4 text-xl font-bold text-center text-kb-brown-2 transform -translate-x-1/2 left-1/2 sm:text-2xl md:text-3xl"
             style="top: 25vh"
           >
             간단한 설문을 통해 맞춤 상품을 추천 받아보세요!
           </h1>
           <p
             v-if="isExpanded"
-            class="absolute w-full px-4 text-lg font-bold text-center text-white transform -translate-x-1/2 left-1/2 sm:text-xl md:text-2xl"
+            class="absolute w-full px-4 text-lg font-bold text-center text-kb-brown-2 transform -translate-x-1/2 left-1/2 sm:text-xl md:text-2xl"
             style="top: 75vh"
           >
             {{ hoveredCategory }} 설문하러 가기
@@ -86,7 +86,7 @@
     </swiper-slide>
 
     <swiper-slide v-for="(item, index) in data" :key="index">
-      <ProductsAllView :item="item" />
+      <Top3Products :item="item" />
     </swiper-slide>
 
     <!-- 네비게이션 -->
@@ -121,7 +121,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import CategoryButton from "../components/Products/CategoryButton.vue";
-import ProductsAllView from "../components/Products/ProductsAllView.vue";
+import Top3Products from "../components/Products/Top3Products.vue";
 
 import LAYOUT_VARIANTS from "../constant/layout.js";
 import productCategoryData from "../constant/productCategoryData.js";
@@ -194,7 +194,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-:deep .swiper-pagination {
+:deep(.swiper-pagination) {
   display: none !important;
 }
 
