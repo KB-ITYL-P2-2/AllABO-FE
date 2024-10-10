@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen">
-    <div class="h-[70px] bg-kb-yellow-4"></div>
+    <div class="h-[70px] bg-transparent"></div>
 
     <AssetPlanNavigation />
   </div>

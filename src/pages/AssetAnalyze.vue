@@ -1,7 +1,7 @@
 <template>
     <!-- 첫 번째 페이지 -->
     <div class="section h-screen flex flex-col bg-asset-back">
-      <div class="h-[70px] bg-kb-yellow-4"></div>
+      <div class="h-[70px] bg-transparent"></div>
       <div class="flex justify-center items-center mt-40 ml-32">
         <TotalCircle class="w-1/2" />
         <TotalText class="w-1/2" />
