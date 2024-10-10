@@ -1,6 +1,8 @@
 <template>
   <div class="h-[calc(100vh-70px)]">
-    <div class="h-[70px] bg-kb-brown-1"></div>
+    <div class="h-[70px]"></div>
+
+    <div class="w-[500px] h-[500px] fixed top-[25%] left-[35%] bg-kb-yellow-4 opacity-50 rounded-full blur-3xl -z-10"></div>
 
     <!-- 제목 섹션 -->
     <div class="flex justify-center h-[14%] my-10">
@@ -8,7 +10,7 @@
     </div>
 
     <!-- 차트와 텍스트 섹션 -->
-    <div class="px-[18%] h-full w-full">
+    <div class="px-[18%] h-[100vh] w-full">
       <!-- 시뮬레이션 데이터 텍스트 -->
       <div class="flex flex-wrap justify-between gap-8">
         <template v-for="(item, index) in simulationData" :key="index">
@@ -41,7 +43,16 @@
       </div>
     </div>
 
-    <div></div>
+    <!-- 종합분석 -->
+    <div>
+      <div class="flex w-full h-auto mt-[120px] justify-center items-center flex-wrap px-[40%] gap-4">
+        <div v-for="(item, index) in ratingData" :key="index">
+          <p class="text-[40px]">{{ item }}</p>
+        </div>
+      </div>
+
+      <div class="h-[200px] mt-16 text-center"><CommonButton :text="'돌아가기'" /></div>
+    </div>
   </div>
 </template>
 
@@ -49,8 +60,13 @@
 import { Line } from "vue-chartjs";
 import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement } from "chart.js";
 
+import CommonButton from "../components/common/CommonButton.vue";
+
 // ChartJS 플러그인 등록
 ChartJS.register(Title, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement);
+
+// 종합 분석 데이터
+const ratingData = ["#자산증가", "#부채감소", "#투자성과", "#재정안정성"];
 
 // 시뮬레이션 데이터
 const simulationData = [
