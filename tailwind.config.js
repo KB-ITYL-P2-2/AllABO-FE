@@ -20,6 +20,8 @@ module.exports = {
         "kb-yellow-9":"#FFEA7F",
         "kb-yellow-10":"#FBEDA4",
         "kb-yellow-11":"#FFCD4E",
+        "kb-yellow-12":"#FFF4BD",
+        "kb-yellow-13":"#FFFDF5",
 
 
         'kb-brown-1':"#535046",
