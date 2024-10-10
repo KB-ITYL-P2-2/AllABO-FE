@@ -59,6 +59,15 @@ module.exports = {
         // 'kb-total-2':"#A19567",
         // 'kb-total-3':"#C5BD9F"
 
+        'asset-yellow-1': "#F4BF42",
+        'asset-yellow-2': "#FAE6A2",
+        'asset-pink-1': "#FFAAAA",
+        'asset-pink-2': "#F8D8D8",
+        'asset-blue-1': "#8AC6FF",
+        'asset-blue-2': "#CBE6FF",
+        'asset-green-1' : '#B1EF5A',
+        'asset-green-2':'#D3EFAC'
+
       },
       keyframes:{},
       screens:{
