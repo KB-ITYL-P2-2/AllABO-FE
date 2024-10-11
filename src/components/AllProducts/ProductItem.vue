@@ -2,9 +2,9 @@
   <div class="px-[20%]">
     <div class="relative flex w-full gap-4 p-5 cursor-pointer hover:bg-gray-50" :class="index != nowItemIndex && 'border-b'">
       <!-- 이미지 -->
-      <div class="relative w-20 h-20">
+      <div class="relative flex items-center justify-center w-20 h-20">
         <div class="absolute w-full h-full rounded-full bg-kb-yellow-3 blur-sm"></div>
-        <img :src="items.url.imageUrl" class="absolute rotate-90 top-[14px]" alt="" />
+        <img :src="items.url.imageUrl" class="absolute top-[14px]" :class="isCard && 'rotate-90'" alt="" />
       </div>
 
       <!-- 내용 -->
@@ -33,15 +33,14 @@
     </div>
 
     <!-- 클릭시 콘텐츠 노출 -->
-    <div :class="index != nowItemIndex && 'hidden'" class="border-b">
+    <div :class="index != nowItemIndex && 'hidden'" class="border-b" @click.stop >
       <div class="flex">
         <div v-for="(item, key, itemIndex) in items.data" :key="key" class="flex-1 p-10 text-center" :class="itemIndex != dataLength && `border-r`">
-          <h3 class="text-kb-gray-1">카테고리</h3>
+          <h3 class="text-kb-gray-1">{{key}}</h3>
           <h3 class="text-[20px] mt-2">{{ item }}</h3>
         </div>
       </div>
-
-      <div class="mb-4 text-center"><CommonButton :text="'상세보기'" /></div>
+      <div class="mb-4 text-center"><CommonButton :text="'상세보기'" @click="openPage" /></div>
     </div>
   </div>
 </template>
@@ -63,8 +62,16 @@ const props = defineProps({
     type: Number && null,
     required: true,
   },
+  isCard:{
+    type: Boolean,
+    required: true,
+  }
 });
 
 const dataLength = ref(Object.keys(props.items.data).length - 1);
 // console.log(dataLength.value);
+
+const openPage = ()=>{
+  window.open(props.items.url.pageUrl);
+}
 </script>
