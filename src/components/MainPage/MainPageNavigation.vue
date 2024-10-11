@@ -9,14 +9,16 @@
             <button
               v-for="(btn, index) in buttons"
               :key="index"
-              @click="handleClick(index)"  
+              @click="handleClick(index)"
+              @mouseover="hoveredIndex = index"
+              @mouseleave="hoveredIndex=null"  
               :class="getButtonClass(index)"
               :style="getButtonStyle(index)"
-              class="ml-10 mt-16 relative flex items-center"
+              class="ml-10 mt-12 relative flex items-center"
             >    
               {{ btn }}
               <span 
-              class="block w-3 h-3 rounded-full" 
+              class="block w-3 h-3 rounded-full hover:bg-kb-yellow-1" 
               :class="{'bg-kb-yellow-1': focusedIndex === index, 'bg-kb-gray-2': focusedIndex !== index}"
             ></span>
             </button>
@@ -83,6 +85,8 @@ const data = ref([
 // 버튼 목록
 const buttons = ref(["맞춤\n상품", "자산\n분석", "자산\n설계"]);
 const focusedIndex = ref(0); 
+const hoveredIndex = ref(null); // Hover 상태를 관리하는 변수
+
 
 // 클릭 시 인덱스를 업데이트하는 함수
 const handleClick = (index) => {
@@ -94,7 +98,7 @@ const currentItem = computed(() => data.value[focusedIndex.value]);
 
 const getButtonStyle = (index) => {
   const radius = 120; //작은 원 반지름
-  const angle = (index * (120 / buttons.value.length) - focusedIndex.value * (150 / buttons.value.length)) * (Math.PI / 180);
+  const angle = (index * (120 / buttons.value.length) - focusedIndex.value * (140 / buttons.value.length)) * (Math.PI / 180);
   const x = radius * Math.cos(angle);
   const y = radius * Math.sin(angle);
 
@@ -109,6 +113,8 @@ const getButtonStyle = (index) => {
 
 // 버튼의 스타일을 설정하는 함수
 const getButtonClass = (index) => {
-  return 'text-kb-gray-2 hover:text-kb-yellow-1 focus:text-kb-yellow-1';
+  return (focusedIndex.value === index || hoveredIndex.value === index)
+    ? 'text-kb-yellow-1' // 선택되었거나 hover된 경우
+    : 'text-kb-gray-2 hover:text-kb-yellow-1'; // 선택되지 않은 경우 hover 시만 색상 변경
 };
 </script>
