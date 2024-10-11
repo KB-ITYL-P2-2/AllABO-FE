@@ -160,10 +160,6 @@ const currentQuestion = computed(() => {
 
 const progress = computed(() => (currentStep.value / totalStep.value) * 100);
 
-const isCompactLayout = computed(
-  () => currentQuestion.value.options?.length <= 5
-);
-
 const containerClass = computed(() => {
   const optionsCount = currentQuestion.value.options?.length || 0;
   return optionsCount > 5

@@ -17,7 +17,11 @@ import KakaoRedirectPage from "../pages/RedirectPages/KakaoRedirectPage.vue";
 import AssetAnalyze from "../pages/AssetAnalyze.vue";
 import AllProducts from "../pages/AllProducts.vue";
 import AssetPlanStrategy from "../pages/AssetPlanStrategy.vue";
+<<<<<<< HEAD
+import AssetPlanInsurance from "../pages/AssetPlanInsurance.vue";
+=======
 import AssetPlanSimulation from "../pages/AssetPlanSimulation.vue";
+>>>>>>> 415206f9b76ddbf6f3e708fed888cf143ac8bc26
 
 const router=createRouter({
     history:createWebHistory(), //라우팅 모드 
@@ -33,8 +37,8 @@ const router=createRouter({
 
         {path:'/asset-plan',component:AssetPlan},
         {path:'/asset-plan/strategy',component:AssetPlanStrategy},
+        {path:'/asset-plan/insurance',component:AssetPlanInsurance},
         {path:'/asset-plan/simulation',component:AssetPlanSimulation},
-
         {path:'/mypage',name: 'MyPage',component:MyPage,props:true},
         {path:'/login',name: 'Login',component:Login},
         {path:'/signup-condition',component:SignCondition},
