@@ -2,11 +2,11 @@
   <div class="overflow-hidden absolute flex items-center w-screen h-screen bg-white z-[49]">
     <div class="flex-shrink-0 w-[580px] flex flex-col items-center">
       <div>
-        <h3 class=""><span class="font-bold text-kb-yellow-1 text-[28px]">공공API</span>를 활용한<br />신뢰도 높은 자산 분석 서비스</h3>
+        <h3 class="mb-2"><span class="font-bold text-kb-yellow-1 text-[28px]">공공 API</span> 를 활용한<br />신뢰도 높은 자산 분석 서비스</h3>
 
         <!-- 로딩 -->
         <div class="flex">
-          <div class="flex items-center gap-1">
+          <div class="flex items-center gap-2">
             <div
               v-for="(item, index) in loadingDots"
               :key="index"
@@ -14,7 +14,7 @@
               :style="{ animationDelay: `${index * 0.2}s` }"
             ></div>
           </div>
-          <span>90%</span>
+          <span class="ml-2">90%</span>
         </div>
       </div>
     </div>

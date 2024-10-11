@@ -2,6 +2,7 @@
     <Header />
   <AnalyzeLoading v-if="false" />
   <RecommendLoading v-if="false" />
+  <PlanLoading v-if="true"/>
   <router-view></router-view>
 </template>
 
@@ -10,6 +11,7 @@ import Header from "./components/Header.vue";
 
 import RecommendLoading from "./components/Loading/RecommendLoading.vue";
 import AnalyzeLoading from "./components/Loading/AnalyzeLoading.vue";
+import PlanLoading from "./components/Loading/PlanLoading.vue";
 
 import { useHeaderStore } from "./stores/headerStore";
 import { useRouter } from "vue-router";
