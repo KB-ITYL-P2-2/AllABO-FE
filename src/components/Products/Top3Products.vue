@@ -30,8 +30,8 @@
           <button
             v-for="(item, index) in item.title.includes('카드') ? cardData : assetData"
             :key="index"
-            :class="['w-3 h-3 rounded-full', index+2 == currentIndex ? 'bg-kb-yellow-1' : 'bg-kb-gray-2']"
-            @click="currentIndex = index+2"
+            :class="['w-3 h-3 rounded-full', index + 2 == currentIndex ? 'bg-kb-yellow-1' : 'bg-kb-gray-2']"
+            @click="currentIndex = index + 2"
           ></button>
         </div>
 
@@ -47,7 +47,16 @@
 
     <!-- 전체 조회 버튼 -->
     <div class="z-0 mt-8">
-      <button class="p-2 border border-gray-400 rounded-[10px] text-font-color bg-white" @click="()=>{router.push('/all-products')}">{{ `${item.title} 전체 조회` }}</button>
+      <button
+        class="p-2 border border-gray-400 rounded-[10px] text-font-color bg-white"
+        @click="
+          () => {
+            router.push({ path: '/all-products', query: { request: item.request } });
+          }
+        "
+      >
+        {{ `${item.title} 전체 조회` }}
+      </button>
     </div>
   </div>
 </template>
@@ -56,10 +65,10 @@
 import { computed, onBeforeMount, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
-const router = useRouter()
-
 import ProductsCards from "./ProductsAllView/ProductsCards.vue";
 import LAYOUT_VARIANTS from "../../constant/layout";
+
+const router = useRouter();
 
 const props = defineProps({
   item: {
@@ -93,11 +102,6 @@ const cardData = ref([
   {
     cardImageUrl: "/images/Products/card3.png",
     cardName: "3번째카드",
-    cardContent: "다 같이 돌자 동네 한 바퀴",
-  },
-  {
-    cardImageUrl: "/images/Products/asset.png",
-    cardName: "예적금",
     cardContent: "다 같이 돌자 동네 한 바퀴",
   },
 ]);
@@ -146,7 +150,7 @@ onBeforeMount(() => {
 });
 
 watch(currentIndex, () => {
-  if (currentIndex.value == cardData.value.length+2) {
+  if (currentIndex.value == cardData.value.length + 2) {
     setTimeout(() => {
       isAnimate.value = false;
       currentIndex.value = 2;
@@ -154,7 +158,7 @@ watch(currentIndex, () => {
   } else if (currentIndex.value == 1) {
     setTimeout(() => {
       isAnimate.value = false;
-      currentIndex.value = cardData.value.length+1;
+      currentIndex.value = cardData.value.length + 1;
     }, 150);
   }
 

@@ -18,7 +18,7 @@
         transition: isHover && isNow ? 'opacity 1000ms' : 'none', // opacity 애니메이션이 끝난 후 visibility 변경
       }"
     >
-      <h1 class="font-bold underline text-kb-brown-1 text-[22px]">{{ item.cardName }}</h1>
+      <h1 class="font-bold text-kb-brown-1 text-[22px]">{{ item.cardName }}</h1>
       <h3 class="text-kb-brown-1 text-[18px]">{{ item.cardContent }}</h3>
       <div class="mt-4">
         <button class="text-white bg-kb-brown-1 rounded-[15px] p-4">자세히 보기</button>
