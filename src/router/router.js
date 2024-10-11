@@ -17,11 +17,8 @@ import KakaoRedirectPage from "../pages/RedirectPages/KakaoRedirectPage.vue";
 import AssetAnalyze from "../pages/AssetAnalyze.vue";
 import AllProducts from "../pages/AllProducts.vue";
 import AssetPlanStrategy from "../pages/AssetPlanStrategy.vue";
-<<<<<<< HEAD
 import AssetPlanInsurance from "../pages/AssetPlanInsurance.vue";
-=======
 import AssetPlanSimulation from "../pages/AssetPlanSimulation.vue";
->>>>>>> 415206f9b76ddbf6f3e708fed888cf143ac8bc26
 
 const router=createRouter({
     history:createWebHistory(), //라우팅 모드 
