@@ -1,18 +1,19 @@
 <template>
   <div class="firebase-sms-auth mt-6 flex flex-col">
     <div id="recaptcha-container"></div>
+  <!--전화번호 -->
     <label for="tel" class="text-font-color mb-1">전화번호</label>
-    <div class="flex">
+    <div class="flex flex-col">
       <input
         type="text"
         v-model="phoneNumber"
         placeholder="전화번호 입력 (+8210xxxxxxxx)"
-        class="pl-4 h-[50px] w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
+        class="pl-4 h-[50px] w-full rounded-md border border-gray-300 mb-4 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
       />
       <button
         @click="sendCode"
         :disabled="!isRecaptchaVerified"
-        class="h-[50px] w-[150px] rounded-md bg-kb-brown-2 text-white hover:bg-kb-yellow-1 transition duration-200"
+        class="h-[50px] w-1/4 rounded-md bg-kb-brown-2 text-white hover:bg-kb-yellow-1 transition duration-200"
       >
         인증코드 전송
       </button>
@@ -20,16 +21,16 @@
     <div class="error-message">{{ errorMessage }}</div>
     <br /><br />
     <!--인증코드 확인-->
-    <div>
+    <div class="flex justify-between">
       <input
       type="text"
       v-model="verificationCode"
       placeholder="인증코드 입력"
-      class="pl-4 h-[50px] w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
+      class="pl-4 h-[50px] w-2/3 mr-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
     />
     <button
       @click="verifyCode"
-      class="h-[50px] w-[150px] rounded-md bg-kb-brown-2 text-white hover:bg-kb-yellow-1 transition duration-200"
+      class="h-[50px] w-1/3 rounded-md bg-kb-brown-2 text-white hover:bg-kb-yellow-1 transition duration-200"
     >
       인증코드 확인
     </button>

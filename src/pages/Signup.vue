@@ -9,18 +9,40 @@
       <!--회원가입 입력 폼-->
       <div class="w-full max-w-lg px-6">
         <form @submit.prevent="submitForm">
+          <!--이름-->
           <div class="mt-[50px] flex flex-col">
             <label for="name" class="text-font-color mb-1">이름</label>
             <input type="text" id="name" v-model="name" placeholder="이름을 입력해주세요" 
                    class="text-font-color pl-4 h-[50px] w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"/>
           </div>
-          
+          <!--생년월일-->
           <div class="mt-6 flex flex-col">
             <label for="birthday" class="text-font-color mb-1">생년월일</label>
-            <input type="text" id="birthday" v-model="birthday" placeholder="YYYYMMDD 형식으로 입력해주세요"
-                   class="text-font-color pl-4 h-[50px] w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"/>
+            <div class="flex">
+              <input type="text" id="birthday1" v-model="birthday1" placeholder="주민번호 앞자리"
+                   class="text-font-color pl-4 h-[50px] w-1/2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"/>
+                   <p class="text-lg text-font-color mx-4 mt-2"> - </p>
+                   <input type="text" id="birthday2" v-model="birthday2" placeholder="주민번호 뒷자리"
+                   class="text-font-color pl-4 h-[50px] w-1/2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"/>
+            </div>
+          </div>
+          <!--전화번호-->
+          <!-- <div class="mt-6 flex flex-col">
+            <label for="tel" class="text-font-color mb-1">전화번호</label>
+            <div class="flex">
+              <input type="tel" id="tel" v-model="tel" placeholder="전화번호를 입력해주세요 (01012341234)" 
+                     class="pl-4 h-[50px] w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"/>
+            </div>
+            <div class="flex justify-end mt-6">
+              <button @click="handleClick" class="h-[50px] w-[150px] rounded-md bg-kb-brown-2 text-white hover:bg-kb-yellow-1 transition duration-200">본인인증하기</button>
+            </div>
+          </div> -->
+          <div class="mt-6 flex flex-col">
+            <AuthenticationBtn/>
           </div>
 
+          <!--본인인증 들어가기-->
+         
           <div class="mt-6 flex flex-col">
             <label for="email" class="text-font-color mb-1">이메일</label>
             <div class="flex">
@@ -46,14 +68,7 @@
             <p v-if="passwordConfirmError" class="text-sm text-red-500 mt-1">비밀번호가 일치하지 않습니다.</p>
           </div>
 
-          <div class="mt-6 flex flex-col">
-            <label for="tel" class="text-font-color mb-1">전화번호</label>
-            <div class="flex">
-              <input type="tel" id="tel" v-model="tel" placeholder="전화번호를 입력해주세요 (01012341234)" 
-                     class="pl-4 h-[50px] w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"/>
-              <button class="ml-4 h-[50px] w-[120px] rounded-md bg-kb-brown-2 text-white hover:bg-kb-yellow-1 transition duration-200">인증</button>
-            </div>
-          </div>
+      
 
           <div class="mt-6 flex flex-col">
             <label for="asset" class="text-font-color mb-1">연 소득</label>
@@ -80,9 +95,12 @@
 import axios from 'axios';
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import AuthenticationBtn from '../components/Login/AuthenticationBtn.vue';
 
 const name = ref('');
-const birthday = ref('');
+const birthday1 = ref('');
+const birthday2= ref('');
+const birthday=birthday1+birthday2;//수정 필요
 const email = ref('');
 const password = ref('');
 const passwordConfirm = ref('');
@@ -92,6 +110,12 @@ const asset = ref('');
 const router = useRouter();
 
 const emailTouched=ref(false);
+
+//본인인증 버튼 클릭 
+const handleClick=()=>{
+  
+}
+
 
 //이메일 유효성 
 const emailError = computed(() => {
