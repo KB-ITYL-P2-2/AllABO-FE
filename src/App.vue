@@ -2,7 +2,7 @@
     <Header />
   <AnalyzeLoading v-if="false" />
   <RecommendLoading v-if="false" />
-  <PlanLoading v-if="true"/>
+  <PlanLoading v-if="false"/>
   <router-view></router-view>
 </template>
 
