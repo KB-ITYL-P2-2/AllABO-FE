@@ -19,7 +19,6 @@ import AllProducts from "../pages/AllProducts.vue";
 import AssetPlanStrategy from "../pages/AssetPlanStrategy.vue";
 import AssetPlanInsurance from "../pages/AssetPlanInsurance.vue";
 import AssetPlanSimulation from "../pages/AssetPlanSimulation.vue";
-import Test from "../pages/Test.vue";
 
 const router=createRouter({
     history:createWebHistory(), //라우팅 모드 
@@ -47,7 +46,6 @@ const router=createRouter({
         {path:'/mypage-withdraw',component:WithdrawMember},
         
         {path:'/kakao-redirect',component:KakaoRedirectPage},
-        {path:'/test',component:Test}
     ]
 })
 export default router;
