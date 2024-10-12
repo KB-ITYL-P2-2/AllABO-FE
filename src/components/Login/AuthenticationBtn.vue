@@ -1,139 +1,132 @@
 <template>
-  <div class="firebase-sms-auth mt-6 flex flex-col">
-    <div id="recaptcha-container"></div>
-  <!--전화번호 -->
-    <label for="tel" class="text-font-color mb-1">전화번호</label>
-    <div class="flex flex-col">
+  <div class="firebase-sms-auth">
+    <h1>Firebase SMS 인증</h1>
+    <div id="recaptcha-container" ref="recaptchaContainer"></div>
+    <!--전화번호 입력 칸 -->
+   <div class="mt-6 flex flex-col">
+    <div class="flex">
       <input
-        type="text"
-        v-model="phoneNumber"
-        placeholder="전화번호 입력 (+8210xxxxxxxx)"
-        class="pl-4 h-[50px] w-full rounded-md border border-gray-300 mb-4 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
-      />
-      <button
-        @click="sendCode"
-        :disabled="!isRecaptchaVerified"
-        class="h-[50px] w-1/4 rounded-md bg-kb-brown-2 text-white hover:bg-kb-yellow-1 transition duration-200"
-      >
+    v-model="phoneNumber"
+    type="text"
+    placeholder="전화번호 입력 (+8210xxxxxxxx)"
+    class="pl-4 text-font-colorpl-4 h-[50px] w-3/4 pr-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"/>
+    </div>
+    <div class="mt-6">
+      <button @click="sendCode" :disabled="!recaptchaSolved"
+      class="bg-kb-brown-1 w-1/3 text-white rounded-md h-[50px] hover:text-font-color hover:bg-kb-yellow-4">
+    
         인증코드 전송
       </button>
     </div>
-    <div class="error-message">{{ errorMessage }}</div>
+   </div>
+  <!--에러메세지-->
+    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
     <br /><br />
-    <!--인증코드 확인-->
-    <div class="flex justify-between">
-      <input
-      type="text"
-      v-model="verificationCode"
-      placeholder="인증코드 입력"
-      class="pl-4 h-[50px] w-2/3 mr-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
-    />
-    <button
-      @click="verifyCode"
-      class="h-[50px] w-1/3 rounded-md bg-kb-brown-2 text-white hover:bg-kb-yellow-1 transition duration-200"
-    >
-      인증코드 확인
-    </button>
-    </div>
+    <!--인증코드-->
+   <div class="mt-6 flex flex-col">
+    <label for="verificationCode" class="text-font-color mb-1">인증코드</label>
+    <input v-model="verificationCode" type="text" placeholder="인증코드 입력"
+    class="pl-4 text-font-colorpl-4 h-[50px] w-3/4 pr-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"/>
+    <button @click="verifyCode"
+    class="bg-kb-brown-1 w-1/3 text-white rounded-md h-[50px] hover:text-font-color hover:bg-kb-yellow-4">
+    인증코드 확인</button>
+   </div>
   </div>
 </template>
 
-<script>
-import { ref, onMounted } from "vue";
-import { auth } from "../../apis/utils/init";
-import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
+<script setup>
+import { ref, onMounted, onBeforeMount } from 'vue';
+import { getApps, initializeApp } from 'firebase/app';
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
+import { firebaseConfig } from '../../apis/utils/firebase';
 
-export default {
-  name: "FirebaseSMSAuth",
-  setup() {
-    const phoneNumber = ref("");
-    const verificationCode = ref("");
-    const errorMessage = ref("");
-    const isRecaptchaVerified = ref(false);
+let app;
+if (!getApps().length) {
+  app = initializeApp(firebaseConfig);
+} else {
+  app = getApps();
+}
 
-    let recaptchaVerifier;
-    let confirmationResult;
+const auth = getAuth();
+auth.languageCode = 'ko';
+// console.log(auth);
 
-    const setUpRecaptcha = async () => {
-      try {
-        recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
-          size: "normal",
-          callback: () => {
-            console.log("reCAPTCHA solved, verification process can continue.");
-            isRecaptchaVerified.value = true;
-          },
-          "expired-callback": () => {
-            console.log("reCAPTCHA expired. Please solve it again.");
-            isRecaptchaVerified.value = false;
-          },
-        });
-        await recaptchaVerifier.render();
-      } catch (error) {
-        console.error("Error setting up reCAPTCHA:", error);
-        errorMessage.value = "reCAPTCHA 설정 오류: " + error.message;
-      }
-    };
+const phoneNumber = ref('');
+const verificationCode = ref('');
+const errorMessage = ref('');
+const recaptchaSolved = ref(false);
+let recaptchaVerifier = null;
+let confirmationResult = null;
+const recaptchaContainer = ref(null)
 
-    const sendCode = async () => {
-      try {
-        console.log("Attempting to send SMS to:", phoneNumber.value);
-        confirmationResult = await signInWithPhoneNumber(
-          auth,
-          phoneNumber.value,
-          recaptchaVerifier
-        );
-        console.log("SMS sent successfully");
-        alert("인증 코드가 전송되었습니다. 메시지를 확인해 주세요.");
-        errorMessage.value = "";
-      } catch (error) {
-        console.error("Error sending SMS:", error.code, error.message);
-        if (error.code === "auth/captcha-check-failed") {
-          errorMessage.value =
-            "reCAPTCHA 인증에 실패했습니다. 다시 시도해 주세요.";
-          try {
-            await recaptchaVerifier.render();
-          } catch (renderError) {
-            console.error("Error re-rendering reCAPTCHA:", renderError);
-          }
-        } else {
-          errorMessage.value = `SMS 전송 실패: ${error.message}`;
-        }
-      }
-    };
-
-    const verifyCode = async () => {
-      try {
-        const result = await confirmationResult.confirm(verificationCode.value);
-        const user = result.user;
-        console.log("User signed in:", user);
-        alert("인증에 성공했습니다!");
-        errorMessage.value = "";
-      } catch (error) {
-        console.error("Error verifying code:", error);
-        errorMessage.value = "인증 코드 확인 실패: " + error.message;
-      }
-    };
-
-    onMounted(() => {
-      setUpRecaptcha();
+// Recaptcha 설정 함수
+const setUpRecaptcha = async () => {
+  try {
+    recaptchaVerifier = new RecaptchaVerifier(auth, recaptchaContainer.value, {
+      size: 'normal',
+      callback: () => {
+        recaptchaSolved.value = true;
+      },
+      'expired-callback': () => {
+        recaptchaSolved.value = false;
+      },
     });
-
-    return {
-      phoneNumber,
-      verificationCode,
-      errorMessage,
-      isRecaptchaVerified,
-      sendCode,
-      verifyCode,
-    };
-  },
+    await recaptchaVerifier.render();
+  } catch (error) {
+    console.error('Error setting up reCAPTCHA:', error);
+    errorMessage.value = 'reCAPTCHA 설정 오류: ' + error.message;
+  }
 };
+
+// 인증 코드 전송 함수
+const sendCode = async () => {
+  // 전화번호 형식이 올바른지 검증 (이 부분을 추가해도 좋습니다)
+  const phoneNumberRegex = /^\+8210\d{8}$/; // +8210으로 시작하고 뒤에 8자리 숫자
+  if (!phoneNumberRegex.test(phoneNumber.value)) {
+    errorMessage.value = '전화번호 형식이 잘못되었습니다. (+8210xxxxxxxx 형식으로 입력하세요)';
+    return;
+  }
+  console.log(auth);
+  console.log(phoneNumber.value);
+  console.log(recaptchaVerifier)
+  try {
+    confirmationResult = await signInWithPhoneNumber(
+      auth,
+      phoneNumber.value,
+      recaptchaVerifier
+    );
+    console.log("안녕안녕~~", confirmationResult)
+    alert('인증 코드가 전송되었습니다. 메시지를 확인해 주세요.');
+    errorMessage.value = '';
+  } catch (error) {
+    console.error('Error sending SMS:', error);
+    errorMessage.value = `SMS 전송 실패: ${error.message}`;
+    
+    // reCAPTCHA 오류 시 재설정
+    if (error.code === 'auth/captcha-check-failed') {
+      await setUpRecaptcha();
+    }
+  }
+};
+// 인증 코드 확인 함수
+const verifyCode = async () => {
+  try {
+    const result = await confirmationResult.confirm(verificationCode.value);
+    console.log('User signed in:', result.user);
+    alert('인증에 성공했습니다!');
+    errorMessage.value = '';
+  } catch (error) {
+    console.error('Error verifying code:', error);
+    errorMessage.value = '인증 코드 확인 실패: ' + error.message;
+  }
+};
+
+onMounted(() => {
+  setUpRecaptcha(); // DOM이 완전히 준비된 후 reCAPTCHA 설정
+});
 </script>
 
 <style scoped>
-.firebase-sms-auth {
-  font-family: Arial, sans-serif;
-}
 
 .error-message {
   color: red;
