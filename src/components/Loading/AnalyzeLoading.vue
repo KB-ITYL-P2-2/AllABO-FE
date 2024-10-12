@@ -2,7 +2,7 @@
   <div class="overflow-hidden absolute flex items-center w-screen h-screen bg-white z-[49]">
     <div class="flex-shrink-0 w-[580px] flex flex-col items-center">
       <div>
-        <h3 class="mb-2"><span class="font-bold text-kb-yellow-1 text-[28px]">공공 API</span> 를 활용한<br />신뢰도 높은 자산 분석 서비스</h3>
+        <h3 class="mb-2 text-[28px]"><span class="font-bold text-kb-yellow-1 text-[32px]">KB 국민은행</span>에서 <br />데이터를 가져와 <br>고객님의 분석 중입니다.</h3>
 
         <!-- 로딩 -->
         <div class="flex">
@@ -24,7 +24,7 @@
       <div
         class="flex"
         :style="{
-          transform: `translateX(-${currentIndex * (isLaptopView ? 350 : 480)}px)`,
+          transform: `translateX(-${currentIndex * (isLaptopView ? 350 : 400)}px)`,
           transition: isTransitionActive ? 'transform 0.7s ease' : 'none',
         }"
       >
@@ -32,7 +32,7 @@
           v-for="(item, index) in imageIndex"
           :key="index"
           :style="{ backgroundImage: `url('/images/AnalyzeLoading/carousel${item + 1}.png')`, transition: 'transform 0.7s ease;' }"
-          class="md:max-laptop:w-[350px] md:max-laptop:h-[350px] w-[480px] h-[480px] bg-cover bg-no-repeat shrink-0"
+          class="md:max-laptop:w-[350px] md:max-laptop:h-[350px] w-[400px] h-[400px] bg-cover bg-no-repeat shrink-0"
         ></div>
       </div>
     </div>
