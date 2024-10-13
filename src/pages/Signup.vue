@@ -28,7 +28,7 @@
                 type="text"
                 id="birthday1"
                 v-model="birthday1"
-                placeholder="주민번호 앞 8자리 "
+                placeholder="주민번호 앞6자리 "
                 class="text-font-color pl-4 h-[50px] w-1/2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
               />
               <p class="text-lg text-font-color mx-4 mt-2"> - </p>
@@ -65,7 +65,7 @@
          </div>
           <div>
             <button @click="emailckForm"
-            class="bg-kb-brown-1 w-[120px] text-white rounded-md h-[50px] hover:text-font-color hover:bg-kb-yellow-4">
+            class="bg-kb-brown-1 w-[120px] text-white rounded-md h-[50px] hover:text-font-color hover:bg-kb-yellow-1">
              이메일 중복확인
            </button>
           </div>
@@ -125,6 +125,7 @@
               취소
             </button>
             <button
+            :class="submitButtonClass"
               class="h-[50px] w-[150px] rounded-md bg-kb-brown-2 text-white transition duration-200 hover:bg-kb-yellow-1"
             >
               가입하기
@@ -153,6 +154,10 @@ const asset = ref('');
 const emailTouched = ref(false);
 const isVerified = ref(false);
 const emailChkMessage=ref('');
+const isFormValid = computed(() => {
+  return name.value && birthday1.value && birthday2.value.length === 7 && password.value && passwordConfirm.value && asset.value;
+});
+
 
 const router = useRouter();
 
@@ -194,15 +199,38 @@ function handlePhoneVerification(phone) {
   isVerified.value = true;
 }
 
+// async function submitForm() {
+//   if (
+//     name.value &&
+//     birthday1.value &&
+//     birthday2.value.length === 7 &&
+//     !passwordError.value &&
+//     !passwordConfirmError.value &&
+//     asset.value
+//   ) {
+//     try {
+//       const response = await axios.post('http://localhost:8080/signup', {
+//         id: id.value,
+//         pwd: password.value,
+//         name: name.value,
+//         identityNumber: birthday.value,
+//         phoneNumber: phoneNumber.value,
+//         totalIncome: asset.value,
+//         "Content-Type": "application/json",
+//       });
+//       console.log(response.data);
+//       router.push({ name: 'SignSuccess', params: { userData: response.data } });
+//     } catch (error) {
+//       console.error('서버 오류:', error);
+//       alert('서버와의 통신에 문제가 발생했습니다.');
+//     }
+//   } else {
+//     // alert('필드를 정확히 입력해주세요.');
+//   }
+// }
+
 async function submitForm() {
-  if (
-    name.value &&
-    birthday1.value &&
-    birthday2.value.length === 7 &&
-    !passwordError.value &&
-    !passwordConfirmError.value &&
-    asset.value
-  ) {
+  if (isFormValid.value) {
     try {
       const response = await axios.post('http://localhost:8080/signup', {
         id: id.value,
@@ -213,17 +241,17 @@ async function submitForm() {
         totalIncome: asset.value,
         "Content-Type": "application/json",
       });
-      console.log(response.data);
       router.push({ name: 'SignSuccess', params: { userData: response.data } });
     } catch (error) {
-      console.error('서버 오류:', error);
       alert('서버와의 통신에 문제가 발생했습니다.');
     }
-  } else {
-    // alert('필드를 정확히 입력해주세요.');
   }
 }
 
+// 버튼 클래스 동적 적용
+const submitButtonClass = computed(() => {
+  return isFormValid.value ? 'bg-kb-brown-1' : 'bg-kb-gray-2';
+});
 
 // 폼 제출 처리 함수
 async function emailckForm(){
@@ -245,3 +273,11 @@ function handleEmailBlur() {
   emailTouched.value = true;
 }
 </script>
+
+<style scoped>
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+</style>
