@@ -22,13 +22,13 @@
 
           <!-- 생년월일 -->
           <div class="mt-6 flex flex-col">
-            <label for="birthday" class="text-font-color mb-1">생년월일</label>
+            <label for="birthday1" class="text-font-color mb-1">생년월일</label>
             <div class="flex">
               <input
                 type="text"
                 id="birthday1"
                 v-model="birthday1"
-                placeholder="주민번호 앞자리 (예: 19990101)"
+                placeholder="주민번호 앞 8자리 "
                 class="text-font-color pl-4 h-[50px] w-1/2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
               />
               <p class="text-lg text-font-color mx-4 mt-2"> - </p>
@@ -36,7 +36,7 @@
                 type="password"
                 id="birthday2"
                 v-model="birthday2"
-                placeholder="주민번호 뒷자리 (예: ******* )"
+                placeholder="주민번호 뒷자리"
                 class="text-font-color pl-4 h-[50px] w-1/2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
               />
             </div>
@@ -49,19 +49,30 @@
           </div>
 
           <!-- 이메일 -->
-          <div class="mt-6 flex flex-col">
-            <label for="email" class="text-font-color mb-1">이메일</label>
-            <input
-              type="email"
-              id="email"
-              v-model="email"
-              placeholder="이메일을 입력해주세요"
-              class="text-font-color pl-4 h-[50px] w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
-            />
-            <p v-if="emailError && emailTouched" class="text-sm text-red-500 mt-2">
-              이메일 형식에 맞게 입력해주세요.
-            </p>
+          <label for="email" class="text-font-color mt-2 ">이메일</label>
+          <div class="mt-1 flex space-x-2 ">
+         <div>
+          <input
+          type="email"
+          id="email"
+          v-model="email"
+          placeholder="이메일을 입력해주세요"
+          class="text-font-color pl-4 h-[50px] w-[350px] rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
+        />
+        <p v-if="emailError && emailTouched" class="text-sm text-red-500 mt-2">
+          이메일 형식에 맞게 입력해주세요.
+        </p>
+         </div>
+          <div>
+            <button @click="emailckForm"
+            class="bg-kb-brown-1 w-[120px] text-white rounded-md h-[50px] hover:text-font-color hover:bg-kb-yellow-4">
+             이메일 중복확인
+           </button>
           </div>
+          </div>
+          <p v-if="emailChkMessage" class="text-red-500 text-sm ml-2">{{emailChkMessage}}</p>
+
+
 
           <!-- 비밀번호 -->
           <div class="mt-6 flex flex-col">
@@ -73,7 +84,7 @@
               placeholder="비밀번호를 입력해주세요"
               class="text-font-color pl-4 h-[50px] w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
             />
-            <p v-if="passwordError" class="text-sm text-kb-gray-2">
+            <p v-if="passwordError" class="text-sm text-kb-gray-2 pl-3">
               비밀번호는 특수문자, 영문, 숫자를 포함하여 8~12자로 설정해주세요.
             </p>
           </div>
@@ -114,9 +125,7 @@
               취소
             </button>
             <button
-              :class="[isFormValid ? 'bg-kb-brown-2 hover:bg-kb-yellow-1' : 'bg-kb-gray-2']"
-              :disabled="!isFormValid"
-              class="h-[50px] w-[150px] rounded-md text-white transition duration-200"
+              class="h-[50px] w-[150px] rounded-md bg-kb-brown-2 text-white transition duration-200 hover:bg-kb-yellow-1"
             >
               가입하기
             </button>
@@ -143,6 +152,7 @@ const tel = ref('');
 const asset = ref('');
 const emailTouched = ref(false);
 const isVerified = ref(false);
+const emailChkMessage=ref('');
 
 const router = useRouter();
 
@@ -175,44 +185,46 @@ const passwordConfirmError = computed(() => {
   return password.value !== passwordConfirm.value;
 });
 
-// 모든 입력 필드가 채워졌는지 확인
-const isFormValid = computed(() => {
-  return (
-    name.value &&
-    birthday1.value &&
-    birthday2.value.length === 7 &&
-    email.value &&
-    !passwordError.value &&
-    !passwordConfirmError.value &&
-    tel.value &&
-    asset.value &&
-    isVerified.value
-  );
-});
-
 // 전화번호 인증 완료 핸들러
 function handlePhoneVerification(phone) {
   tel.value = phone;
   isVerified.value = true;
 }
 
-// axios 비동기 처리
-async function submitForm() {
-  // 폼 제출 시에만 본인 인증을 체크
-  if (!isVerified.value) {
-    alert('먼저 본인 인증을 완료해주세요.');
-    return;
+// 폼 제출 처리 함수
+async function emailckForm(){
+  try{
+    const response=await axios.get(`http://localhost:8080/iddupchk/{id}`);
+      if(response.status===200){
+        emailChkMessage.value="사용가능한 아이디 입니다."
+      }
+      else{
+        emailChkMessage.value="이미 사용중인 아이디 입니다."
+      }
+    console.log(response)
+  }catch(error){
+    alert('서버와의 통신에 문제가 발생했습니다.');
   }
+}
 
-  if (isFormValid.value) {
+async function submitForm() {
+  if (
+    name.value &&
+    birthday1.value &&
+    birthday2.value.length === 7 &&
+    !passwordError.value &&
+    !passwordConfirmError.value &&
+    asset.value
+  ) {
     try {
       const response = await axios.post('http://localhost:8080/signup', {
+        id: email.value,
+        pwd: password.value,
         name: name.value,
-        birthday: birthday.value,
-        email: email.value,
-        tel: tel.value,
-        asset: asset.value,
-        "Content-Type": "application/x-www-form-urlencoded",
+        identityNumber: birthday.value,
+        phoneNumber: tel.value,
+        totalIncome: asset.value,
+        "Content-Type": "application/json",
       });
       console.log(response.data);
       router.push({ name: 'SignSuccess', params: { userData: response.data } });
