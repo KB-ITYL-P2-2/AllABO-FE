@@ -1,6 +1,6 @@
 <template>
-    <div class="h-[160px]"></div>
-    <div class="bg-rebalancing-back bg-cover flex flex-col items-center">
+    <div class="h-[70px] mb-12"></div>
+    <div class=" flex flex-col items-center">
       <h1 class="text-4xl font-bold text-center p-2 text-font-color">
         보험 리밸런싱
       </h1>
@@ -8,19 +8,21 @@
         제공된 가입 보험 내역을 바탕으로 한 리밸런싱 결과로, 실제 데이터와
         차이가 있을 수 있습니다.
       </p>
-
-      <InsuranceAnalyze :insurance="insurance" :desc="desc" />
+<!-- 
+      <InsuranceAnalyze :insurance="insurance" :desc="desc" /> -->
     </div>
 
-    <div class="w-full flex flex-col items-center mt-36">
-      <AssetPlanTabButton 
-        v-model="showCurrentAnalysis" />
-
-      <div>
-        <InsuranceCardList v-if="showCurrentAnalysis" :insuranceData="insuranceData" />
-        <RebalancingCardList v-else :rebalancingData="rebalancingData"/>
+    <div class="mt-8">
+      <div class="w-full flex flex-col items-center">
+        <AssetPlanTabButton 
+          v-model="showCurrentAnalysis" />
+  
+        <div class="bg-rebalancing-back bg-cover p-10 w-full">
+          <InsuranceCardList class="flex justify-center" v-if="showCurrentAnalysis" :insuranceData="insuranceData" />
+          <RebalancingCardList class="flex justify-center" v-else :rebalancingData="rebalancingData"/>
+        </div>
         <div class="h-[200px] text-center">
-          <CommonButton class="mt-20" :text="'돌아가기'" />
+          <CommonButton class="mt-8" :text="'돌아가기'" />
         </div>
       </div>
     </div>

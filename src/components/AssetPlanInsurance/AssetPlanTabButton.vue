@@ -1,6 +1,6 @@
 <template>
 <div
-        class="w-[240px] bg-[#F9E26F] p-1 mb-24 rounded-full shadow-md flex items-center justify-center space-x-2"
+        class="w-[240px] bg-[#F9E26F] p-1 mb-8 rounded-full shadow-md flex items-center justify-center space-x-2"
       >
       <button
         @click="$emit('update:modelValue', true)"
