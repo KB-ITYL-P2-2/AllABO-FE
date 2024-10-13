@@ -49,13 +49,13 @@
           </div>
 
           <!-- 이메일 -->
-          <label for="email" class="text-font-color mt-2 ">이메일</label>
+          <label for="id" class="text-font-color mt-2 ">이메일</label>
           <div class="mt-1 flex space-x-2 ">
          <div>
           <input
           type="email"
-          id="email"
-          v-model="email"
+          id="id"
+          v-model="id"
           placeholder="이메일을 입력해주세요"
           class="text-font-color pl-4 h-[50px] w-[350px] rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
         />
@@ -145,7 +145,7 @@ import AuthenticationBtn from '../components/Login/AuthenticationBtn.vue';
 const name = ref('');
 const birthday1 = ref('');
 const birthday2 = ref('');
-const email = ref('');
+const id = ref('');
 const password = ref('');
 const passwordConfirm = ref('');
 const phoneNumber = ref('');
@@ -172,7 +172,7 @@ const birthday = computed(() => {
 // 이메일 유효성 검사
 const emailError = computed(() => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return !emailRegex.test(email.value);
+  return !emailRegex.test(id.value);
 });
 
 // 비밀번호 유효성 검사
@@ -194,22 +194,6 @@ function handlePhoneVerification(phone) {
   isVerified.value = true;
 }
 
-// 폼 제출 처리 함수
-async function emailckForm(){
-  try{
-    const response=await axios.get(`http://localhost:8080/iddupchk/{id}`);
-      if(response.status===200){
-        emailChkMessage.value="사용가능한 아이디 입니다."
-      }
-      else{
-        emailChkMessage.value="이미 사용중인 아이디 입니다."
-      }
-    console.log(response)
-  }catch(error){
-    alert('서버와의 통신에 문제가 발생했습니다.');
-  }
-}
-
 async function submitForm() {
   if (
     name.value &&
@@ -221,7 +205,7 @@ async function submitForm() {
   ) {
     try {
       const response = await axios.post('http://localhost:8080/signup', {
-        id: email.value,
+        id: id.value,
         pwd: password.value,
         name: name.value,
         identityNumber: birthday.value,
@@ -239,7 +223,24 @@ async function submitForm() {
     // alert('필드를 정확히 입력해주세요.');
   }
 }
-console.log(birthday);
+
+
+// 폼 제출 처리 함수
+async function emailckForm(){
+  try {
+    const response = await axios.get(`http://localhost:8080/iddupchk/${id.value}`);
+    // 서버로부터의 응답 메시지를 사용하여 중복 여부 확인
+    if (response.data === "이미 존재하는 아이디입니다") {
+      emailChkMessage.value = "이미 사용중인 아이디 입니다.";
+    } else {
+      emailChkMessage.value = "사용 가능한 아이디 입니다.";
+    }
+    console.log(response);
+  } catch (error) {
+    alert('서버와의 통신에 문제가 발생했습니다.');
+  }
+}
+
 function handleEmailBlur() {
   emailTouched.value = true;
 }
