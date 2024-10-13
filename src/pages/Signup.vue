@@ -199,36 +199,6 @@ function handlePhoneVerification(phone) {
   isVerified.value = true;
 }
 
-// async function submitForm() {
-//   if (
-//     name.value &&
-//     birthday1.value &&
-//     birthday2.value.length === 7 &&
-//     !passwordError.value &&
-//     !passwordConfirmError.value &&
-//     asset.value
-//   ) {
-//     try {
-//       const response = await axios.post('http://localhost:8080/signup', {
-//         id: id.value,
-//         pwd: password.value,
-//         name: name.value,
-//         identityNumber: birthday.value,
-//         phoneNumber: phoneNumber.value,
-//         totalIncome: asset.value,
-//         "Content-Type": "application/json",
-//       });
-//       console.log(response.data);
-//       router.push({ name: 'SignSuccess', params: { userData: response.data } });
-//     } catch (error) {
-//       console.error('서버 오류:', error);
-//       alert('서버와의 통신에 문제가 발생했습니다.');
-//     }
-//   } else {
-//     // alert('필드를 정확히 입력해주세요.');
-//   }
-// }
-
 async function submitForm() {
   if (isFormValid.value) {
     try {
