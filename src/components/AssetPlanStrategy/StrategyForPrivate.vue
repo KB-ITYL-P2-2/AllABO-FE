@@ -1,32 +1,58 @@
 <template>
-  <div class="h-full">
-    <div class="w-full h-[1150px] bg-kb-yellow-4">
-      <div class="sticky top-[28%] h-[400px] bg-kb-yellow-8 w-full flex items-center px-[22%]">
+  <div class="h-full relative">
+    <div class="w-full h-screen bg-kb-yellow-4">
+      <div
+        class="sticky top-[28%] h-[400px] bg-kb-yellow-8 w-full flex items-center px-[22%]"
+      >
         <!-- 3원 -->
-        <div class="relative flex-1 h-full">
-          <template v-for="(item, index) in goalData" :key="index">
-            <StrategyCircle
-              :class="scrollY < (index + 1) * 400 && scrollY >= index * 400 ? 'opacity-100' : 'opacity-0'"
-              class="absolute animation top-[7%] left-0"
-              :title="item.title"
-              :percent="item.percent"
-            />
-          </template>
+        <div class="relative flex-1 h-full mr-9">
+          <StrategyCircle
+            v-for="(item, index) in circleData"
+            :key="index"
+            :class="currentIndex === index ? 'opacity-100' : 'opacity-0'"
+            class="absolute animation top-[7%] left-0"
+            :title="item.title"
+            :percent="item.percent"
+          />
         </div>
 
         <!-- contents -->
         <div class="relative flex-[2] h-full">
-          <StrategyText :class="scrollY < 200 ? 'opacity-100' : 'opacity-0'" class="absolute animation top-[22%] left-0" />
-          <template v-for="(item, index) in recommendData" :key="index">
-            <StrategyRecommend
-              :class="scrollY >= (index + 1) * 200 && scrollY < (index + 2) * 200 ? 'opacity-100' : 'opacity-0'"
-              class="absolute top-[26%] animation"
-              :title="item.title"
-              :products="item.products"
-            />
-          </template>
+          <StrategyText
+            :percent="textData.percent"
+            :isIncrease="textData.isIncrease"
+            :strategy="textData.strategy"
+            :class="currentIndex === 0 ? 'opacity-100' : 'opacity-0'"
+            class="absolute animation top-[22%] left-0"
+          />
+          <StrategyRecommend
+            v-for="(item, index) in recommendData"
+            :key="index"
+            :class="currentIndex === index + 1 ? 'opacity-100' : 'opacity-0'"
+            class="absolute top-[26%] animation"
+            :title="item.title"
+            :products="item.products"
+          />
         </div>
       </div>
+    </div>
+
+    <!-- 이동 버튼 -->
+    <div
+      class="absolute top-1/2 right-4 transform -translate-y-1/2 flex flex-col space-y-4"
+    >
+      <button
+        @click="prevSlide"
+        class="bg-kb-yellow-8 text-white px-4 py-2 rounded"
+      >
+        Previous
+      </button>
+      <button
+        @click="nextSlide"
+        class="bg-kb-yellow-8 text-white px-4 py-2 rounded"
+      >
+        Next
+      </button>
     </div>
 
     <!-- 부채 관리 솔루션 -->
@@ -36,16 +62,26 @@
         class="sticky top-0 border-x-[1px] border-kb-brown-3 h-[100vh] animation flex items-center justify-center"
       >
         <div class="flex justify-center h-full pt-32 pb-24 flex-3">
-          <div class="absolute top-0 left-[21.1%] -z-10 w-[1px] h-full bg-[#6D6262]"></div>
+          <div
+            class="absolute top-0 left-[21.1%] -z-10 w-[1px] h-full bg-[#6D6262]"
+          ></div>
           <div class="flex flex-col items-center justify-between">
-            <StrategyDept :class="scrollY < 1400 ? 'opacity-100' : 'opacity-0 '" class="absolute animation" :text="'우선순위'" />
+            <StrategyDept
+              :class="scrollY < 1400 ? 'opacity-100' : 'opacity-0 '"
+              class="absolute animation"
+              :text="'우선순위'"
+            />
             <StrategyDeptSolution
               :class="scrollY >= 1400 ? 'opacity-100' : 'opacity-0 '"
               class="absolute animation"
               :title="`우선순위`"
               :content="'주택 담보 대출 상환을 우선적으로 고려'"
             />
-            <StrategyDept :class="scrollY < 1600 ? 'opacity-100' : 'opacity-0 '" class="absolute bottom-24 animation" :text="'우선순위'" />
+            <StrategyDept
+              :class="scrollY < 1600 ? 'opacity-100' : 'opacity-0 '"
+              class="absolute bottom-24 animation"
+              :text="'우선순위'"
+            />
             <StrategyDeptSolution
               :class="scrollY >= 1600 ? 'opacity-100' : 'opacity-0 '"
               class="absolute bottom-24 animation"
@@ -56,21 +92,34 @@
         </div>
 
         <!-- 3원 -->
-        <div class="flex items-center justify-center flex-1" ref="circleElement">
+        <div
+          class="flex items-center justify-center flex-1"
+          ref="circleElement"
+        >
           <StrategyCircle :title="'부채관리'" :percent="'솔루션'" />
         </div>
 
         <div class="flex justify-center h-full pt-40 pb-12 flex-3">
-          <div class="absolute top-0 right-[21%] -z-10 w-[1px] h-full bg-[#6D6262]"></div>
+          <div
+            class="absolute top-0 right-[21%] -z-10 w-[1px] h-full bg-[#6D6262]"
+          ></div>
           <div class="relative flex flex-col items-center justify-between">
-            <StrategyDept :class="scrollY < 1500 ? 'opacity-100' : 'opacity-0'" class="absolute animation" :text="'우선순위'" />
+            <StrategyDept
+              :class="scrollY < 1500 ? 'opacity-100' : 'opacity-0'"
+              class="absolute animation"
+              :text="'우선순위'"
+            />
             <StrategyDeptSolution
               :class="scrollY >= 1500 ? 'opacity-100' : 'opacity-0'"
               class="absolute animation"
               :title="`우선순위`"
               :content="'주택 담보 대출 상환을 우선적으로 고려'"
             />
-            <StrategyDept :class="scrollY < 1700 ? 'opacity-100' : 'opacity-0'" class="absolute bottom-0 animation" :text="'우선순위'" />
+            <StrategyDept
+              :class="scrollY < 1700 ? 'opacity-100' : 'opacity-0'"
+              class="absolute bottom-0 animation"
+              :text="'우선순위'"
+            />
             <StrategyDeptSolution
               :class="scrollY >= 1700 ? 'opacity-100' : 'opacity-0'"
               class="absolute bottom-0 animation"
@@ -85,25 +134,46 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watch } from "vue";
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
-import StrategyCircle from "./StrategyForPrivate/StrategyCircle.vue";
-import StrategyText from "./StrategyForPrivate/StrategyText.vue";
-import StrategyRecommend from "./StrategyForPrivate/StrategyRecommend.vue";
-import StrategyDept from "./StrategyForPrivate/StrategyDept.vue";
-import StrategyDeptSolution from "./StrategyForPrivate/StrategyDeptSolution.vue";
+import StrategyCircle from './StrategyForPrivate/StrategyCircle.vue';
+import StrategyText from './StrategyForPrivate/StrategyText.vue';
+import StrategyRecommend from './StrategyForPrivate/StrategyRecommend.vue';
+import StrategyDept from './StrategyForPrivate/StrategyDept.vue';
+import StrategyDeptSolution from './StrategyForPrivate/StrategyDeptSolution.vue';
 
-const goalData = [
-  { title: "목표 저축률", percent: `${25}%` },
-  { title: "목표 투자 비율", percent: `${25}%` },
+const circleData = [
+  {
+    title: '목표 지출 절감률',
+    percent: 10,
+  },
+  {
+    title: '목표 저축률',
+    percent: 25,
+  },
+  {
+    title: '목표 투자 비용',
+    percent: 25,
+  },
 ];
 
-const recommendData = [
-  { title: "권장 저축 상품", products: ["정기예금", "국채형 저축 상품"] },
-  { title: "권장 투자 상품", products: ["ETF", "배당주", "안전자산 펀드"] },
-];
+const textData = {
+  percent: 10,
+  isIncrease: false,
+  strategy: '추가 저축 및 투자 비율을 높이는 방안',
+};
 
 const scrollY = ref(0);
+
+const currentIndex = ref(0);
+
+const nextSlide = () => {
+  currentIndex.value = currentIndex.value + 1;
+};
+
+const prevSlide = () => {
+  currentIndex.value = currentIndex.value - 1;
+};
 
 const handleScroll = () => {
   scrollY.value = window.scrollY;
@@ -111,11 +181,11 @@ const handleScroll = () => {
 };
 
 onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
+  window.addEventListener('scroll', handleScroll);
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener("scroll", handleScroll);
+  window.removeEventListener('scroll', handleScroll);
 });
 </script>
 

@@ -1,7 +1,5 @@
 <template>
   <div class="h-screen">
-    <div class="h-[70px] bg-transparent"></div>
-
     <AssetPlanNavigation />
   </div>
 </template>
