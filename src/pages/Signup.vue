@@ -44,7 +44,7 @@
 
           <!-- 전화번호 인증 -->
           <div class="mt-6 flex flex-col">
-            <label for="tel" class="text-font-color mb-1">전화번호</label>
+            <label for="phoneNumber" class="text-font-color mb-1">전화번호</label>
             <AuthenticationBtn @verification-complete="handlePhoneVerification" />
           </div>
 
@@ -148,7 +148,7 @@ const birthday2 = ref('');
 const email = ref('');
 const password = ref('');
 const passwordConfirm = ref('');
-const tel = ref('');
+const phoneNumber = ref('');
 const asset = ref('');
 const emailTouched = ref(false);
 const isVerified = ref(false);
@@ -168,6 +168,7 @@ const birthday = computed(() => {
   return birthday1.value && birthday2.value ? `${birthday1.value}-${birthday2.value}` : '';
 });
 
+
 // 이메일 유효성 검사
 const emailError = computed(() => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -186,8 +187,10 @@ const passwordConfirmError = computed(() => {
 });
 
 // 전화번호 인증 완료 핸들러
+// handlePhoneVerification 함수는 부모 컴포넌트에서 호출됨
 function handlePhoneVerification(phone) {
-  tel.value = phone;
+  phoneNumber.value = phone;
+  console.log('인증된 전화번호:', phone);  // 전화번호 값이 제대로 넘어오는지 로그로 확인
   isVerified.value = true;
 }
 
@@ -222,7 +225,7 @@ async function submitForm() {
         pwd: password.value,
         name: name.value,
         identityNumber: birthday.value,
-        phoneNumber: tel.value,
+        phoneNumber: phoneNumber.value,
         totalIncome: asset.value,
         "Content-Type": "application/json",
       });
@@ -233,10 +236,10 @@ async function submitForm() {
       alert('서버와의 통신에 문제가 발생했습니다.');
     }
   } else {
-    alert('필드를 정확히 입력해주세요.');
+    // alert('필드를 정확히 입력해주세요.');
   }
 }
-
+console.log(birthday);
 function handleEmailBlur() {
   emailTouched.value = true;
 }

@@ -1,38 +1,38 @@
 <template>
   <div class="firebase-sms-auth">
     <!--전화번호 입력 칸 -->
-   <div class="mt-1 flex space-x-2">
-    <div>
-      <input
-    v-model="phoneNumber"
-    type="text"
-    placeholder="전화번호 입력 (- 없이 입력해주세요)"
-    class="pl-4 text-font-color h-[50px] w-[350px] 2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"/>
+    <div class="mt-1 flex space-x-2">
+      <div>
+        <input
+          v-model="phoneNumber"
+          type="text"
+          placeholder="전화번호 입력 (- 없이 입력해주세요)"
+          class="pl-4 text-font-color h-[50px] w-[350px] 2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"/>
+      </div>
+      <div>
+        <button @click="sendCode" :disabled="!recaptchaSolved"
+        class="bg-kb-brown-1 w-[120px] text-white rounded-md h-[50px] hover:text-font-color hover:bg-kb-yellow-4">
+          인증코드 전송
+        </button>
+      </div>
     </div>
-    <div>
-      <button @click="sendCode" :disabled="!recaptchaSolved"
-      class="bg-kb-brown-1 w-[120px] text-white rounded-md h-[50px] hover:text-font-color hover:bg-kb-yellow-4">
-        인증코드 전송
-      </button>
-    </div>
-   </div>
-  <!--에러메세지-->
+    <!--에러메세지-->
     <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
     <div class="my-4" id="recaptcha-container" ref="recaptchaContainer"></div>
 
     <!--인증코드-->
     <label for="verificationCode" class="text-font-color">인증코드</label>
     <div class="mt-1 flex space-x-2 mb-6">
-  <div>
-    <input v-model="verificationCode" type="text" placeholder="인증코드 입력"
-    class="pl-4 text-font-color h-[50px] w-[350px] rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"/>
-  </div>
-  <div>
-    <button @click="verifyCode"
-    class="bg-kb-brown-1 w-[120px] text-white rounded-md h-[50px] hover:text-font-color hover:bg-kb-yellow-4">
-    인증코드 확인</button>
-  </div>
-   </div>
+      <div>
+        <input v-model="verificationCode" type="text" placeholder="인증코드 입력"
+        class="pl-4 text-font-color h-[50px] w-[350px] rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"/>
+      </div>
+      <div>
+        <button @click="verifyCode"
+        class="bg-kb-brown-1 w-[120px] text-white rounded-md h-[50px] hover:text-font-color hover:bg-kb-yellow-4">
+        인증코드 확인</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -41,6 +41,9 @@ import { ref, onMounted } from 'vue';
 import { getApps, initializeApp } from 'firebase/app';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import { firebaseConfig } from '../../apis/utils/firebase';
+
+// emit을 정의합니다
+const emit = defineEmits(['verification-complete']);
 
 let app;
 if (!getApps().length) {
@@ -51,7 +54,6 @@ if (!getApps().length) {
 
 const auth = getAuth();
 auth.languageCode = 'ko';
-// console.log(auth);
 
 const phoneNumber = ref('');
 const verificationCode = ref('');
@@ -59,7 +61,7 @@ const errorMessage = ref('');
 const recaptchaSolved = ref(false);
 let recaptchaVerifier = null;
 let confirmationResult = null;
-const recaptchaContainer = ref(null)
+const recaptchaContainer = ref(null);
 
 // Recaptcha 설정 함수
 const setUpRecaptcha = async () => {
@@ -97,7 +99,11 @@ const sendCode = async () => {
     );
     alert('인증 코드가 전송되었습니다. 메시지를 확인해 주세요.');
     errorMessage.value = ''; // 오류 메시지 초기화
-      } catch (error) {
+
+    // 전화번호를 부모로 전달
+    emit('verification-complete', phoneNumber.value);
+    
+  } catch (error) {
     console.error('Error sending SMS:', error);
     errorMessage.value = `SMS 전송 실패: ${error.message}`;
     
@@ -126,7 +132,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
 .error-message {
   color: red;
 }
