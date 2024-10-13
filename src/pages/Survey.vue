@@ -108,7 +108,7 @@ import {
   insuranceSurvey,
   cardSurvey,
   loanSurvey,
-  savingSurvey,
+  depositsSurvey,
 } from '../constant/surveyData';
 import { postSurvey } from '../apis/api/survey';
 
@@ -142,7 +142,7 @@ const surveyData = computed(() => {
     case '카드':
       return cardSurvey;
     case '예/적금':
-      return savingSurvey;
+      return depositsSurvey;
     case '대출':
       return loanSurvey;
     case '보험':
@@ -160,7 +160,6 @@ const currentQuestion = computed(() => {
     {}
   );
 });
-
 
 // 선택지 개수에 따른 css 변경
 const containerClass = computed(() => {
@@ -189,8 +188,7 @@ function selectOption(option, question) {
   selectedOptions.value.push(optionIndex);
   currentStep.value++;
   isMovingForward.value = true;
-console.log(selectedOptions.value);
-
+  console.log(selectedOptions.value);
 
   if (currentStep.value > totalStep.value) {
     sendData();
@@ -227,12 +225,12 @@ async function sendData() {
     console.log(response);
 
     if (response.status === 200) {
-      router.push('/all-products')
+      router.push('/all-products');
     } else {
       // 알림창? 설문 다시?
     }
   } catch (e) {
-    throw new Error('Survey Err: ' , e);
+    throw new Error('Survey Err: ', e);
   }
 }
 </script>
