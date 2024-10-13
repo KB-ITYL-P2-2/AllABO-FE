@@ -2,14 +2,14 @@
   <div class="flex flex-col h-screen">
     <!-- 페이지 상단 -->
     <div
-      class="bg-[#5F584E] h-[47%] flex flex-col items-center justify-center px-4 py-8 relative"
+      class="bg-kb-yellow-4 h-[47%] flex flex-col items-center justify-center px-4 py-8 relative"
     >
       <!-- 프로그레스 바 -->
       <div
         class="absolute w-full max-w-[528px] left-1/2 transform -translate-x-1/2"
         style="top: 50%"
       >
-        <div class="absolute top-[-24px] left-0 text-white text-sm">
+        <div class="absolute top-[-24px] left-0 text-font-color text-sm">
           {{ currentStep }} / {{ totalStep }}
         </div>
         <div class="progress-bar bg-gray-300 h-2 rounded-full overflow-hidden">
@@ -24,7 +24,7 @@
       <Transition name="fade" mode="out-in">
         <h2
           :key="currentQuestion.id"
-          class="text-white text-3xl font-bold text-center absolute w-full max-w-[760px]"
+          class="text-font-color text-3xl font-bold text-center absolute w-full max-w-[760px]"
           style="top: 66.7%"
         >
           {{ currentQuestion.text }}
@@ -33,7 +33,7 @@
 
       <!-- 구분선 -->
       <div
-        class="w-full max-w-[760px] h-px bg-white opacity-50 absolute left-1/2 transform -translate-x-1/2"
+        class="w-full max-w-[760px] h-px bg-kb-brown-2 opacity-50 absolute left-1/2 transform -translate-x-1/2"
         style="bottom: 16.6%"
       ></div>
     </div>
@@ -63,7 +63,6 @@
               :key="option"
               @click="selectOption(option, currentQuestion)"
               :class="[
-                buttonClass,
                 'py-3 px-6 bg-gray-200 text-font-color rounded-[15px] transition duration-300 disabled:opacity-50',
                 selectedOptions[currentQuestion.id] === option
                   ? 'bg-kb-yellow-2 border-inherit'
@@ -104,23 +103,20 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import gsap from 'gsap';
 
 import {
   insuranceSurvey,
   cardSurvey,
   loanSurvey,
-  savingSurvey,
+  depositsSurvey,
 } from '../constant/surveyData';
+import { postSurvey } from '../apis/api/survey';
 
 const route = useRoute();
 const router = useRouter();
 
+// 프로그레스
 const currentStep = ref(1);
-const questionHistory = ref([]);
-const selectedOptions = ref({});
-const isMovingForward = ref(true);
-
 const totalStep = computed(() => {
   const category = route.query.category;
 
@@ -136,6 +132,9 @@ const totalStep = computed(() => {
   }
 });
 
+const progress = computed(() => (currentStep.value / totalStep.value) * 100);
+
+// 카테고리 선택에 따라 설문 데이터 결정
 const surveyData = computed(() => {
   const category = route.query.category;
 
@@ -143,13 +142,17 @@ const surveyData = computed(() => {
     case '카드':
       return cardSurvey;
     case '예/적금':
-      return savingSurvey;
+      return depositsSurvey;
     case '대출':
       return loanSurvey;
     case '보험':
       return insuranceSurvey;
   }
 });
+
+const questionHistory = ref([]);
+const selectedOptions = ref([]);
+const isMovingForward = ref(true);
 
 const currentQuestion = computed(() => {
   return (
@@ -158,12 +161,7 @@ const currentQuestion = computed(() => {
   );
 });
 
-const progress = computed(() => (currentStep.value / totalStep.value) * 100);
-
-const isCompactLayout = computed(
-  () => currentQuestion.value.options?.length <= 5
-);
-
+// 선택지 개수에 따른 css 변경
 const containerClass = computed(() => {
   const optionsCount = currentQuestion.value.options?.length || 0;
   return optionsCount > 5
@@ -171,10 +169,11 @@ const containerClass = computed(() => {
     : 'flex flex-col space-y-6';
 });
 
-const buttonClass = computed(() => {
-  const optionsCount = currentQuestion.value.options?.length || 0;
-  return optionsCount > 5 ? 'w-full' : 'w-full';
-});
+function initializeSurvey() {
+  currentStep.value = 1;
+  questionHistory.value = [0]; // Start with the first question
+  selectedOptions.value = [];
+}
 
 watch(
   () => route.query.category,
@@ -184,19 +183,15 @@ watch(
   { immediate: true }
 );
 
-function initializeSurvey() {
-  currentStep.value = 1;
-  questionHistory.value = [0]; // Start with the first question
-  selectedOptions.value = {};
-}
-
 function selectOption(option, question) {
-  selectedOptions.value[question.id] = option;
+  const optionIndex = question.options.indexOf(option);
+  selectedOptions.value.push(optionIndex);
   currentStep.value++;
   isMovingForward.value = true;
+  console.log(selectedOptions.value);
 
   if (currentStep.value > totalStep.value) {
-    router.push('/result'); // 결과 페이지로 이동
+    sendData();
     return;
   }
 
@@ -218,35 +213,25 @@ function selectOption(option, question) {
 function goToPreviousQuestion() {
   if (questionHistory.value.length > 1) {
     questionHistory.value.pop(); // Remove the current question
+    selectedOptions.value.pop(); // 마지막 선택 제거
     currentStep.value--;
     isMovingForward.value = false;
   }
 }
 
-// Animation hooks (remain the same)
-function beforeEnter(el) {
-  el.style.opacity = 0;
-  el.style.transform = isMovingForward.value
-    ? 'translateX(100%)'
-    : 'translateX(-100%)';
-}
+async function sendData() {
+  try {
+    const response = await postSurvey(selectedOptions);
+    console.log(response);
 
-function enter(el, done) {
-  gsap.to(el, {
-    opacity: 1,
-    x: 0,
-    duration: 0.5,
-    onComplete: done,
-  });
-}
-
-function leave(el, done) {
-  gsap.to(el, {
-    opacity: 0,
-    x: isMovingForward.value ? '-100%' : '100%',
-    duration: 0.5,
-    onComplete: done,
-  });
+    if (response.status === 200) {
+      router.push('/all-products');
+    } else {
+      // 알림창? 설문 다시?
+    }
+  } catch (e) {
+    throw new Error('Survey Err: ', e);
+  }
 }
 </script>
 

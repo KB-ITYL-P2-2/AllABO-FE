@@ -1,4 +1,10 @@
 <template>
-    <div class="h-[90px]">자산 설계 페이지</div>
- </template>
- <script setup></script>
+  <div class="h-screen">
+    <div class="h-[70px] bg-transparent"></div>
+
+    <AssetPlanNavigation />
+  </div>
+</template>
+<script setup>
+import AssetPlanNavigation from '../components/AssetPlan/AssetPlanNavigation.vue';
+</script>

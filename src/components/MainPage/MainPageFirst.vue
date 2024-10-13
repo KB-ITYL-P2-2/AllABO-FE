@@ -1,10 +1,10 @@
 <template>
-  <div class="flex flex-col items-center justify-center h-screen bg-kb-brown-2">
-    <div class="md:max-laptop:text-[54px] text-[80px] font-black border border-x-[20px] border-t-[20px] px-[72px] border-white border-b-0">
-      <span class="text-white">{{ text }}</span>
+  <div class="flex flex-col items-center justify-center h-screen bg-kb-yellow-4">
+    <div class="md:max-laptop:text-[54px] text-[80px] font-black border border-x-[20px] border-t-[20px] px-[72px] border-kb-brown-2 border-b-0">
+      <span class="text-font-color">{{ text }}</span>
       <span class="text-kb-yellow-1">{{ dot }}</span>
     </div>
-    <p class="md:max-laptop:text-[28px] text-[40px] text-white mt-6">Next Generation FinTech</p>
+    <p class="md:max-laptop:text-[28px] text-[40px] text-font-color mt-6">Next Generation FinTech</p>
   </div>
 </template>
 

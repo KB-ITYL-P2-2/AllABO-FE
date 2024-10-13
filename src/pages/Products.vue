@@ -21,20 +21,20 @@
     <swiper-slide>
       <div class="relative w-screen h-screen overflow-hidden">
         <div
-          class="w-full transition-all duration-300 ease-in-out bg-[#5F584E] absolute top-0 left-0"
+          class="absolute top-0 left-0 w-full transition-all duration-300 ease-in-out bg-kb-yellow-4"
           :style="{
             height: isExpanded ? '100%' : '50%',
           }"
         >
           <h1
-            class="absolute w-full px-4 text-xl font-bold text-center text-white transform -translate-x-1/2 left-1/2 sm:text-2xl md:text-3xl"
+            class="absolute w-full px-4 text-xl font-bold text-center transform -translate-x-1/2 text-kb-brown-2 left-1/2 sm:text-2xl md:text-3xl"
             style="top: 25vh"
           >
             간단한 설문을 통해 맞춤 상품을 추천 받아보세요!
           </h1>
           <p
             v-if="isExpanded"
-            class="absolute w-full px-4 text-lg font-bold text-center text-white transform -translate-x-1/2 left-1/2 sm:text-xl md:text-2xl"
+            class="absolute w-full px-4 text-lg font-bold text-center transform -translate-x-1/2 text-kb-brown-2 left-1/2 sm:text-xl md:text-2xl"
             style="top: 75vh"
           >
             {{ hoveredCategory }} 설문하러 가기
@@ -86,7 +86,7 @@
     </swiper-slide>
 
     <swiper-slide v-for="(item, index) in data" :key="index">
-      <ProductsAllView :item="item" />
+      <Top3Products :item="item" />
     </swiper-slide>
 
     <!-- 네비게이션 -->
@@ -121,7 +121,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import CategoryButton from "../components/Products/CategoryButton.vue";
-import ProductsAllView from "../components/Products/ProductsAllView.vue";
+import Top3Products from "../components/Products/Top3Products.vue";
 
 import LAYOUT_VARIANTS from "../constant/layout.js";
 import productCategoryData from "../constant/productCategoryData.js";
@@ -162,11 +162,11 @@ const formatText=(text)=>{
 }
 
 const data = [
-  { title: "신용카드", index: 1 },
-  { title: "체크카드", index: 2 },
-  { title: "예금적금", index: 3 },
-  { title: "보험", index: 4 },
-  { title: "대출", index: 5 },
+  { title: "신용카드", index: 1, request: '/credit-card' },
+  { title: "체크카드", index: 2, request: '/check-card' },
+  { title: "예금적금", index: 3, request: '/deposit' },
+  { title: "보험", index: 4, request: '/insurance' },
+  { title: "대출", index: 5, request: '/loan' },
 ];
 
 const isExpanded = ref(false);
@@ -194,7 +194,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-::v-deep .swiper-pagination {
+:deep(.swiper-pagination) {
   display: none !important;
 }
 

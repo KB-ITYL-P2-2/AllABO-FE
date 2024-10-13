@@ -1,6 +1,6 @@
 <template>
   <div class="h-[100vh] flex flex-col">
-    <div class="h-[70px] bg-kb-brown-1"></div>
+    <div class="h-[70px] bg-kb-yellow-4"></div>
 
     <div class="relative flex items-center justify-center h-full overflow-hidden bg-kb-yellow-4">
       <div class="relative z-10 flex items-center w-full px-[18%] md:max-laptop:px-[16.5%]">
@@ -12,7 +12,9 @@
       </div>
 
       <div class="absolute top-[70%] z-40">
-        <MainPageButton :text="'분석하러 가기'" />
+        <MainPageButton :text="'분석하러 가기'"
+        @click="goToAnalyze"
+        />
       </div>
 
       <!-- 첫번째 원 -->
@@ -57,6 +59,12 @@
 </template>
 <script setup>
 import MainPageButton from '../components/MainPage/MainPageButton.vue';
+import { useRouter } from 'vue-router';
+
+const router=useRouter();
+const goToAnalyze=()=>{
+  router.push("/asset-analyze")
+}
 </script>
 
 <style scoped>
