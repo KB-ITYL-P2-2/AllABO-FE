@@ -1,7 +1,8 @@
 <template>
   <div id="graphContainer" class="relative w-full flex justify-center space-y-4">
     <!-- 첫 번째 그래프: 파란색(사용자) + 회색(평균) -->
-    <div class="relative w-full max-w-[600px] h-[60px] ml-[400px]">
+    <!-- <div class="relative w-full max-w-[600px] h-[60px] ml-[400px]"> -->
+    <div class="relative w-full max-w-[600px] h-[60px] ml-52">
       <div
         class="absolute h-[60px] bg-kb-gray-2 rounded-r-lg origin-left"
         :style="{ width: `${animatedAverageWidth}px`, left: '50%', transform: 'scaleX(-1)' }"
@@ -14,7 +15,7 @@
     </div>
 
     <!-- 두 번째 그래프: 노란색(사용자) + 회색(평균) -->
-    <div class="relative w-full max-w-[600px] h-[60px] mt-8">
+    <div class="relative w-full max-w-[600px] h-[60px] mt-8 mr-24">
       <div
         class="absolute h-[60px] bg-kb-gray-2 rounded-r-lg origin-left"
         :style="{ width: `${animatedAverageWidth2}px`, left: '50%', transform: 'scaleX(-1)' }"

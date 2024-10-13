@@ -106,7 +106,7 @@ onMounted(() => {
 }
 
 .grow-animation {
-  animation: grow 2s ease-out forwards; 
+  animation: grow 1s ease-out forwards; 
 }
 
 @keyframes grow-hash {
@@ -121,6 +121,6 @@ onMounted(() => {
 }
 
 .grow-animation-hash {
-  animation: grow-hash 2s ease-out forwards; 
+  animation: grow-hash 1s ease-out forwards; 
 }
 </style>
