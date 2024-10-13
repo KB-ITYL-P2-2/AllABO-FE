@@ -5,7 +5,9 @@
     >
       <div class="flex flex-col items-center">
         <span class="text-[24px] mt-3">{{ title }}</span>
-        <span class="text-[45px] text-red-500 font-bold">{{ percent }}%</span>
+        <span class="text-[45px] text-red-500 font-bold">{{
+          percentText
+        }}</span>
       </div>
 
       <!-- border circle -->
@@ -20,6 +22,8 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
+
 const props = defineProps({
   title: {
     type: String,
@@ -27,7 +31,15 @@ const props = defineProps({
   },
   percent: {
     type: Number,
-    required: true,
+    required: false,
   },
+  text: {
+    type: String,
+    required: false,
+  },
+});
+
+const percentText = computed(() => {
+  return props.percent ? props.percent + '%' : props.text;
 });
 </script>

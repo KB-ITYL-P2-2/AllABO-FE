@@ -1,11 +1,9 @@
 <template>
-  <div class="h-full relative">
-    <div class="w-full h-screen bg-kb-yellow-4">
-      <div
-        class="sticky top-[28%] h-[400px] bg-kb-yellow-8 w-full flex items-center px-[22%]"
-      >
+  <div class="h-screen relative">
+    <div class="w-full h-full bg-kb-yellow-4 flex items-center justify-center">
+      <div class="h-[400px] bg-kb-yellow-8 w-full flex items-center px-[22%]">
         <!-- 3원 -->
-        <div class="relative flex-1 h-full mr-9">
+        <div class="relative flex-1 h-full mr-9 mt-6">
           <StrategyCircle
             v-for="(item, index) in circleData"
             :key="index"
@@ -26,7 +24,7 @@
             class="absolute animation top-[22%] left-0"
           />
           <StrategyRecommend
-            v-for="(item, index) in recommendData"
+            v-for="(item, index) in productData"
             :key="index"
             :class="currentIndex === index + 1 ? 'opacity-100' : 'opacity-0'"
             class="absolute top-[26%] animation"
@@ -35,112 +33,47 @@
           />
         </div>
       </div>
-    </div>
 
-    <!-- 이동 버튼 -->
-    <div
-      class="absolute top-1/2 right-4 transform -translate-y-1/2 flex flex-col space-y-4"
-    >
-      <button
-        @click="prevSlide"
-        class="bg-kb-yellow-8 text-white px-4 py-2 rounded"
-      >
-        Previous
-      </button>
-      <button
-        @click="nextSlide"
-        class="bg-kb-yellow-8 text-white px-4 py-2 rounded"
-      >
-        Next
-      </button>
+      <!-- 이동 버튼 -->
+      <StrategyButton
+        :currentIndex="currentIndex"
+        @prev="prevSlide"
+        @next="nextSlide"
+      />
     </div>
 
     <!-- 부채 관리 솔루션 -->
-    <div class="w-full h-[2000px] bg-kb-yellow-4 relative">
-      <div
-        :class="scrollY > 800 ? 'opacity-100' : 'opacity-0'"
-        class="sticky top-0 border-x-[1px] border-kb-brown-3 h-[100vh] animation flex items-center justify-center"
-      >
-        <div class="flex justify-center h-full pt-32 pb-24 flex-3">
-          <div
-            class="absolute top-0 left-[21.1%] -z-10 w-[1px] h-full bg-[#6D6262]"
-          ></div>
-          <div class="flex flex-col items-center justify-between">
-            <StrategyDept
-              :class="scrollY < 1400 ? 'opacity-100' : 'opacity-0 '"
-              class="absolute animation"
-              :text="'우선순위'"
-            />
-            <StrategyDeptSolution
-              :class="scrollY >= 1400 ? 'opacity-100' : 'opacity-0 '"
-              class="absolute animation"
-              :title="`우선순위`"
-              :content="'주택 담보 대출 상환을 우선적으로 고려'"
-            />
-            <StrategyDept
-              :class="scrollY < 1600 ? 'opacity-100' : 'opacity-0 '"
-              class="absolute bottom-24 animation"
-              :text="'우선순위'"
-            />
-            <StrategyDeptSolution
-              :class="scrollY >= 1600 ? 'opacity-100' : 'opacity-0 '"
-              class="absolute bottom-24 animation"
-              :title="`우선순위`"
-              :content="'주택 담보 대출 상환을 우선적으로 고려'"
-            />
-          </div>
-        </div>
-
+    <div class="w-full h-screen bg-kb-yellow-4 relative">
+      <div class="flex justify-center items-center h-full">
         <!-- 3원 -->
-        <div
-          class="flex items-center justify-center flex-1"
-          ref="circleElement"
-        >
-          <StrategyCircle :title="'부채관리'" :percent="'솔루션'" />
+        <div class="flex items-center justify-center flex-1">
+          <StrategyCircle :title="'부채관리'" :text="'솔루션'" />
         </div>
 
-        <div class="flex justify-center h-full pt-40 pb-12 flex-3">
-          <div
-            class="absolute top-0 right-[21%] -z-10 w-[1px] h-full bg-[#6D6262]"
-          ></div>
-          <div class="relative flex flex-col items-center justify-between">
-            <StrategyDept
-              :class="scrollY < 1500 ? 'opacity-100' : 'opacity-0'"
-              class="absolute animation"
-              :text="'우선순위'"
-            />
-            <StrategyDeptSolution
-              :class="scrollY >= 1500 ? 'opacity-100' : 'opacity-0'"
-              class="absolute animation"
-              :title="`우선순위`"
-              :content="'주택 담보 대출 상환을 우선적으로 고려'"
-            />
-            <StrategyDept
-              :class="scrollY < 1700 ? 'opacity-100' : 'opacity-0'"
-              class="absolute bottom-0 animation"
-              :text="'우선순위'"
-            />
-            <StrategyDeptSolution
-              :class="scrollY >= 1700 ? 'opacity-100' : 'opacity-0'"
-              class="absolute bottom-0 animation"
-              :title="`우선순위`"
-              :content="'주택 담보 대출 상환을 우선적으로 고려'"
-            />
-          </div>
-        </div>
+        <!-- 솔루션들 -->
+        <StrategyDeptSolution
+          v-for="(solution, index) in solutionData"
+          :key="index"
+          :title="solution.title"
+          :content="solution.content"
+          :class="getSolutionPosition(index)"
+          :positionClass="getSolutionPosition(index)"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref } from 'vue';
 
 import StrategyCircle from './StrategyForPrivate/StrategyCircle.vue';
 import StrategyText from './StrategyForPrivate/StrategyText.vue';
 import StrategyRecommend from './StrategyForPrivate/StrategyRecommend.vue';
-import StrategyDept from './StrategyForPrivate/StrategyDept.vue';
 import StrategyDeptSolution from './StrategyForPrivate/StrategyDeptSolution.vue';
+import StrategyButton from './StrategyButton.vue';
+
+import solutionData from '../../constant/solutionData';
 
 const circleData = [
   {
@@ -163,7 +96,26 @@ const textData = {
   strategy: '추가 저축 및 투자 비율을 높이는 방안',
 };
 
-const scrollY = ref(0);
+const productData = [
+  {
+    title: '권장 저축 상품',
+    products: ['정기예금', '국채형 저축 상품'],
+  },
+  {
+    title: '권장 투자 상품',
+    products: ['ETF', '배당주', '안전자산 펀드'],
+  },
+];
+
+const getSolutionPosition = (index) => {
+  const positions = [
+    'solution-top-left', // 왼쪽 위
+    'solution-top-right', // 오른쪽 위
+    'solution-bottom-left', // 왼쪽 아래
+    'solution-bottom-right', // 오른쪽 아래
+  ];
+  return positions[index];
+};
 
 const currentIndex = ref(0);
 
@@ -174,26 +126,34 @@ const nextSlide = () => {
 const prevSlide = () => {
   currentIndex.value = currentIndex.value - 1;
 };
-
-const handleScroll = () => {
-  scrollY.value = window.scrollY;
-  console.log(scrollY.value);
-};
-
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
 </script>
 
 <style scoped>
 .animation {
   transition: opacity 0.5s, transform 0.5s; /* 부드러운 전환 */
 }
-.flex-3 {
-  flex: 4 1 0; /* flex-grow, flex-shrink, flex-basis */
+
+.solution-top-left {
+  position: absolute;
+  top: 150px;
+  left: 150px;
+}
+
+.solution-top-right {
+  position: absolute;
+  top: 150px;
+  right: 150px;
+}
+
+.solution-bottom-left {
+  position: absolute;
+  bottom: 150px;
+  left: 150px;
+}
+
+.solution-bottom-right {
+  position: absolute;
+  bottom: 150px;
+  right: 150px;
 }
 </style>
