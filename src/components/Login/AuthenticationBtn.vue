@@ -11,7 +11,7 @@
       </div>
       <div>
         <button @click="sendCode" :disabled="!recaptchaSolved"
-        class="bg-kb-brown-1 w-[120px] text-white rounded-md h-[50px] hover:text-font-color hover:bg-kb-yellow-4">
+        class="bg-kb-brown-1 w-[120px] text-white rounded-md h-[50px] hover:text-font-color hover:bg-kb-yellow-1">
           인증코드 전송
         </button>
       </div>
@@ -29,7 +29,7 @@
       </div>
       <div>
         <button @click="verifyCode"
-        class="bg-kb-brown-1 w-[120px] text-white rounded-md h-[50px] hover:text-font-color hover:bg-kb-yellow-4">
+        class="bg-kb-brown-1 w-[120px] text-white rounded-md h-[50px] hover:text-font-color hover:bg-kb-yellow-1">
         인증코드 확인</button>
       </div>
     </div>
@@ -118,7 +118,7 @@ const verifyCode = async () => {
   try {
     const result = await confirmationResult.confirm(verificationCode.value);
     console.log('User signed in:', result.user);
-    alert('인증에 성공했습니다!');
+    alert('인증 완료');
     errorMessage.value = ''; // 오류 메시지 초기화
   } catch (error) {
     console.error('Error verifying code:', error);
@@ -127,7 +127,7 @@ const verifyCode = async () => {
 };
 
 onMounted(() => {
-  setUpRecaptcha(); // DOM이 완전히 준비된 후 reCAPTCHA 설정
+  setUpRecaptcha(); 
 });
 </script>
 
