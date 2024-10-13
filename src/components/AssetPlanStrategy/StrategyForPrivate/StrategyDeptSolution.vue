@@ -1,16 +1,19 @@
 <template>
-  <div>
-    <span
-      class="absolute bg-white rounded-[100px] py-1 px-4 top-[-38px] left-[41%]"
-      >{{ title }}</span
-    >
-    <span
-      :class="[
-        'py-6 px-8 text-center bg-kb-yellow-9 shadow-md text-[20px]',
-        positionClass,
-      ]"
-      >{{ content }}</span
-    >
+  <div
+    :class="[
+      'solution-item',
+      positionClass,
+      { 'solution-visible': isVisible },
+      'absolute w-96 h-32 bg-white rounded-lg shadow-md flex flex-col overflow-hidden',
+    ]"
+    :style="{ animationDelay: animationDelay }"
+  >
+    <div class="bg-kb-yellow-8 p-2 text-center">
+      <span class="text-lg text-gray-800">{{ title }}</span>
+    </div>
+    <div class="flex-grow flex items-center justify-center p-4">
+      <span class="text-base text-gray-600 text-center">{{ content }}</span>
+    </div>
   </div>
 </template>
 
@@ -28,23 +31,26 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  isVisible: {
+    type: Boolean,
+    required: true,
+  },
+  animationDelay: {
+    type: String,
+    required: true,
+  },
 });
 </script>
 
 <style scoped>
-.solution-top-left {
-  border-radius: 20px 20px 0 20px;
+.solution-item {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.5s, transform 0.5s;
 }
 
-.solution-top-right {
-  border-radius: 20px 20px 20px 0;
-}
-
-.solution-bottom-left {
-  border-radius: 20px 0 20px 20px;
-}
-
-.solution-bottom-right {
-  border-radius: 0 20px 20px 20px;
+.solution-visible {
+  opacity: 1;
+  transform: scale(1);
 }
 </style>

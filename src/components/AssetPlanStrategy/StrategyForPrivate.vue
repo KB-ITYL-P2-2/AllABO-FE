@@ -43,10 +43,33 @@
     </div>
 
     <!-- 부채 관리 솔루션 -->
-    <div class="w-full h-screen bg-kb-yellow-4 relative">
-      <div class="flex justify-center items-center h-full">
+    <div
+      ref="solutionSection"
+      class="w-screen h-screen bg-kb-yellow-4 relative flex items-center justify-center"
+    >
+      <div class="w-full h-full relative">
+        <!-- SVG for lines -->
+        <svg
+          class="absolute top-0 left-0 w-full h-full z-0"
+          :class="{ 'lines-visible': isVisible }"
+        >
+          <line
+            v-for="(_, index) in solutionData"
+            :key="`line-${index}`"
+            :class="[`line-${getSolutionPosition(index)}`, 'solution-line']"
+            x1="50%"
+            y1="50%"
+            :x2="getLineEndX(index)"
+            :y2="getLineEndY(index)"
+            :style="{ animationDelay: `${index * 0.5}s` }"
+          />
+        </svg>
+
         <!-- 3원 -->
-        <div class="flex items-center justify-center flex-1">
+        <div
+          ref="centerCircle"
+          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+        >
           <StrategyCircle :title="'부채관리'" :text="'솔루션'" />
         </div>
 
@@ -56,8 +79,10 @@
           :key="index"
           :title="solution.title"
           :content="solution.content"
-          :class="getSolutionPosition(index)"
+          :class="[getSolutionPosition(index), 'absolute']"
           :positionClass="getSolutionPosition(index)"
+          :isVisible="isVisible && visibleSolutions[index]"
+          :animationDelay="`${index * 0.5 + 0.5}s`"
         />
       </div>
     </div>
@@ -65,7 +90,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
 
 import StrategyCircle from './StrategyForPrivate/StrategyCircle.vue';
 import StrategyText from './StrategyForPrivate/StrategyText.vue';
@@ -107,6 +132,11 @@ const productData = [
   },
 ];
 
+const solutionSection = ref(null);
+const isVisible = ref(false);
+const visibleSolutions = ref(solutionData.map(() => false));
+const animationKey = ref(0);
+
 const getSolutionPosition = (index) => {
   const positions = [
     'solution-top-left', // 왼쪽 위
@@ -126,6 +156,48 @@ const nextSlide = () => {
 const prevSlide = () => {
   currentIndex.value = currentIndex.value - 1;
 };
+
+const getLineEndX = (index) => {
+  const position = getSolutionPosition(index);
+  return position.includes('left') ? '25%' : '75%';
+};
+
+const getLineEndY = (index) => {
+  const position = getSolutionPosition(index);
+  return position.includes('top') ? '30%' : '70%';
+};
+
+watch(isVisible, (newValue) => {
+  if (newValue) {
+    animationKey.value++;
+    solutionData.forEach((_, index) => {
+      setTimeout(() => {
+        visibleSolutions.value[index] = true;
+      }, (index * 0.5 + 1) * 1000); // 1초(선 애니메이션) + 각 솔루션 간 0.5초 지연
+    });
+  } else {
+    visibleSolutions.value = solutionData.map(() => false);
+  }
+});
+
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      isVisible.value = entry.isIntersecting;
+    },
+    { threshold: 0.5 }
+  );
+
+  if (solutionSection.value) {
+    observer.observe(solutionSection.value);
+  }
+
+  onUnmounted(() => {
+    if (solutionSection.value) {
+      observer.unobserve(solutionSection.value);
+    }
+  });
+});
 </script>
 
 <style scoped>
@@ -133,27 +205,48 @@ const prevSlide = () => {
   transition: opacity 0.5s, transform 0.5s; /* 부드러운 전환 */
 }
 
+.solution-line {
+  stroke: #f6ce46;
+  stroke-width: 1;
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  animation: none;
+}
+
+.lines-visible .solution-line {
+  animation: drawLine 1s ease-out forwards;
+}
+
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeInScale {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .solution-top-left {
-  position: absolute;
-  top: 150px;
-  left: 150px;
+  top: 19%;
+  left: 17%;
 }
 
 .solution-top-right {
-  position: absolute;
-  top: 150px;
-  right: 150px;
+  top: 19%;
+  right: 17%;
 }
 
 .solution-bottom-left {
-  position: absolute;
-  bottom: 150px;
-  left: 150px;
+  bottom: 19%;
+  left: 17%;
 }
 
 .solution-bottom-right {
-  position: absolute;
-  bottom: 150px;
-  right: 150px;
+  bottom: 19%;
+  right: 17%;
 }
 </style>
