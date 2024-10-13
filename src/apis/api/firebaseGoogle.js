@@ -1,5 +1,6 @@
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../utils/firebase";
+import axios from "axios";
 
 export const googleLoginHandler = async () => {
   try {

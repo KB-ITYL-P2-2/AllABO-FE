@@ -40,7 +40,7 @@ const router=createRouter({
         {path:'/login',name: 'Login',component:Login},
         {path:'/signup-condition',component:SignCondition},
         {path:'/signup',component:Signup},
-        {path:'/signup-success',component:SignSuccess},
+        {path: '/signup-success', name: 'SignSuccess',component: SignSuccess},
         {path:'/mypage-profile',component:EditProfile},
         {path:'/mypage-password',component:EditPassword},
         {path:'/mypage-withdraw',component:WithdrawMember},
