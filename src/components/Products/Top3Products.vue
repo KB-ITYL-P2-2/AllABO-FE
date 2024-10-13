@@ -6,7 +6,7 @@
         <!-- <ProductsCards v-for="(item, index) in cardData" :item="item" :key="index" :class="[`transition-transform order-${cardOrder[currentIndex][index]}`, cardOrder[currentIndex][index]==2 ? `scale-110` : '']" /> -->
         <div class="flex flex-row h-[350px] items-center w-[900px] overflow-hidden" id="carousel-container">
           <div
-            v-for="(item, index) in item.title.includes('카드') ? newCardData : newAssetData"
+            v-for="(items, index) in mappingData(data[item.title])"
             :key="index"
             class="px-4 flex-none basis-[300px] flex items-center justify-center z-10"
             :class="[index == currentIndex && 'z-20', isAnimate && 'transition-all']"
@@ -15,7 +15,8 @@
             }"
           >
             <ProductsCards
-              :item="item"
+              :items="items"
+              :isCard="item.title.includes('카드')"
               :isHover="isHover"
               :isNow="currentIndex == index"
               class=""
@@ -28,10 +29,10 @@
 
         <div class="z-10 flex gap-3 mt-7">
           <button
-            v-for="(item, index) in item.title.includes('카드') ? cardData : assetData"
+            v-for="(item, index) in data[item.title]"
             :key="index"
-            :class="['w-3 h-3 rounded-full', index+2 == currentIndex ? 'bg-kb-yellow-1' : 'bg-kb-gray-2']"
-            @click="currentIndex = index+2"
+            :class="['w-3 h-3 rounded-full', index + 2 == currentIndex ? 'bg-kb-yellow-1' : 'bg-kb-gray-2']"
+            @click="currentIndex = index + 2"
           ></button>
         </div>
 
@@ -47,7 +48,16 @@
 
     <!-- 전체 조회 버튼 -->
     <div class="z-0 mt-8">
-      <button class="p-2 border border-gray-400 rounded-[10px] text-font-color bg-white" @click="()=>{router.push('/all-products')}">{{ `${item.title} 전체 조회` }}</button>
+      <button
+        class="p-2 border border-gray-400 rounded-[10px] text-font-color bg-white"
+        @click="
+          () => {
+            router.push({ path: '/all-products', query: { request: item.request } });
+          }
+        "
+      >
+        {{ `${item.title} 전체 조회` }}
+      </button>
     </div>
   </div>
 </template>
@@ -56,10 +66,10 @@
 import { computed, onBeforeMount, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
-const router = useRouter()
-
 import ProductsCards from "./ProductsAllView/ProductsCards.vue";
 import LAYOUT_VARIANTS from "../../constant/layout";
+
+const router = useRouter();
 
 const props = defineProps({
   item: {
@@ -79,50 +89,108 @@ const cardOrder = [
   [2, 3, 1], // 3일때
 ];
 
-const cardData = ref([
-  {
-    cardImageUrl: "/images/Products/card1.png",
-    cardName: "우리동네 체크카드(키뮤)",
-    cardContent: "다 같이 돌자 동네 한 바퀴",
-  },
-  {
-    cardImageUrl: "/images/Products/card2.png",
-    cardName: "2번째 카드",
-    cardContent: "다 같이 돌자 동네 한 바퀴",
-  },
-  {
-    cardImageUrl: "/images/Products/card3.png",
-    cardName: "3번째카드",
-    cardContent: "다 같이 돌자 동네 한 바퀴",
-  },
-  {
-    cardImageUrl: "/images/Products/asset.png",
-    cardName: "예적금",
-    cardContent: "다 같이 돌자 동네 한 바퀴",
-  },
-]);
-
-const newCardData = ref([]);
-
-const assetData = ref([
-  {
-    cardImageUrl: "/images/Products/asset.png",
-    cardName: "예적금",
-    cardContent: "다 같이 돌자 동네 한 바퀴",
-  },
-  {
-    cardImageUrl: "/images/Products/asset.png",
-    cardName: "2번째 예적금",
-    cardContent: "다 같이 돌자 동네 한 바퀴",
-  },
-  {
-    cardImageUrl: "/images/Products/asset.png",
-    cardName: "3번째 예적금",
-    cardContent: "다 같이 돌자 동네 한 바퀴",
-  },
-]);
-
-const newAssetData = ref([]);
+const data = ref({
+  체크카드: [
+    {
+      cardImageUrl: "/images/Products/Top3Products/check-card/1.png",
+      cardName: "첵첵 체크카드(마루는강쥐)",
+      cardContent: "마루와 함께 혜택도 첵첵!",
+      pageUrl: "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=01760",
+    },
+    {
+      cardImageUrl: "/images/Products/Top3Products/check-card/2.png",
+      cardName: "트래블러스 체크카드\n(토심이)",
+      cardContent: "여행이 일상인 프로여행러라면",
+      pageUrl: "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09564",
+    },
+    {
+      cardImageUrl: "/images/Products/Top3Products/check-card/3.png",
+      cardName: "총무 체크카드(홀로)",
+      cardContent: "모임의 밥과 후식 할인 담당",
+      pageUrl: "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=07980",
+    },
+  ],
+  신용카드: [
+    {
+      cardImageUrl: "/images/Products/Top3Products/credit-card/1.png",
+      cardName: "WE:SH Travel",
+      cardContent: "외화 충전·환전 없이\n우대 환율로 결제되는",
+      pageUrl: "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09561",
+    },
+    {
+      cardImageUrl: "/images/Products/Top3Products/credit-card/2.png",
+      cardName: "Easy pick카드",
+      cardContent: "주요 생활 영역부터 내가 Pick한\n영역까지 모두 적립 Easy!",
+      pageUrl: "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09243",
+    },
+    {
+      cardImageUrl: "/images/Products/Top3Products/credit-card/3.png",
+      cardName: "캐시노트 KB 국민카드",
+      cardContent: "캐시노트 월정액과\n사업지원 할인을 동시에",
+      pageUrl: "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=04291",
+    },
+  ],
+  예금적금: [
+    {
+      cardImageUrl: "/images/Products/Top3Products/deposit/1.png",
+      cardName: "KB 내맘대로 적금",
+      cardContent: "누구나 쉽게 우대받는 DIY",
+      pageUrl: "https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=N&prcode=DP01000821",
+    },
+    {
+      cardImageUrl: "/images/Products/Top3Products/deposit/2.png",
+      cardName: "Easy pick카드",
+      cardContent: "주요 생활 영역부터 내가 Pick한 영역까지 모두 적립 Easy!",
+      pageUrl: "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09243",
+    },
+    {
+      cardImageUrl: "/images/Products/Top3Products/deposit/3.png",
+      cardName: "캐시노트 KB 국민카드",
+      cardContent: "캐시노트 월정액과 사업지원 할인을 동시에",
+      pageUrl: "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=04291",
+    },
+  ],
+  대출: [
+    {
+      cardImageUrl: "/images/Products/Top3Products/loan/1.png",
+      cardName: "KB 내맘대로 적금",
+      cardContent: "누구나 쉽게 우대받는 DIY",
+      pageUrl: "https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=N&prcode=DP01000821",
+    },
+    {
+      cardImageUrl: "/images/Products/Top3Products/loan/2.png",
+      cardName: "Easy pick카드",
+      cardContent: "주요 생활 영역부터 내가 Pick한 영역까지 모두 적립 Easy!",
+      pageUrl: "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09243",
+    },
+    {
+      cardImageUrl: "/images/Products/Top3Products/loan/3.png",
+      cardName: "캐시노트 KB 국민카드",
+      cardContent: "캐시노트 월정액과 사업지원 할인을 동시에",
+      pageUrl: "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=04291",
+    },
+  ],
+  보험: [
+    {
+      cardImageUrl: "/images/Products/Top3Products/insurance/1.png",
+      cardName: "KB 내맘대로 적금",
+      cardContent: "누구나 쉽게 우대받는 DIY",
+      pageUrl: "https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=N&prcode=DP01000821",
+    },
+    {
+      cardImageUrl: "/images/Products/Top3Products/insurance/2.png",
+      cardName: "Easy pick카드",
+      cardContent: "주요 생활 영역부터 내가 Pick한 영역까지 모두 적립 Easy!",
+      pageUrl: "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09243",
+    },
+    {
+      cardImageUrl: "/images/Products/Top3Products/insurance/3.png",
+      cardName: "캐시노트 KB 국민카드",
+      cardContent: "캐시노트 월정액과 사업지원 할인을 동시에",
+      pageUrl: "https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=04291",
+    },
+  ],
+});
 
 const productMouseOverHandler = index => {
   if (index == currentIndex.value) {
@@ -134,19 +202,14 @@ const productMouseLeaveHandler = () => {
   isHover.value = false;
 };
 
-onBeforeMount(() => {
-  const cardStart = cardData.value.slice(0, 2);
-  const cardEnd = cardData.value.slice(-2);
-  newCardData.value = [...cardEnd, ...cardData.value, ...cardStart];
-
-  const assetStart = assetData.value.slice(0, 2);
-  const assetEnd = assetData.value.slice(-2);
-  newAssetData.value = [...assetEnd, ...assetData.value, ...assetStart];
-  // console.log(cardData);
-});
+const mappingData = (param)=>{
+  const cardStart = param.slice(0, 2);
+  const cardEnd = param.slice(-2);
+  return [...cardEnd, ...param, ...cardStart];
+}
 
 watch(currentIndex, () => {
-  if (currentIndex.value == cardData.value.length+2) {
+  if (currentIndex.value == 5) {
     setTimeout(() => {
       isAnimate.value = false;
       currentIndex.value = 2;
@@ -154,7 +217,7 @@ watch(currentIndex, () => {
   } else if (currentIndex.value == 1) {
     setTimeout(() => {
       isAnimate.value = false;
-      currentIndex.value = cardData.value.length+1;
+      currentIndex.value = 4;
     }, 150);
   }
 
@@ -164,6 +227,7 @@ watch(currentIndex, () => {
 });
 
 const carouselItemClickHandler = index => {
+  // console.log(index);
   // 캐러셀 넘어갈때 클릭 빠르게 하면 item 벗어나는 거 막음
   if (!isClickable.value) return; // 클릭이 막혀 있으면 이벤트를 무시
 

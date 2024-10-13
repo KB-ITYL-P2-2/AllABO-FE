@@ -19,7 +19,9 @@
       <div>
         <InsuranceCardList v-if="showCurrentAnalysis" :insuranceData="insuranceData" />
         <RebalancingCardList v-else :rebalancingData="rebalancingData"/>
-        <div class="h-[200px]"></div>
+        <div class="h-[200px] text-center">
+          <CommonButton class="mt-20" :text="'돌아가기'" />
+        </div>
       </div>
     </div>
 </template>
@@ -32,6 +34,7 @@ import RebalancingCardList from "../components/AssetPlanInsurance/RebalancingCar
 import insuranceData from "../constant/insuranceData.js";
 import rebalancingData from "../constant/rebalancingData.js";
 import AssetPlanTabButton from "../components/AssetPlanInsurance/AssetPlanTabButton.vue";
+import CommonButton from "../components/common/CommonButton.vue";
 
 const insurance = ["건강보험", "실손의료비보험", "치아보험"];
 

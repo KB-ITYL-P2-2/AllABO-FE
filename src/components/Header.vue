@@ -10,7 +10,7 @@
         <router-link to="/" class="text-2xl font-bold"> F:YL </router-link>
 
         <!-- 네비게이션 메뉴와 프로필 아이콘을 포함하는 컨테이너 -->
-        <div class="flex items-center gap-8">
+        <div class="flex items-center">
           <!-- 네비게이션 간격 조정 -->
           <!-- 네비게이션 메뉴 -->
           <ul class="flex h-[70px] items-center">

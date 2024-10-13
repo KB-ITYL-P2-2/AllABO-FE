@@ -8,10 +8,11 @@
     <!-- 나머지 60% 배경 -->
     <div class="h-[65vh] bg-white flex flex-col items-center justify-start">
       <div class="flex justify-center mt-10">
-        <form class="w-[400px]">
+        <form class="w-[400px]" @submit.prevent>
           <!-- 이메일 -->
           <label for="email" class="block mb-2 text-kb-gray-2">이메일</label>
           <input 
+          v-model="id"
             id="email"
             type="email"
             placeholder="이메일을 입력하세요"
@@ -21,6 +22,7 @@
           <!-- 비밀번호 -->
           <label for="password" class="block mt-4 mb-2 text-kb-gray-2">비밀번호</label>
           <input 
+          v-model="pwd"
             id="password"
             type="password" 
             placeholder="비밀번호를 입력하세요"
@@ -31,7 +33,8 @@
           <button 
             type="submit"
             class="h-[50px] w-full rounded-md bg-kb-brown-1 text-white text-[16px] mt-8 hover:bg-kb-yellow-1 focus:bg-kb-yellow-1 transition duration-150"
-          >
+            @click="requestLogin"
+            >
             로그인
           </button>
           
@@ -78,6 +81,7 @@ import EmailModal from '../components/Login/EmailModal.vue';
 import PasswordModal from '../components/Login/PasswordModal.vue';
 import { kakaoLoginRequestCodeHandler } from '../apis/api/kakao';
 import { googleLoginHandler,sendTokenToBackend } from "../apis/api/firebaseGoogle.js";
+import { login } from '../apis/api/user.js';
 
 // 모달 상태
 const showEmailModal = ref(false);
@@ -100,6 +104,19 @@ const handleGoogleLogin = async () => {
   }
 };
 
+const id = ref('');
+const pwd = ref('');
+
+const requestLogin = async()=>{
+  // console.log(id.value, pwd.value);
+  const response = await login(id.value, pwd.value);
+  if(response.status === 200){
+    localStorage.setItem("token", response.data.accessToken);
+  }else{
+    alert("로그인 실패")
+    throw new Error("로그인 실패")
+  }
+}
 
 </script>
 
