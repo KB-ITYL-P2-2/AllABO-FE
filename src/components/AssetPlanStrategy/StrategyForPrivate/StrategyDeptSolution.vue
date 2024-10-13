@@ -1,7 +1,19 @@
 <template>
-  <div class="">
-    <span class="absolute bg-white rounded-[100px] py-1 px-4 top-[-38px] left-[41%]">{{ title }}</span>
-    <span class="rounded-[100px] py-6 px-8 text-center bg-kb-yellow-9 whitespace-nowrap shadow-lg text-[26px]">{{ content }}</span>
+  <div
+    :class="[
+      'solution-item',
+      positionClass,
+      { 'solution-visible': isVisible },
+      'absolute w-96 h-32 bg-white rounded-lg shadow-md flex flex-col overflow-hidden',
+    ]"
+    :style="{ animationDelay: animationDelay }"
+  >
+    <div class="bg-kb-yellow-8 p-2 text-center">
+      <span class="text-lg text-gray-800">{{ title }}</span>
+    </div>
+    <div class="flex-grow flex items-center justify-center p-4">
+      <span class="text-base text-gray-600 text-center">{{ content }}</span>
+    </div>
   </div>
 </template>
 
@@ -9,11 +21,36 @@
 const props = defineProps({
   title: {
     type: String,
-    required : true
+    required: true,
   },
   content: {
     type: String,
-    required : true
-  }
-})
+    required: true,
+  },
+  positionClass: {
+    type: String,
+    required: true,
+  },
+  isVisible: {
+    type: Boolean,
+    required: true,
+  },
+  animationDelay: {
+    type: String,
+    required: true,
+  },
+});
 </script>
+
+<style scoped>
+.solution-item {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.solution-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+</style>
