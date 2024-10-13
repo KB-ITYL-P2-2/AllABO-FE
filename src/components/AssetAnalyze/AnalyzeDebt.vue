@@ -24,7 +24,7 @@
           </div>
           <img :src="assetImage1" alt="icon" class="absolute top-[140px] ml-[250px] z-20 w-[110px] h-[110px]" />
           <div class="w-full h-full bg-white rounded-b-[50px] flex px-10 items-center">
-            <p class="text-[28px] text-font-color font-thin">20대 평균자산에 비해 자산이 크게 많은 편입니다.</p>
+            <p class="text-[20px] text-font-color font-thin"> 20대 평균 자산인 {5,960}만 원에 비해 약 3.31배 높습니다. <br>20대 평균자산에 비해 자산이 크게 많은 편입니다.</p>
           </div>
         </div>
       </div>
