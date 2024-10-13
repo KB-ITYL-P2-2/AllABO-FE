@@ -21,7 +21,7 @@
         <div class="ml-[40px] flex flex-col justify-center">
           <div class="flex items-end">
             <p class="text-4xl text-font-color font-semibold">김가나</p>
-            <button class="text-kb-gray-2 ml-[22px]" @click="logout">
+            <button class="text-kb-gray-2 ml-[22px]" @click="handleLogout">
               로그아웃
             </button>
           </div>
@@ -36,11 +36,16 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
-import LikeProducts from "../components/MyPage/LikeProducts.vue";
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '../stores/auth';
+import LikeProducts from '../components/MyPage/LikeProducts.vue';
 
 const router = useRouter();
-const logout = () => {
-  router.push("/");
+const authStore = useAuthStore();
+
+const handleLogout = () => {
+  alert('로그아웃 되었습니다.');
+  authStore.logout();
+  router.push('/');
 };
 </script>
