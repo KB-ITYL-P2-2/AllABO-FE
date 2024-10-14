@@ -20,7 +20,7 @@
             ]"
             :style="{
               transform: `translateX(-${(currentIndex - 1) * 300}px) scale(${
-                currentIndex === index ? (!isHover ? 1.1 : 1.1) : 1
+                currentIndex === index ? 1.1 : 1
               })`,
             }"
           >
@@ -29,7 +29,8 @@
               :isCard="item.title.includes('카드')"
               :isHover="isHover"
               :isNow="currentIndex == index"
-              class=""
+              :currentIndex="currentIndex"
+              :index="index"
               @click="carouselItemClickHandler(index)"
               @mouseover="productMouseOverHandler(index)"
               @mouseleave="productMouseLeaveHandler"
@@ -63,7 +64,7 @@
 
     <!-- 전체 조회 버튼 -->
     <div
-      class="absolute bottom-[-140px] left-1/2 transform -translate-x-1/2 z-0"
+      class="absolute bottom-[-150px] left-1/2 transform -translate-x-1/2 z-0"
     >
       <button
         class="px-4 py-2.5 rounded-lg text-gray-500 bg-white shadow-md text-[16px] hover:bg-gray-100 duration-300"
@@ -166,17 +167,17 @@ const data = ref({
     },
     {
       cardImageUrl: '/images/Products/Top3Products/deposit/2.png',
-      cardName: 'Easy pick카드',
-      cardContent: '주요 생활 영역부터 내가 Pick한 영역까지 모두 적립 Easy!',
+      cardName: 'KB Star 정기예금',
+      cardContent: 'Digital KB의 대표 정기예금',
       pageUrl:
-        'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09243',
+        'https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=N&prcode=DP01000938',
     },
     {
       cardImageUrl: '/images/Products/Top3Products/deposit/3.png',
-      cardName: '캐시노트 KB 국민카드',
-      cardContent: '캐시노트 월정액과 사업지원 할인을 동시에',
+      cardName: '직장인우대적금',
+      cardContent: '직장인의 알짜배기 재테크',
       pageUrl:
-        'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=04291',
+        'https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=N&prcode=DP01000228',
     },
   ],
   대출: [
@@ -205,24 +206,22 @@ const data = ref({
   보험: [
     {
       cardImageUrl: '/images/Products/Top3Products/insurance/1.png',
-      cardName: 'KB 내맘대로 적금',
-      cardContent: '누구나 쉽게 우대받는 DIY',
-      pageUrl:
-        'https://obank.kbstar.com/quics?page=C016613&cc=b061496:b061645&isNew=N&prcode=DP01000821',
+      cardName: 'KB Yes!365 건강보험(연만기)',
+      cardContent: '자녀/건강보험',
+      pageUrl: 'https://www.kbinsure.co.kr/CG302230001.ec',
     },
     {
       cardImageUrl: '/images/Products/Top3Products/insurance/2.png',
-      cardName: 'Easy pick카드',
-      cardContent: '주요 생활 영역부터 내가 Pick한 영역까지 모두 적립 Easy!',
-      pageUrl:
-        'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=09243',
+      cardName: 'KB자동차보험',
+      cardContent: '자동차/운전자',
+      pageUrl: 'https://www.kbinsure.co.kr/CG301010012.ec',
     },
     {
       cardImageUrl: '/images/Products/Top3Products/insurance/3.png',
-      cardName: '캐시노트 KB 국민카드',
-      cardContent: '캐시노트 월정액과 사업지원 할인을 동시에',
+      cardName: 'KB 생활비지급암보험 무배당(갱신형)',
+      cardContent: '암보험',
       pageUrl:
-        'https://card.kbcard.com/CRD/DVIEW/HCAMCXPRICAC0076?mainCC=a&cooperationcode=04291',
+        'https://www.kblife.co.kr/insurance-product/productDetails.do?id=501552401&productType=4&linkCd=OF_PD_PC_01',
     },
   ],
 });

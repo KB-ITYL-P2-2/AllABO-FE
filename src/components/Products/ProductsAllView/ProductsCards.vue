@@ -5,9 +5,15 @@
     :style="{
       width: isNow && isHover ? '450px' : '200px',
       transform: isNow && isHover ? 'translateX(-100px)' : 'none',
+      cursor: currentIndex !== index ? 'pointer' : 'default',
     }"
   >
-    <img :src="`${items.cardImageUrl}`" class="" :class="isCard && ''" alt="" />
+    <img
+      :src="`${items.cardImageUrl}`"
+      class=""
+      :class="isCard"
+      :alt="`${items.cardName}`"
+    />
 
     <!-- opacity와 visibility에 조건부 transition 적용 -->
     <div
@@ -31,7 +37,7 @@
         >
           자세히 보기
         </button>
-        <button class="p-2 ml-4 bg-white rounded-full">
+        <button class="px-2 py-1.5 ml-4 bg-white rounded-full">
           <font-awesome-icon
             :icon="['far', 'heart']"
             class="text-kb-yellow-3"
@@ -59,6 +65,14 @@ const props = defineProps({
   },
   isCard: {
     type: Boolean,
+    required: true,
+  },
+  currentIndex: {
+    type: Number,
+    required: true,
+  },
+  index: {
+    type: Number,
     required: true,
   },
 });

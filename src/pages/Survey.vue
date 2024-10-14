@@ -12,9 +12,9 @@
         <div class="absolute top-[-24px] left-0 text-font-color text-sm">
           {{ currentStep }} / {{ totalStep }}
         </div>
-        <div class="progress-bar bg-gray-300 h-2 rounded-full overflow-hidden">
+        <div class="progress-bar bg-gray-200 h-2 rounded-full overflow-hidden">
           <div
-            class="bg-yellow-400 h-full duration-200 ease-out"
+            class="bg-kb-yellow-2 h-full duration-200 ease-out"
             :style="{ width: `${progress}%` }"
           ></div>
         </div>
@@ -62,12 +62,7 @@
               v-for="option in currentQuestion.options"
               :key="option"
               @click="selectOption(option, currentQuestion)"
-              :class="[
-                'py-3 px-6 bg-gray-200 text-font-color rounded-[15px] transition duration-300 disabled:opacity-50',
-                selectedOptions[currentQuestion.id] === option
-                  ? 'bg-kb-yellow-2 border-inherit'
-                  : 'bg-gray-200 hover:bg-kb-gray-3',
-              ]"
+              class="py-3 px-6 bg-white border text-font-color rounded-[15px] shadow-md transition hover:bg-[#F4F4F5] duration-300"
             >
               {{ option }}
             </button>
@@ -79,20 +74,23 @@
       <button
         v-if="currentStep > 1"
         @click="goToPreviousQuestion"
-        class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-200 rounded-full p-2"
+        class="absolute left-[20%] top-1/2 transform -translate-y-1/2 p-2 rounded-full focus:outline-none"
       >
+        <div
+          class="absolute inset-0 bg-kb-yellow-2 opacity-60 rounded-full blur-sm"
+        ></div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
           fill="none"
           viewBox="0 0 24 24"
-          stroke="currentColor"
+          stroke-width="1.5"
+          stroke="#FFFFFF"
+          class="size-14 pr-1.5 relative z-10"
         >
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
-            stroke-width="2"
-            d="M15 19l-7-7 7-7"
+            d="M15.75 19.5 8.25 12l7.5-7.5"
           />
         </svg>
       </button>
