@@ -32,7 +32,7 @@ body{-ms-overflow-style:none; }body::-webkit-scrollbar { display:none; }
 
   .bg-rebalancing-back {
     background-image: url('/images/AssetPlan/rebalancing-back.png');
-    background-size: 100% 100%;
+    background-size: 100% 50%;
     background-position: center;
     background-repeat: no-repeat;
   }
