@@ -7,7 +7,7 @@
         <TotalText class="w-1/2" />
       </div>
     </div>
-    <!--저축 분석 페이지 시작 -->
+    <!--저축 분석 페이지 시작 그래프 이슈해결 -->
     <div class="section h-screen items-center bg-asset-back">
       <AnalyzeSavings/>
     </div>
