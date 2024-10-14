@@ -102,7 +102,7 @@
 
     <!-- 네비게이션 -->
     <div
-      class="fixed left-[10%] top-[30%] z-10 flex flex-col border border-[#BDBDBD] bg-white rounded-[10px] overflow-hidden p-2"
+      class="fixed left-[10%] top-[30%] z-10 flex flex-col bg-white rounded-[10px] overflow-hidden shadow-md"
       :class="{
         'opacity-0': !navigationTrigger,
         'opacity-100': navigationTrigger,
@@ -116,14 +116,14 @@
       <div
         v-for="(item, index) in data"
         :key="index"
-        class="py-1 text-center"
-        :class="index !== data.length - 1 && 'border-b-[1px]'"
+        class="text-center"
+        :class="index !== data.length - 1 && 'border-b-[0.5px]'"
       >
         <button
           ref="navButton"
-          class="rounded-[10px] text-[18px] w-[60px] h-[60px]"
+          class="text-[16px] w-[60px] h-[60px]"
           :class="
-            item.index === swiperIndex ? 'bg-kb-yellow-3' : 'text-kb-gray-3'
+            item.index === swiperIndex ? 'bg-kb-yellow-12' : 'text-kb-gray-3'
           "
           @click="goToSlide(item.index)"
         >

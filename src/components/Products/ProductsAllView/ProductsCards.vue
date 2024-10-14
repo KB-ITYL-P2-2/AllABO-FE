@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex h-[300px] relative duration-150 gap-3"
+    class="flex h-[300px] relative duration-150 gap-10"
     :class="`bg-[url('${items.cardImageUrl}')]`"
     :style="{
       width: isNow && isHover ? '450px' : '200px',
@@ -18,12 +18,25 @@
         transition: isHover && isNow ? 'opacity 1000ms' : 'none', // opacity 애니메이션이 끝난 후 visibility 변경
       }"
     >
-      <h1 class="font-bold text-kb-brown-1 text-[22px] whitespace-pre-wrap">{{ items.cardName }}</h1>
-      <h3 class="text-kb-brown-1 text-[18px] whitespace-pre-wrap">{{ items.cardContent }}</h3>
+      <h1 class="font-bold text-kb-brown-1 text-[22px] whitespace-nowrap">
+        {{ items.cardName }}
+      </h1>
+      <h3 class="text-kb-brown-1 text-[18px] whitespace-nowrap">
+        {{ items.cardContent }}
+      </h3>
       <div class="mt-4">
-        <button class="text-white bg-kb-brown-1 rounded-[15px] p-4" @click="openPage">자세히 보기</button>
-        <button class="p-3 ml-4 bg-white rounded-full">
-          <font-awesome-icon :icon="['far', 'heart']" class="text-kb-yellow-3" size="xl" />
+        <button
+          class="text-white text-sm bg-kb-brown-1 rounded-[15px] px-4 py-3"
+          @click="openPage"
+        >
+          자세히 보기
+        </button>
+        <button class="p-2 ml-4 bg-white rounded-full">
+          <font-awesome-icon
+            :icon="['far', 'heart']"
+            class="text-kb-yellow-3"
+            size="lg"
+          />
         </button>
       </div>
     </div>
@@ -50,7 +63,7 @@ const props = defineProps({
   },
 });
 
-const openPage = ()=>{
+const openPage = () => {
   window.open(props.items.pageUrl);
-}
+};
 </script>
