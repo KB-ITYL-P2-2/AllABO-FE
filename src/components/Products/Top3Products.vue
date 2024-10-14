@@ -84,7 +84,7 @@
 </template>
 
 <script setup>
-import { computed, onBeforeMount, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 import ProductsCards from './ProductsAllView/ProductsCards.vue';

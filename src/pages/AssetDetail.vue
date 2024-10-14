@@ -2,27 +2,46 @@
   <div class="h-[100vh] flex flex-col">
     <div class="h-[70px] bg-kb-yellow-4"></div>
 
-    <div class="relative flex items-center justify-center h-full overflow-hidden bg-kb-yellow-4">
-      <div class="relative z-10 flex items-center w-full px-[18%] md:max-laptop:px-[16.5%]">
-        <h1 class="float-left font-bold bg-kb-yellow-4 text-[32px] md:max-laptop:text-[24px] whitespace-nowrap">클릭 한 번으로 완성되는</h1>
-        <p class="float-left ml-[11%] text-center bg-kb-yellow-4 whitespace-nowrap">
-          현금, 카드, 보험, 대출<br />모든 자산을 한 번에 분석하는 F:YL 만의 압도적인 서비스
+    <div
+      class="relative flex items-center justify-center h-full overflow-hidden bg-kb-yellow-4"
+    >
+      <div
+        class="relative z-10 flex items-center w-full px-[18%] md:max-laptop:px-[16.5%]"
+      >
+        <h1
+          class="float-left font-bold bg-kb-yellow-4 text-[32px] md:max-laptop:text-[24px] whitespace-nowrap"
+        >
+          클릭 한 번으로 완성되는
+        </h1>
+        <p
+          class="float-left ml-[11%] text-center bg-kb-yellow-4 whitespace-nowrap"
+        >
+          현금, 카드, 보험, 대출<br />모든 자산을 한 번에 분석하는 F:YL 만의
+          압도적인 서비스
         </p>
-        <h1 class="float-left ml-44 font-bold bg-kb-yellow-4 text-[32px] md:max-laptop:text-[24px] whitespace-nowrap">자산 분석</h1>
+        <h1
+          class="float-left ml-44 font-bold bg-kb-yellow-4 text-[32px] md:max-laptop:text-[24px] whitespace-nowrap"
+        >
+          자산 분석
+        </h1>
       </div>
 
-      <div class="absolute top-[70%] z-40">
-        <MainPageButton :text="'분석하러 가기'"
-        @click="goToAnalyze"
-        />
+      <div class="absolute top-[75%] z-40">
+        <MainPageButton :text="'분석하러 가기'" @click="goToAnalyze" />
       </div>
 
       <!-- 첫번째 원 -->
       <div class="absolute">
-        <div class="border border-kb-gray-3 w-[350px] h-[350px] rounded-full relative">
+        <div
+          class="border border-kb-gray-3 w-[350px] h-[350px] rounded-full relative"
+        >
           <!-- <span class="absolute size-[38px] rounded-full bg-kb-yellow-1 dot opacity-70"></span> -->
-          <span class="absolute rounded-full opacity-70 size-5 bg-kb-yellow-2 dot"></span>
-          <span class="absolute size-[38px] rounded-full bg-kb-brown-4 dot opacity-70"></span>
+          <span
+            class="absolute rounded-full opacity-70 size-5 bg-kb-yellow-2 dot"
+          ></span>
+          <span
+            class="absolute size-[38px] rounded-full bg-kb-brown-4 dot opacity-70"
+          ></span>
         </div>
       </div>
 
@@ -30,8 +49,12 @@
       <div class="absolute">
         <div class="border border-kb-gray-3 w-[650px] h-[650px] rounded-full">
           <!-- <span class="absolute size-[52px] rounded-full bg-kb-yellow-1 dot dot2"></span> -->
-          <span class="absolute size-[42px] rounded-full opacity-60 bg-kb-yellow-2 dot dot2"></span>
-          <span class="absolute size-[62px] rounded-full opacity-60 bg-kb-pink-1 dot dot2"></span>
+          <span
+            class="absolute size-[42px] rounded-full opacity-60 bg-kb-yellow-2 dot dot2"
+          ></span>
+          <span
+            class="absolute size-[62px] rounded-full opacity-60 bg-kb-pink-1 dot dot2"
+          ></span>
         </div>
       </div>
 
@@ -39,17 +62,25 @@
       <div class="absolute">
         <div class="border border-kb-gray-3 w-[1100px] h-[1100px] rounded-full">
           <!-- <span class="absolute size-[68px] rounded-full opacity-50 bg-kb-gray-2 dot dot3"></span> -->
-          <span class="absolute size-[100px] rounded-full opacity-50 bg-kb-gray-1 dot dot3"></span>
-          <span class="absolute size-[80px] rounded-full opacity-50 bg-kb-pink-1 dot dot3"></span>
+          <span
+            class="absolute size-[100px] rounded-full opacity-50 bg-kb-gray-1 dot dot3"
+          ></span>
+          <span
+            class="absolute size-[80px] rounded-full opacity-50 bg-kb-pink-1 dot dot3"
+          ></span>
         </div>
       </div>
 
       <!-- 네번째 원 -->
       <div class="absolute">
         <div class="border border-kb-gray-3 w-[1500px] h-[1500px] rounded-full">
-          <span class="absolute size-[120px] rounded-full opacity-20 bg-kb-gray-2 dot dot4"></span>
+          <span
+            class="absolute size-[120px] rounded-full opacity-20 bg-kb-gray-2 dot dot4"
+          ></span>
           <!-- <span class="absolute size-[140px] rounded-full opacity-20 bg-kb-gray-1 dot dot4"></span> -->
-          <span class="absolute size-[200px] rounded-full opacity-20 bg-kb-pink-1 dot dot4"></span>
+          <span
+            class="absolute size-[200px] rounded-full opacity-20 bg-kb-pink-1 dot dot4"
+          ></span>
         </div>
       </div>
 
@@ -61,10 +92,10 @@
 import MainPageButton from '../components/MainPage/MainPageButton.vue';
 import { useRouter } from 'vue-router';
 
-const router=useRouter();
-const goToAnalyze=()=>{
-  router.push("/asset-analyze")
-}
+const router = useRouter();
+const goToAnalyze = () => {
+  router.push('/asset-analyze');
+};
 </script>
 
 <style scoped>
