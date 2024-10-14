@@ -1,51 +1,106 @@
 <template>
-  <p class="flex justify-center text-[32px] text-font-color font-semibold underline underline-offset-8">
-    저축 분석 결과
-  </p>
-  
-  <div class="relative mx-[500px] flex flex-col justify-center items-center mt-[60px]">
-  <!--bg동그라미-->
-  <div class="absolute top-0 left-0 right-0 bottom-0 rounded-full bg-kb-yellow-4 opacity-50 h-[600px] w-[600px] mx-auto shadow-[0_0_40px_20px_rgba(0,0,0,0.05)]"></div>
+  <div class="container mx-auto px-4">
+    <h1 class="text-3xl font-semibold text-center text-font-color underline underline-offset-8 mb-12">
+      저축 분석 결과
+    </h1>
+    
+    <div class="relative mx-auto max-w-4xl">
+      <!-- Background circle -->
+      <div class="absolute inset-0 bg-kb-yellow-4 opacity-50 rounded-full h-[600px] w-[600px] mx-auto shadow-lg"></div>
 
-    <!-- 연령대별 총 저축 금액 비교 -->
-    <!-- <div class="relative z-10 flex flex-col items-end w-full mt-40 "> 설명을 오른쪽으로 정렬 -->
-      <div class="relative z-10 flex flex-col items-start w-full mt-40 ml-8"> <!-- 설명을 오른쪽으로 정렬 -->
+      <!-- Total Savings Comparison -->
+      <div class="relative z-10 flex flex-col items-start w-full mt-16 mb-12">
+        <SavingsGraph :userSavings="totalUserSavings" :averageSavings="totalAverageSavings" />
+        <div class="space-y-2 ml-12">
+          <p class="text-xl text-kb-brown-6">{{ age }}대 평균 저축액보다</p>
+          <p class="font-bold text-4xl text-font-color">
+            약 {{ Math.abs(parseFloat(compareSavings1)).toFixed(1) }}배 더 
+            {{ parseFloat(compareSavings1) >= 0 ? '높습니다' : '낮습니다' }}
+          </p>
+          <p class="text-kb-blue-5 font-semibold text-2xl">{{ totalSavingsKeywords.join(', ') }}</p>
+        </div>
+      </div>
 
-      <SavingsGraph :totalUserSavings="totalUserSavings" :totalAverageSavings="totalAverageSavings" />
-     <div class="space-y-2 mb-16 ml-12">
-      <p class="text-[20px] text-kb-brown-6">{{ age }}대 평균 저축액보다</p>
-      <p class="font-bold text-[36px] text-font-color ">약 {{ compareSavings1 }}% 더 높습니다</p>
-      <p class="text-kb-blue-5 font-semibold text-[26px]">{{ hashSavings[0] }}, {{ hashSavings[1] }}</p>
-     </div>
-    </div>
-
-    <!-- 연령대별 평균 자산 대비 저축 비율 비교 -->
-    <div class="relative z-10 flex flex-col items-start w-full"> <!-- 설명을 왼쪽으로 정렬 -->
-      <SavingsGraph class="rotate-180 ml-52" :assetUserSavings="assetUserSavings" :assetAverageSavings="assetAverageSavings" />
-   <div class="space-y-2 mb-10 ml-12">
-    <p class="text-[20px] text-kb-brown-6">{{ age }}대 평균 자산 대비 저축 비율보다</p>
-    <p class="font-bold text-[36px] text-font-color">약 {{ compareSavings2 }}% 더 높습니다</p>
-    <span class="text-kb-blue-5 font-semibold text-[26px]">{{ hashSavings[2] }}, {{ hashSavings[3] }}</span>
-   </div>
+      <!-- Savings to Asset Ratio Comparison -->
+      <div class="relative z-10 flex flex-col items-start w-full">
+        <SavingsGraph class="rotate-180 ml-52" :userSavings="assetUserSavings" :averageSavings="assetAverageSavings" />
+        <div class="space-y-2 ml-12">
+          <p class="text-xl text-kb-brown-6">{{ age }}대 평균 자산 대비 저축 비율보다</p>
+          <p class="font-bold text-4xl text-font-color">
+            약 {{ Math.abs(parseFloat(compareSavings2)).toFixed(1) }}배 더 
+            {{ parseFloat(compareSavings2) >= 0 ? '높습니다' : '낮습니다' }}
+          </p>
+          <p class="text-kb-blue-5 font-semibold text-2xl">{{ savingsRatioKeywords.join(', ') }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
+import { useAuthStore } from '../../stores/auth';
 import SavingsGraph from './graph/SavingsGraph.vue';
 
-// 나이, 비교 저축 비율, 해시태그 값
+//비교군
 const age = ref(20);
-// 첫 번째 그래프 
-const totalUserSavings = ref(13950);
-const totalAverageSavings = ref(897);
-// 두 번째 그래프 
-const assetUserSavings = ref(70.63);
-const assetAverageSavings = ref(59.9);
 
-const compareSavings1 = ref('1494.29');
-const compareSavings2 = ref('10.73');
-const hashSavings = ref(['#고저축', '#우수한저축률', '#저축관리잘됨', '#안정적인자산운용']);
+//평균 저축액 비교
+const totalUserSavings = ref(0);
+const totalAverageSavings = ref(0);
+
+//평균 자산 대비 저축 비율
+const assetUserSavings = ref(0);
+const assetAverageSavings = ref(0);
+
+const compareSavings1 = ref('0');
+const compareSavings2 = ref('0');
+const totalSavingsKeywords = ref([]);
+const savingsRatioKeywords = ref([]);
+
+// Fetch data from backend
+const fetchSavingsAnalysisData = async () => {
+  const authStore = useAuthStore();
+  const token = authStore.token;
+  if (!token) {
+    console.error("토큰이 없습니다. 로그인 후 다시 시도하세요.");
+    return;
+  }
+
+  try {
+    const response = await axios.post(
+      `http://localhost:8080/assets/saving-ratio`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const data = response.data.jsonNode;
+    
+    // Update state with fetched data
+    age.value = parseInt(data.비교균);
+    
+    // Total Savings Analysis
+    totalUserSavings.value = parseInt(data['총 저축 금액 분석']['내 자산'].replace('원', ''));
+    totalAverageSavings.value = parseInt(data['총 저축 금액 분석']['비교군 자산'].replace('원', ''));
+    compareSavings1.value = data['총 저축 금액 분석']['비교군과 비교%'].replace('%', '');
+    totalSavingsKeywords.value = data['총 저축 금액 분석']['요약'];
+
+    // Savings to Asset Ratio Analysis
+    assetUserSavings.value = parseFloat(data['자산 대비 저축 비율 분석']['자산 대비 저축 비율'].replace('%', ''));
+    assetAverageSavings.value = parseFloat(data['자산 대비 저축 비율 분석']['비교균 저축 비율'].replace('%', ''));
+    compareSavings2.value = data['자산 대비 저축 비율 분석']['차이'].replace('%', '');
+    savingsRatioKeywords.value = data['자산 대비 저축 비율 분석']['요약'];
+
+  } catch (error) {
+    console.error("데이터 가져오기 오류", error);
+  }
+};
+
+onMounted(fetchSavingsAnalysisData);
 </script>
-

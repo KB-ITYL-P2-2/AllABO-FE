@@ -1,5 +1,5 @@
 <template>
-    <!-- 첫 번째 페이지  시작 -->
+    <!-- 첫 번째 페이지  text완룡 -->
     <div class="section h-screen flex flex-col bg-asset-back">
       <div class="h-[70px] bg-transparent"></div>
       <div class="flex justify-center items-center mt-40 ml-32">
@@ -7,7 +7,7 @@
         <TotalText class="w-1/2" />
       </div>
     </div>
-    <!--저축 분석 페이지 -->
+    <!--저축 분석 페이지 시작 -->
     <div class="section h-screen items-center bg-asset-back">
       <AnalyzeSavings/>
     </div>

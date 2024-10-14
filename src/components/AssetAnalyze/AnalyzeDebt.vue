@@ -87,12 +87,14 @@
 </template>
 
 <script setup>
+import axios from "axios";
+import { ref, onMounted} from "vue";
+import { useAuthStore } from "../../stores/auth";
+
+
 import AssetGraph from "./graph/AssetGraph.vue";
 import DebtGraph from "./graph/DebtGraph.vue";
 import IncomeGraph from "./graph/IncomeGraph.vue";
-import { ref, onMounted,computed} from "vue";
-import axios from "axios";
-import { useAuthStore } from "../../stores/auth";
 
 // 데이터 상태 관리
 const flipped = ref([false, false, false]);

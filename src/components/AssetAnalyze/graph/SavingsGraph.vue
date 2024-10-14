@@ -1,8 +1,7 @@
 <template>
   <div id="graphContainer" class="relative w-full flex justify-center space-y-4">
     <!-- 첫 번째 그래프: 파란색(사용자) + 회색(평균) -->
-    <!-- <div class="relative w-full max-w-[600px] h-[60px] ml-[400px]"> -->
-    <div class="relative w-full max-w-[600px] h-[60px] ml-52">
+    <div class="relative w-full max-w-[600px] h-[60px] ml-52" v-if="isSavingDataReady">
       <div
         class="absolute h-[60px] bg-kb-gray-2 rounded-r-lg origin-left"
         :style="{ width: `${animatedAverageWidth}px`, left: '50%', transform: 'scaleX(-1)' }"
@@ -13,9 +12,10 @@
         :class="userClass1"
       ></div>
     </div>
+    <div v-else class="text-center">그래프 로딩 중...</div>
 
     <!-- 두 번째 그래프: 노란색(사용자) + 회색(평균) -->
-    <div class="relative w-full max-w-[600px] h-[60px] mt-8 mr-24">
+    <div class="relative w-full max-w-[600px] h-[60px] mt-8 mr-24" v-if="isSavingDataReady">
       <div
         class="absolute h-[60px] bg-kb-gray-2 rounded-r-lg origin-left"
         :style="{ width: `${animatedAverageWidth2}px`, left: '50%', transform: 'scaleX(-1)' }"
@@ -26,6 +26,7 @@
         :class="userClass2"
       ></div>
     </div>
+    <div v-else class="text-center">그래프 로딩 중...</div>
   </div>
 </template>
 
@@ -39,6 +40,9 @@ const props = defineProps({
   assetUserSavings: Number,
   assetAverageSavings: Number
 });
+
+// 데이터 로드 상태 관리
+const isSavingDataReady = ref(false);
 
 // 최대 막대 너비 (화면 크기 대비 계산, 가로 그래프니까 width로 설정)
 const maxBarWidth = 300;
@@ -75,6 +79,7 @@ const observeScroll = (userValue, averageValue, isFirstGraph = true) => {
           } else {
             calculateWidths2(userValue, averageValue);
           }
+          isSavingDataReady.value = true; // 데이터가 준비됨을 표시
         }
       });
     },
@@ -87,7 +92,7 @@ const observeScroll = (userValue, averageValue, isFirstGraph = true) => {
   }
 };
 
-// 부모 컴포넌트에서 받아온 값들에 따라 그래프 다르게 처리하려고
+// 부모 컴포넌트에서 받아온 값들에 따라 그래프 다르게 처리
 onMounted(() => {
   nextTick(() => {
     observeScroll(props.totalUserSavings, props.totalAverageSavings, true); // 첫 번째 그래프
@@ -95,16 +100,3 @@ onMounted(() => {
   });
 });
 </script>
-
-<style scoped>
-div {
-  transition: width 1s ease-in-out;
-}
-
-.relative {
-  position: relative;
-}
-.absolute {
-  position: absolute;
-}
-</style>
