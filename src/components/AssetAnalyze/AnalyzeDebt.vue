@@ -3,7 +3,6 @@
     자산 및 부채 분석 결과
   </p>
   <div class="flex justify-center mt-[60px] space-x-10">
-    
     <!-- 첫 번째 카드 (총 자산) -->
     <div class="group perspective w-[450px] h-[450px] relative cursor-pointer" @click="toggleFlip(0)">
       <div class="relative w-full h-full transition-transform duration-500 transform-style-3d" :class="flipped[0] ? 'rotateY-180' : ''">
@@ -24,7 +23,7 @@
           </div>
           <img :src="assetImage1" alt="icon" class="absolute top-[140px] ml-[250px] z-20 w-[110px] h-[110px]" />
           <div class="w-full h-full bg-white rounded-b-[50px] flex px-10 items-center">
-            <p class="text-[20px] text-font-color font-thin"> 20대 평균 자산인 {5,960}만 원에 비해 약 3.31배 높습니다. <br>20대 평균자산에 비해 자산이 크게 많은 편입니다.</p>
+            <p class="text-[20px] text-font-color font-thin" v-html="assetAnalysis"></p>
           </div>
         </div>
       </div>
@@ -50,7 +49,7 @@
           </div>
           <img :src="assetImage2" alt="icon" class="absolute top-[120px] ml-[250px] z-20 w-[130px] h-[130px]" />
           <div class="w-full h-full bg-white rounded-b-[50px] flex px-10 items-center">
-            <p class="text-[28px] text-font-color font-thin">20대의 높은 부채 부담에 비해 상대적으로 안정적입니다.</p>
+            <p class="text-[28px] text-font-color font-thin">{{ assetDebtAnalysis }}</p>
           </div>
         </div>
       </div>
@@ -76,13 +75,13 @@
           </div>
           <img :src="assetImage3" alt="icon" class="absolute top-[130px] ml-[250px] z-20 w-[120px] h-[120px]" />
           <div class="w-full h-full bg-white rounded-b-[50px] flex px-10 items-center">
-            <p class="text-[28px] text-font-color font-thin">20대에 비해 소득 대비 부채 부담이 적고, 재정적 여유가 큽니다.</p>
+            <p class="text-[28px] text-font-color font-thin">{{ incomeDebtAnalysis }}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <p class="  mt-10 flex justify-center text-[20px] text-kb-gray-2">
+  <p class="mt-10 flex justify-center text-[20px] text-kb-gray-2">
     자세한 결과를 보고 싶다면 분석 결과를 클릭하여 확인하세요
   </p>
 </template>
@@ -91,25 +90,108 @@
 import AssetGraph from "./graph/AssetGraph.vue";
 import DebtGraph from "./graph/DebtGraph.vue";
 import IncomeGraph from "./graph/IncomeGraph.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import axios from "axios";
+import { useAuthStore } from "../../stores/auth";
+import { authInstance } from "../../apis/utils/instance";
 
 // 데이터 상태 관리
 const flipped = ref([false, false, false]);
-const compareTotal = ref("3.31");
-const compareAssetDebt = ref("168.59");
-const compareIncomeDebt = ref("44.74");
+
+const compareTotal = ref(0);
+const compareAssetDebt = ref(0);
+const compareIncomeDebt = ref(0);
 
 // 첫 번째 값 (총 자산)
-const userTotalAssets = ref(15000);
-const averageTotalAssets = ref(6579);
+const userTotalAssets = ref(0);
+const averageTotalAssets = ref(0);
+const assetAnalysis = ref(0);
 
 // 두 번째 값 (자산 대비 부채율)
-const assetDebtRatio = ref(15.19);
-const averageDebtRatio = ref(183.78);
+const assetDebtRatio = ref(0);
+const averageDebtRatio = ref(0);
+const assetDebtAnalysis = ref("");
 
 // 세 번째 값 (연 소득 대비 부채율)
-const incomeDebtRatio = ref(42.86);
-const averageIncomeRatio = ref(87.60);
+const incomeDebtRatio = ref(0);
+const averageIncomeRatio = ref(0);
+const incomeDebtAnalysis = ref(0);
+
+
+// axios 연결
+const fetchAssetLoanData = async () => {
+  const authStore = useAuthStore(); 
+  const token = authStore.token; 
+  if (!token) {
+    console.error("토큰이 없습니다. 로그인 후 다시 시도하세요.");
+    return;
+  }
+
+  try {
+    const response = await axios.post(
+      `http://localhost:8080/assets/loan`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    
+
+
+    
+    const data = response?.data?.jsonNode?.['같은 연령대 평균과 비교'];
+    if (!data) {
+      throw new Error('유효한 데이터를 가져오지 못했습니다.');
+    }
+
+
+
+    console.log(data);
+
+    // 자산 비교
+    userTotalAssets.value = parseInt(data['자산 비교']['사용자 자산']);
+    averageTotalAssets.value = parseFloat(data['자산 비교']['같은 연령대 평균 자산']);
+    compareTotal.value = parseFloat(data['자산 비교']['사용자,같은연령대 차이(n배)']).toFixed(2);
+    assetAnalysis.value = data['자산 비교']['연령 별 자산 총평'].replace('|', '<br>');
+
+    // // 자산 대비 부채 비율 비교
+    // assetDebtRatio.value = parseFloat(data['자산 대비 부채 비율 비교']['사용자 자산 대비 부채 비율']);
+    // averageDebtRatio.value = parseFloat(data['자산 대비 부채 비율 비교']['같은 연령대 평균 자산 대비 부채 비율']);
+    // compareAssetDebt.value = Math.abs(parseFloat(data['자산 대비 부채 비율 비교']['사용자,같은연령대 비율 차이'])).toFixed(2);
+    // assetDebtAnalysis.value = data['자산 대비 부채 비율 비교']['연령 별 자산대비 부채 총평'];
+
+    
+
+    // // 연 소득 대비 부채 비율 비교
+    // incomeDebtRatio.value = parseFloat(data['연 소득 대비 부채 비율 비교']['사용자 연 소득 대비 부채 비율']);
+    // averageIncomeRatio.value = parseFloat(data['연 소득 대비 부채 비율 비교']['같은 연령대 평균 연 소득 대비 부채 비율']);
+    // compareIncomeDebt.value = Math.abs(parseFloat(data['연 소득 대비 부채 비율 비교']['사용자,같은연령대 비율 차이'])).toFixed(2);
+    // incomeDebtAnalysis.value = data['연 소득 대비 부채 비율 비교']['연령 별 소득 대비 부채 총평'];
+// 자산 대비 부채 비율 비교
+assetDebtRatio.value = parseFloat(data['자산 대비 부채 비율 비교']['사용자 자산 대비 부채 비율'].replace('%', '')).toFixed(2) ;
+averageDebtRatio.value = parseFloat(data['자산 대비 부채 비율 비교']['같은 연령대 평균 자산 대비 부채 비율'].replace('%', '')).toFixed(2) ;
+compareAssetDebt.value = Math.abs(parseFloat(data['자산 대비 부채 비율 비교']['사용자,같은연령대 비율 차이'].replace('%', ''))).toFixed(2);
+assetDebtAnalysis.value = data['자산 대비 부채 비율 비교']['연령 별 자산대비 부채 총평'];
+
+// 연 소득 대비 부채 비율 비교
+incomeDebtRatio.value = parseFloat(data['연 소득 대비 부채 비율 비교']['사용자 연 소득 대비 부채 비율'].replace('%', '')).toFixed(2) ;
+averageIncomeRatio.value = parseFloat(data['연 소득 대비 부채 비율 비교']['같은 연령대 평균 연 소득 대비 부채 비율'].replace('%', '')).toFixed(2) ;
+compareIncomeDebt.value = Math.abs(parseFloat(data['연 소득 대비 부채 비율 비교']['사용자,같은연령대 비율 차이'].replace('%', ''))).toFixed(2);
+incomeDebtAnalysis.value = data['연 소득 대비 부채 비율 비교']['연령 별 소득 대비 부채 총평'];
+
+
+
+
+
+  } catch (error) {
+    console.error("데이터 오류", error);
+  }
+};
+
+onMounted(fetchAssetLoanData); // 데이터 가져오기
 
 // 이미지 경로
 const assetImage1 = "/images/AssetAnalyze/asset1.png";

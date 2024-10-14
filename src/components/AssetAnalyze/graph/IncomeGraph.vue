@@ -3,7 +3,7 @@
       <!-- 내 연 소득 대비 부채 비율 그래프 -->
         <div class="flex flex-col items-center">
             <p class="text-center text-[14px] text-font-color">
-                {{ incomeDebtRatio }}%
+                {{ incomeDebtRatio.toFixed(2) }}%
               </p>
               <div
                 class="w-[70px] rounded-t-lg bg-gradient-to-t from-kb-pink-5 to-kb-pink-7 hover-grow"
@@ -17,7 +17,7 @@
       <!-- '20대 평균' 연 소득 대비 부채 비율 그래프 -->
         <div class="flex flex-col items-center">
             <p class="text-center text-[14px] text-gray-700">
-                {{ averageIncomeRatio }}%
+                {{ averageIncomeRatio.toFixed(2) }}%
               </p>
               <div
                 class="w-[70px] rounded-t-lg bg-gradient-to-t from-kb-pink-5 via-gray-300 to-kb-gray-4"

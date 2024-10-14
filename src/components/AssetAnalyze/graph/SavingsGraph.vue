@@ -41,7 +41,7 @@ const props = defineProps({
 });
 
 // 최대 막대 너비 (화면 크기 대비 계산, 가로 그래프니까 width로 설정)
-const maxBarWidth = 400;
+const maxBarWidth = 300;
 const animatedUserWidth = ref(0);
 const animatedAverageWidth = ref(0);
 const animatedUserWidth2 = ref(0);
