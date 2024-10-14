@@ -2,14 +2,14 @@ import { defineStore } from 'pinia'
 
 export const loadingStateStore = defineStore('loadingState', {
   state: () => ({
-    isAssetAnalyzeLoading: false
+    isAssetAnalyzeLoadingState: false
   }),
   actions: {
     setIsAssetAnalyzeLoading(value) {
-      this.isAssetAnalyzeLoading = value
+      this.isAssetAnalyzeLoadingState = value
     },
   },
   getters: {
-    isAssetAnalyzeLoading: (state) => state.isAssetAnalyzeLoading
+    isAssetAnalyzeLoading: (state) => state.isAssetAnalyzeLoadingState
   }
 })

@@ -18,13 +18,15 @@ import { useRouter } from "vue-router";
 import { onMounted } from "vue";
 import { loadingStateStore } from "./stores/loadingStateStore";
 import { ref } from "vue";
+import { computed } from "vue";
 
 const headerStore = useHeaderStore();
 const loadingStore = loadingStateStore();
 
 const router = useRouter();
 
-const analyzeLoading = ref(loadingStore.isAssetAnalyzeLoading);
+const analyzeLoading = computed(() => loadingStore.isAssetAnalyzeLoading);
+console.log(analyzeLoading.value);
 
 onMounted(() => {
   router.beforeEach((to, from, next) => {
