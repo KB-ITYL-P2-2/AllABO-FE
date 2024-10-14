@@ -18,8 +18,8 @@
         <div class="absolute w-full h-full rounded-[50px] flex flex-col items-center justify-start transform rotateY-180 backface-hidden shadow-lg">
           <div class="w-full h-[200px] bg-kb-blue-6 flex flex-col rounded-t-[50px] p-10">
             <p class="text-[24px] text-font-color mb-6 font-light">총 자산</p>
-            <p class="text-[28px] font-bold text-font-color">#우수한자산</p>
-            <p class="text-[28px] font-bold text-font-color">#재정적안정</p>
+            <p class="text-[28px] font-bold text-font-color">{{ assetKeywords[0] }}</p>
+            <p class="text-[28px] font-bold text-font-color">{{ assetKeywords[1] }}</p>
           </div>
           <img :src="assetImage1" alt="icon" class="absolute top-[140px] ml-[250px] z-20 w-[110px] h-[110px]" />
           <div class="w-full h-full bg-white rounded-b-[50px] flex px-10 items-center">
@@ -44,12 +44,12 @@
         <div class="absolute w-full h-full rounded-[50px] flex flex-col items-center justify-start transform rotateY-180 backface-hidden shadow-lg">
           <div class="w-full h-[200px] bg-kb-yellow-8 flex flex-col rounded-t-[50px] p-10">
             <p class="text-[24px] text-font-color mb-6 font-light">자산 대비 부채 비율</p>
-            <p class="text-[28px] font-bold text-font-color">#부채부담적음</p>
-            <p class="text-[28px] font-bold text-font-color">#안정적인재정</p>
+            <p class="text-[28px] font-bold text-font-color">{{ assetDebtKeywords[0]}}</p>
+            <p class="text-[28px] font-bold text-font-color">{{ assetDebtKeywords[1] }}</p>
           </div>
           <img :src="assetImage2" alt="icon" class="absolute top-[120px] ml-[250px] z-20 w-[130px] h-[130px]" />
           <div class="w-full h-full bg-white rounded-b-[50px] flex px-10 items-center">
-            <p class="text-[28px] text-font-color font-thin">{{ assetDebtAnalysis }}</p>
+            <p class="text-[20px] text-font-color font-thin">{{ assetDebtAnalysis }}</p>
           </div>
         </div>
       </div>
@@ -70,12 +70,12 @@
         <div class="absolute w-full h-full rounded-[50px] flex flex-col items-center justify-start transform rotateY-180 backface-hidden shadow-lg">
           <div class="w-full h-[200px] bg-kb-pink-5 flex flex-col rounded-t-[50px] p-10">
             <p class="text-[24px] text-font-color mb-6 font-light">연 소득 대비 부채 비율</p>
-            <p class="text-[28px] font-bold text-font-color">#재정적여유</p>
-            <p class="text-[28px] font-bold text-font-color">#부채부담적음</p>
+            <p class="text-[28px] font-bold text-font-color">{{ incomeDebtKeywords[0] }}</p>
+            <p class="text-[28px] font-bold text-font-color">{{ incomeDebtKeywords[1] }}</p>
           </div>
           <img :src="assetImage3" alt="icon" class="absolute top-[130px] ml-[250px] z-20 w-[120px] h-[120px]" />
           <div class="w-full h-full bg-white rounded-b-[50px] flex px-10 items-center">
-            <p class="text-[28px] text-font-color font-thin">{{ incomeDebtAnalysis }}</p>
+            <p class="text-[20px] text-font-color font-thin">{{ incomeDebtAnalysis }}</p>
           </div>
         </div>
       </div>
@@ -90,13 +90,15 @@
 import AssetGraph from "./graph/AssetGraph.vue";
 import DebtGraph from "./graph/DebtGraph.vue";
 import IncomeGraph from "./graph/IncomeGraph.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted,computed} from "vue";
 import axios from "axios";
 import { useAuthStore } from "../../stores/auth";
-import { authInstance } from "../../apis/utils/instance";
 
 // 데이터 상태 관리
 const flipped = ref([false, false, false]);
+
+//연령대 
+const age=ref("");
 
 const compareTotal = ref(0);
 const compareAssetDebt = ref(0);
@@ -105,7 +107,7 @@ const compareIncomeDebt = ref(0);
 // 첫 번째 값 (총 자산)
 const userTotalAssets = ref(0);
 const averageTotalAssets = ref(0);
-const assetAnalysis = ref(0);
+const assetAnalysis = ref("");
 
 // 두 번째 값 (자산 대비 부채율)
 const assetDebtRatio = ref(0);
@@ -115,7 +117,12 @@ const assetDebtAnalysis = ref("");
 // 세 번째 값 (연 소득 대비 부채율)
 const incomeDebtRatio = ref(0);
 const averageIncomeRatio = ref(0);
-const incomeDebtAnalysis = ref(0);
+const incomeDebtAnalysis = ref("");
+
+//3값에 대한 해시태그들 
+const assetKeywords = ref([]); // 자산 비교 해시태그
+const assetDebtKeywords = ref([]); // 자산 대비 부채 비율 해시태그
+const incomeDebtKeywords = ref([]); // 연 소득 대비 부채 비율 해시태그
 
 
 // axios 연결
@@ -151,47 +158,32 @@ const fetchAssetLoanData = async () => {
 
     console.log(data);
 
-    // 자산 비교
     userTotalAssets.value = parseInt(data['자산 비교']['사용자 자산']);
-    averageTotalAssets.value = parseFloat(data['자산 비교']['같은 연령대 평균 자산']);
-    compareTotal.value = parseFloat(data['자산 비교']['사용자,같은연령대 차이(n배)']).toFixed(2);
+    averageTotalAssets.value = parseFloat(data['자산 비교']['같은 연령대 평균 자산(뒤 0000붙여서)']);
+    compareTotal.value = parseFloat(data['자산 비교']['사용자와 같은연령대 비율 차이(n배)']).toFixed(2);
     assetAnalysis.value = data['자산 비교']['연령 별 자산 총평'].replace('|', '<br>');
+    assetKeywords.value = data['자산 비교']['#요약키워드(2개)'];
 
-    // // 자산 대비 부채 비율 비교
-    // assetDebtRatio.value = parseFloat(data['자산 대비 부채 비율 비교']['사용자 자산 대비 부채 비율']);
-    // averageDebtRatio.value = parseFloat(data['자산 대비 부채 비율 비교']['같은 연령대 평균 자산 대비 부채 비율']);
-    // compareAssetDebt.value = Math.abs(parseFloat(data['자산 대비 부채 비율 비교']['사용자,같은연령대 비율 차이'])).toFixed(2);
-    // assetDebtAnalysis.value = data['자산 대비 부채 비율 비교']['연령 별 자산대비 부채 총평'];
+    // 자산 대비 부채 비율 비교
+    assetDebtRatio.value = parseFloat(data['자산 대비 부채 비율 비교']['사용자 자산 대비 부채 비율(% 제외)']);
+    averageDebtRatio.value = parseFloat(data['자산 대비 부채 비율 비교']['같은 연령대 평균 자산 대비 부채 비율(% 제외,소숫점 두자리수까지)']);
+    compareAssetDebt.value = Math.abs(parseFloat(data['자산 대비 부채 비율 비교']['사용자와 같은연령대 비율 차이(n배)'])).toFixed(2);
+    assetDebtAnalysis.value = data['자산 대비 부채 비율 비교']['연령 별 자산대비 부채 총평'];
+    assetDebtKeywords.value = data['자산 대비 부채 비율 비교']['#요약키워드(2개)'];
 
-    
-
-    // // 연 소득 대비 부채 비율 비교
-    // incomeDebtRatio.value = parseFloat(data['연 소득 대비 부채 비율 비교']['사용자 연 소득 대비 부채 비율']);
-    // averageIncomeRatio.value = parseFloat(data['연 소득 대비 부채 비율 비교']['같은 연령대 평균 연 소득 대비 부채 비율']);
-    // compareIncomeDebt.value = Math.abs(parseFloat(data['연 소득 대비 부채 비율 비교']['사용자,같은연령대 비율 차이'])).toFixed(2);
-    // incomeDebtAnalysis.value = data['연 소득 대비 부채 비율 비교']['연령 별 소득 대비 부채 총평'];
-// 자산 대비 부채 비율 비교
-assetDebtRatio.value = parseFloat(data['자산 대비 부채 비율 비교']['사용자 자산 대비 부채 비율'].replace('%', '')).toFixed(2) ;
-averageDebtRatio.value = parseFloat(data['자산 대비 부채 비율 비교']['같은 연령대 평균 자산 대비 부채 비율'].replace('%', '')).toFixed(2) ;
-compareAssetDebt.value = Math.abs(parseFloat(data['자산 대비 부채 비율 비교']['사용자,같은연령대 비율 차이'].replace('%', ''))).toFixed(2);
-assetDebtAnalysis.value = data['자산 대비 부채 비율 비교']['연령 별 자산대비 부채 총평'];
-
-// 연 소득 대비 부채 비율 비교
-incomeDebtRatio.value = parseFloat(data['연 소득 대비 부채 비율 비교']['사용자 연 소득 대비 부채 비율'].replace('%', '')).toFixed(2) ;
-averageIncomeRatio.value = parseFloat(data['연 소득 대비 부채 비율 비교']['같은 연령대 평균 연 소득 대비 부채 비율'].replace('%', '')).toFixed(2) ;
-compareIncomeDebt.value = Math.abs(parseFloat(data['연 소득 대비 부채 비율 비교']['사용자,같은연령대 비율 차이'].replace('%', ''))).toFixed(2);
-incomeDebtAnalysis.value = data['연 소득 대비 부채 비율 비교']['연령 별 소득 대비 부채 총평'];
-
-
-
-
+    // 연 소득 대비 부채 비율 비교
+    incomeDebtRatio.value = parseFloat(data['연 소득 대비 부채 비율 비교']['사용자 연 소득 대비 부채 비율(%제외)']);
+    averageIncomeRatio.value = parseFloat(data['연 소득 대비 부채 비율 비교']['같은 연령대 평균 연 소득 대비 부채 비율(% 제외,소숫점 두자리수까지)']);
+    compareIncomeDebt.value = Math.abs(parseFloat(data['연 소득 대비 부채 비율 비교']['사용자와 같은연령대 비율 차이(n배)'])).toFixed(2);
+    incomeDebtAnalysis.value = data['연 소득 대비 부채 비율 비교']['연령 별 소득 대비 부채 총평'];
+    incomeDebtKeywords.value = data['연 소득 대비 부채 비율 비교']['# 요약키워드(2개)'];
 
   } catch (error) {
     console.error("데이터 오류", error);
-  }
-};
+  }};
 
 onMounted(fetchAssetLoanData); // 데이터 가져오기
+
 
 // 이미지 경로
 const assetImage1 = "/images/AssetAnalyze/asset1.png";
