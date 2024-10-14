@@ -1,6 +1,6 @@
 <template>
     <Header />
-  <AnalyzeLoading v-if="false" />
+  <AnalyzeLoading v-if="analyzeLoading" />
   <RecommendLoading v-if="false" />
   <PlanLoading v-if="false"/>
   <router-view></router-view>
@@ -16,9 +16,15 @@ import PlanLoading from "./components/Loading/PlanLoading.vue";
 import { useHeaderStore } from "./stores/headerStore";
 import { useRouter } from "vue-router";
 import { onMounted } from "vue";
+import { loadingStateStore } from "./stores/loadingStateStore";
+import { ref } from "vue";
 
 const headerStore = useHeaderStore();
+const loadingStore = loadingStateStore();
+
 const router = useRouter();
+
+const analyzeLoading = ref(loadingStore.isAssetAnalyzeLoading);
 
 onMounted(() => {
   router.beforeEach((to, from, next) => {
