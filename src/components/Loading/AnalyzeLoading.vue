@@ -14,7 +14,6 @@
               :style="{ animationDelay: `${index * 0.2}s` }"
             ></div>
           </div>
-          <span class="ml-2">90%</span>
         </div>
       </div>
     </div>
