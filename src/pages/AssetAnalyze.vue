@@ -32,15 +32,25 @@ import AnalyzeSavings from "../components/AssetAnalyze/AnalyzeSavings.vue";
 import AnalyzeRange from "../components/AssetAnalyze/AnalyzeRange.vue";
 import AnalyzeButton from "../components/AssetAnalyze/AnalyzeButton.vue";
 
-import { onBeforeMount } from "vue";
+import { onBeforeMount, onMounted } from "vue";
 import { getIncomeLevel, getLoan, getSaving, getSavingRatio } from "../apis/api/assetAnalyze";
 import { loadingStateStore } from "../stores/loadingStateStore";
 
 const loadingStore = loadingStateStore();
 
+onMounted(() => {
+  window.addEventListener("scroll", e => {
+    if (loadingStore.isAssetAnalyzeLoading) {
+      document.body.style.overflow = 'hidden';  // 스크롤 비활성화
+    } else {
+      document.body.style.overflow = 'auto';  // 스크롤 다시 활성화
+    }
+  });
+});
+
 onBeforeMount(async () => {
   loadingStore.setIsAssetAnalyzeLoading(true);
-  console.log(loadingStore.isAssetAnalyzeLoading)
+  console.log(loadingStore.isAssetAnalyzeLoading);
 
   try {
     const savingResponse = await getSaving();
@@ -48,10 +58,10 @@ onBeforeMount(async () => {
     const loanResponse = await getLoan();
     const incomeLevelResponse = await getIncomeLevel();
 
-    console.log(savingResponse)
-    console.log(savingRatioResponse)
-    console.log(loanResponse)
-    console.log(incomeLevelResponse)
+    console.log(savingResponse);
+    console.log(savingRatioResponse);
+    console.log(loanResponse);
+    console.log(incomeLevelResponse);
 
     if (savingResponse.status === 200 && savingRatioResponse.status === 200 && loanResponse.status === 200 && incomeLevelResponse.status === 200) {
       loadingStore.setIsAssetAnalyzeLoading(false);
