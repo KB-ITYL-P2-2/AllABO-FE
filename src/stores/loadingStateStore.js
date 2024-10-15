@@ -1,8 +1,8 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
 export const loadingStateStore = defineStore('loadingState', {
   state: () => ({
-    isAssetAnalyzeLoadingState: [false, false, false, false]
+    isAssetAnalyzeLoadingState: [false, false, false, false],
   }),
   actions: {
     setIsAssetAnalyzeLoading(value, index) {
@@ -10,6 +10,6 @@ export const loadingStateStore = defineStore('loadingState', {
     },
   },
   getters: {
-    isAssetAnalyzeLoading: (state) => state.isAssetAnalyzeLoadingState
-  }
-})
+    isAssetAnalyzeLoading: (state) => state.isAssetAnalyzeLoadingState,
+  },
+});
