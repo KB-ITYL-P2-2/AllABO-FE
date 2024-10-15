@@ -1,28 +1,29 @@
 <template>
-  <div v-if="isTotalDataReady" class="flex justify-center items-end h-[300px] space-x-10">
+  <div
+    v-if="isTotalDataReady"
+    class="flex justify-center items-end h-[300px] space-x-10"
+  >
     <!-- 내 자산 총액 그래프 -->
     <div class="flex flex-col items-center">
       <p class="text-center text-[14px] text-font-color">
-        {{ userTotalAssets }}만원
+        {{ formatNumber(userTotalAssets) }}만원
       </p>
       <div
         class="w-[70px] rounded-t-lg bg-gradient-to-t from-kb-blue-6 to-kb-blue-5 hover-grow"
         :style="{ height: `${normalizedUserHeight}px` }"
-      >
-      </div>
+      ></div>
       <p class="text-center text-[12px] text-font-color">나</p>
     </div>
 
     <!-- '20대 평균' 자산총액 그래프 -->
     <div class="flex flex-col items-center">
       <p class="text-center text-[14px] text-font-color">
-        {{ averageTotalAssets }}만원
+        {{ formatNumber(averageTotalAssets) }}만원
       </p>
       <div
-        class="w-[70px] rounded-t-lg bg-gradient-to-t from-kb-blue-6 via-gray-300 to-kb-gray-4 "
+        class="w-[70px] rounded-t-lg bg-gradient-to-t from-kb-blue-6 via-gray-300 to-kb-gray-4"
         :style="{ height: `${normalizedAverageHeight}px` }"
-      >
-      </div>
+      ></div>
       <p class="text-center text-[12px] text-font-color">20대 평균</p>
     </div>
   </div>
@@ -45,12 +46,22 @@ const props = defineProps({
   },
 });
 
+//포맷함수
+const formatNumber = (value) => {
+  if (typeof value === "number") {
+    return Math.floor(value).toLocaleString(); // 소수점 이하 버리고 세 자리마다 콤마 추가
+  }
+  return value;
+};
+
 // 각각의 컴포넌트마다 독립적인 상태
 const isTotalDataReady = ref(false);
 
 // 최대값을 기준으로 그래프 높이 비율 계산
 const maxGraphHeight = 150; // 그래프의 최대 높이 (px)
-const maxAssets = computed(() => Math.max(props.userTotalAssets, props.averageTotalAssets));
+const maxAssets = computed(() =>
+  Math.max(props.userTotalAssets, props.averageTotalAssets)
+);
 
 // 자산 값을 비율로 환산하여 그래프 높이 계산
 const normalizedUserHeight = computed(() => {
