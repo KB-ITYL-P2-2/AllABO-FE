@@ -12,9 +12,9 @@
         <div class="absolute top-[-24px] left-0 text-font-color text-sm">
           {{ currentStep }} / {{ totalStep }}
         </div>
-        <div class="h-2 overflow-hidden bg-gray-300 rounded-full progress-bar">
+        <div class="progress-bar bg-gray-200 h-2 rounded-full overflow-hidden">
           <div
-            class="h-full duration-200 ease-out bg-yellow-400"
+            class="bg-kb-yellow-2 h-full duration-200 ease-out"
             :style="{ width: `${progress}%` }"
           ></div>
         </div>
@@ -62,12 +62,7 @@
               v-for="option in currentQuestion.options"
               :key="option"
               @click="selectOption(option, currentQuestion)"
-              :class="[
-                'py-3 px-6 bg-gray-200 text-font-color rounded-[15px] transition duration-300 disabled:opacity-50',
-                selectedOptions[currentQuestion.id] === option
-                  ? 'bg-kb-yellow-2 border-inherit'
-                  : 'bg-gray-200 hover:bg-kb-gray-3',
-              ]"
+              class="py-3 px-6 bg-white border text-font-color rounded-[15px] shadow-md transition hover:bg-[#F4F4F5] duration-300"
             >
               {{ option }}
             </button>
@@ -79,20 +74,23 @@
       <button
         v-if="currentStep > 1"
         @click="goToPreviousQuestion"
-        class="absolute p-2 transform -translate-y-1/2 bg-gray-200 rounded-full left-4 top-1/2"
+        class="absolute left-[20%] top-1/2 transform -translate-y-1/2 p-2 rounded-full focus:outline-none"
       >
+        <div
+          class="absolute inset-0 bg-kb-yellow-2 opacity-60 rounded-full blur-sm"
+        ></div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6"
           fill="none"
           viewBox="0 0 24 24"
-          stroke="currentColor"
+          stroke-width="1.5"
+          stroke="#FFFFFF"
+          class="size-14 pr-1.5 relative z-10"
         >
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
-            stroke-width="2"
-            d="M15 19l-7-7 7-7"
+            d="M15.75 19.5 8.25 12l7.5-7.5"
           />
         </svg>
       </button>
@@ -142,16 +140,16 @@ const surveyData = computed(() => {
 
   switch (category) {
     case '카드':
-      categoryUrl.value = "/card"
+      categoryUrl.value = '/card';
       return cardSurvey;
     case '예/적금':
-      categoryUrl.value = "/deposit"
+      categoryUrl.value = '/deposit';
       return depositsSurvey;
     case '대출':
-      categoryUrl.value = "/loan"
+      categoryUrl.value = '/loan';
       return loanSurvey;
     case '보험':
-      categoryUrl.value = "/insurance"
+      categoryUrl.value = '/insurance';
       return insuranceSurvey;
   }
 });
@@ -231,7 +229,13 @@ async function sendData() {
     // console.log(response.data);
 
     if (response.status === 200) {
-      router.push({path: '/all-products', query: {recommend: JSON.stringify(response.data), category: route.query.category}});
+      router.push({
+        path: '/all-products',
+        query: {
+          recommend: JSON.stringify(response.data),
+          category: route.query.category,
+        },
+      });
     } else {
       // 알림창? 설문 다시?
     }

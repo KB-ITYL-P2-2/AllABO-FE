@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <p
-      class="flex justify-center text-[32px] text-font-color font-semibold underline underline-offset-8"
-    >
-      분위별 분석 결과
-    </p>
+  <div class="flex flex-col items-center w-full">
+    <p class="text-[32px] text-font-color font-semibold">분위별 분석 결과</p>
+    <div class="bg-gray-600 h-0.5 w-[210px]"></div>
   </div>
-  <div class="flex justify-center mt-20 px-10 mx-auto space-x-60">
+
+  <div class="flex justify-center px-10 mx-auto space-x-14">
     <!-- 왼쪽 원형 영역 -->
     <div
       class="relative flex flex-col justify-center items-center"
@@ -29,18 +27,21 @@
           </div>
         </div>
 
-        <!-- 주황색 원  -->
+        <!-- 소득 및 지출 비율 차이 작은 원 -->
         <div
-          class="absolute top-[-30px] right-[50px] transform translate-x-10 translate-y-10 rounded-full bg-gradient-to-b from-kb-yellow-9 to-kb-yellow-10 shadow-md h-[150px] w-[150px] flex items-center justify-center"
+          class="absolute z-10 top-[-45px] right-[55px] transform translate-x-10 translate-y-10 rounded-full bg-[#FFE1C2] shadow-md h-[150px] w-[150px] flex items-center justify-center"
         >
-          <p class="font-semibold text-center text-[40px]">{{ incomeRange }}</p>
+          <p class="font-semibold text-font-color text-center text-[32px]">
+            {{ incomeRange }}
+          </p>
         </div>
       </div>
-      <!-- 소득 및 지출 비율 차이 작은 원 -->
+
+      <!-- 주황색 원  -->
       <div
-        class="absolute top-[130px] right-[-80px] rounded-full bg-gradient-to-b from-kb-pink-8 to-kb-pink-5 shadow-md h-[180px] w-[180px] flex items-center justify-center"
+        class="absolute top-[130px] right-[-80px] rounded-full bg-kb-blue-6 shadow-md h-[180px] w-[180px] flex items-center justify-center"
       >
-        <p class="text-[32px] font-semibold text-center">
+        <p class="text-[28px] font-semibold text-font-color text-center">
           {{ userSpendingRatio }}%
           {{ spendingManagementNeeded ? "초과" : "미만" }}
         </p>
@@ -48,38 +49,98 @@
     </div>
 
     <!-- 텍스트 영역 -->
-    <div class="relative mt-16">
+    <div class="flex flex-col justify-center h-[650px] w-[650px] pl-24">
       <div
-        class="bg-white shadow-md rounded-lg transition-all duration-500 ease-in-out overflow-hidden grow-animation-hash"
+        class="transition-all duration-500 ease-in-out grow-animation-hash"
         :class="
           isVisible
             ? 'w-[500px] h-[500px] opacity-100'
             : 'w-[0px] h-[0px] opacity-0'
         "
       >
-        <div
-          v-if="isVisible"
-          class="flex flex-col space-y-4 p-6 items-start ml-10"
-        >
-          <p class="mt-8 text-[20px]">
-            사용자 월 소득 :
-            <span class="text-kb-brown-1 text-[28px] font-semibold"
-              >{{ formatNumber(userIncome) }} 원</span
+        <div v-if="isVisible" class="flex flex-col space-y-4 h-full">
+          <!-- 상단 2개 박스 -->
+          <div class="flex items-center space-x-4 h-[30%]">
+            <div
+              class="w-[45%] text-center bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 p-6 rounded-3xl shadow-md flex flex-col items-center justify-center"
             >
-          </p>
-          <p class="text-[20px]">
-            소속 분위 평균 소득 :
-            <span class="text-kb-brown-1 text-[28px] font-semibold"
-              >{{ formatNumber(avgIncomeInGroup) }} 원</span
+              <p class="text-[18px] text-font-color">
+                {{ userName }}님의 월 소득
+                <span class="text-font-color text-[22px] font-semibold"
+                  >{{ formatNumber(userIncome) }} 원</span
+                >
+                만 원
+              </p>
+            </div>
+
+            <!-- VS 요소 -->
+            <div
+              class="w-12 h-12 flex items-center justify-center flex-shrink-0"
             >
-          </p>
-          <p class="mt-4 text-[20px]">
-            {{
-              spendingManagementNeeded
-                ? "지출 관리가 필요합니다."
-                : "지출 관리가 양호합니다."
-            }}
-          </p>
+              <span class="text-font-color font-bold text-2xl">VS</span>
+            </div>
+
+            <div
+              class="w-[45%] text-center bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 p-6 rounded-3xl shadow-md flex flex-col items-center justify-center"
+            >
+              <p class="text-[18px] text-font-color">
+                {{ incomeRange }}분위 평균 월 소득
+                <span class="text-font-color text-[22px] font-semibold"
+                  >{{ formatNumber(avgIncomeInGroup) }} 원</span
+                >
+                만 원
+              </p>
+            </div>
+          </div>
+
+          <!-- 중간 2개 박스 -->
+          <div class="flex items-center space-x-4 h-[30%]">
+            <div
+              class="w-[45%] text-center bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 p-6 rounded-3xl shadow-md flex flex-col items-center justify-center"
+            >
+              <p class="text-[18px] text-font-color">
+                {{ userName }}님의 소득 대비<br />
+                지출 비율
+                <span class="text-font-color text-[22px] font-semibold pl-1">
+                  {{ userExpenditurePercent.toFixed(1) }}%</span
+                >
+              </p>
+            </div>
+
+            <!-- VS 요소 -->
+            <div
+              class="w-12 h-12 flex items-center justify-center flex-shrink-0"
+            >
+              <span class="text-font-color font-bold text-2xl">VS</span>
+            </div>
+
+            <div
+              class="w-[45%] text-center bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 p-6 rounded-3xl shadow-md flex flex-col items-center justify-center"
+            >
+              <p class="text-[18px] text-font-color">
+                {{ incomeRange }}분위 소득 대비<br />
+                지출 비율
+                <span class="text-font-color text-[22px] font-semibold pl-1"
+                  >{{ rangeExpenditurePercent.toFixed(1) }}%</span
+                >
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="w-full bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 p-6 rounded-3xl shadow-md h-[30%] flex flex-col items-center justify-center"
+          >
+            <p class="text-[18px] text-font-color">
+              {{ userName }}님은
+              <span class="font-bold">{{ incomeRange }}분위</span>에
+              속합니다.<br />
+              {{
+                spendingManagementNeeded
+                  ? "지출 관리가 필요합니다."
+                  : "지출 관리가 양호합니다."
+              }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -97,6 +158,7 @@ const userSpendingRatio = ref("");
 const avgIncomeInGroup = ref("");
 const incomeRange = ref("");
 const hashtags = ref([]);
+const userName = ref("문준이");
 const spendingManagementNeeded = ref(false);
 
 const isVisible = ref(false);

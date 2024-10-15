@@ -1,5 +1,8 @@
 <template>
-  <div v-if="isIncomeDataReady" class="flex justify-center items-end h-[200px] mt-8 relative space-x-10">
+  <div
+    v-if="isIncomeDataReady"
+    class="flex justify-center items-end h-[200px] mt-8 relative space-x-10"
+  >
     <!-- 내 연 소득 대비 부채 비율 그래프 -->
     <div class="flex flex-col items-center">
       <p class="text-center text-[14px] text-font-color">
@@ -8,8 +11,7 @@
       <div
         class="w-[70px] rounded-t-lg bg-gradient-to-t from-kb-pink-5 to-kb-pink-7 hover-grow"
         :style="{ height: `${normalizedUserGraphHeight}px` }"
-      >
-      </div>
+      ></div>
       <p class="text-center text-[12px] text-font-color">나</p>
     </div>
 
@@ -21,8 +23,7 @@
       <div
         class="w-[70px] rounded-t-lg bg-gradient-to-t from-kb-pink-5 via-gray-300 to-kb-gray-4"
         :style="{ height: `${normalizedAverageGraphHeight}px` }"
-      >
-      </div>
+      ></div>
       <p class="text-center text-[12px] text-font-color mt-4">20대 평균</p>
     </div>
   </div>
@@ -50,7 +51,9 @@ const isIncomeDataReady = ref(false);
 
 // 최대값을 기준으로 그래프 높이 비율 계산
 const maxGraphHeight = 150; // 그래프의 최대 높이 (px)
-const maxRatio = computed(() => Math.max(props.incomeDebtRatio, props.averageIncomeRatio));
+const maxRatio = computed(() =>
+  Math.max(props.incomeDebtRatio, props.averageIncomeRatio)
+);
 
 // 비율 값을 기준으로 그래프 높이를 계산
 const normalizedUserGraphHeight = computed(() => {
