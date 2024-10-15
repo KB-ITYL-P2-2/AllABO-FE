@@ -73,6 +73,7 @@
             <div>
               <button
                 @click="emailckForm"
+                type="button"
                 class="bg-kb-brown-1 w-[120px] text-white rounded-md h-[50px] hover:text-font-color hover:bg-kb-yellow-1"
               >
                 이메일 중복확인
@@ -136,6 +137,8 @@
               취소
             </button>
             <button
+              @click="submitForm"
+              type="button"
               :class="submitButtonClass"
               class="h-[50px] w-[150px] rounded-md bg-kb-brown-2 text-white transition duration-200 hover:bg-kb-yellow-1"
             >
@@ -211,25 +214,31 @@ const passwordConfirmError = computed(() => {
 });
 
 // 전화번호 인증 완료 핸들러
-// handlePhoneVerification 함수는 부모 컴포넌트에서 호출됨
 function handlePhoneVerification(phone) {
   phoneNumber.value = phone;
-  console.log("인증된 전화번호:", phone); // 전화번호 값이 제대로 넘어오는지 로그로 확인
+  console.log("인증된 전화번호:", phone);
   isVerified.value = true;
 }
 
 async function submitForm() {
   if (isFormValid.value) {
     try {
-      const response = await axios.post(`http://localhost:8080/signup`, {
-        id: id.value,
-        pwd: password.value,
-        name: name.value,
-        identityNumber: birthday.value,
-        phoneNumber: phoneNumber.value,
-        totalIncome: asset.value,
-        "Content-Type": "application/json",
-      });
+      const response = await axios.post(
+        `http://localhost:8080/signup`,
+        {
+          id: id.value,
+          pwd: password.value,
+          name: name.value,
+          identityNumber: birthday.value,
+          phoneNumber: phoneNumber.value,
+          totalIncome: asset.value,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       router.push({ name: "SignSuccess", params: { userData: response.data } });
     } catch (error) {
       alert("서버와의 통신에 문제가 발생했습니다.");
@@ -237,18 +246,12 @@ async function submitForm() {
   }
 }
 
-// 버튼 클래스 동적 적용
-const submitButtonClass = computed(() => {
-  return isFormValid.value ? "bg-kb-brown-1" : "bg-kb-gray-2";
-});
-
-// 폼 제출 처리 함수
+// 이메일 중복 확인 함수
 async function emailckForm() {
   try {
     const response = await axios.get(
       `http://localhost:8080/iddupchk/${id.value}`
     );
-    // 서버로부터의 응답 메시지를 사용하여 중복 여부 확인
     if (response.data === "이미 존재하는 아이디입니다") {
       emailChkMessage.value = "이미 사용중인 아이디 입니다.";
     } else {
