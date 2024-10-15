@@ -16,11 +16,6 @@
           left: '50%',
           transform: 'scaleX(-1)',
         }"
-        :style="{
-          width: `${animatedAverageWidth}px`,
-          left: '50%',
-          transform: 'scaleX(-1)',
-        }"
       ></div>
       <div
         class="absolute h-[60px] rounded-r-lg origin-left"
@@ -37,11 +32,6 @@
     >
       <div
         class="absolute h-[60px] bg-kb-gray-2 rounded-r-lg origin-left"
-        :style="{
-          width: `${animatedAverageWidth2}px`,
-          left: '50%',
-          transform: 'scaleX(-1)',
-        }"
         :style="{
           width: `${animatedAverageWidth2}px`,
           left: '50%',

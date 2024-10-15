@@ -1,8 +1,8 @@
 <template>
-    <Header />
+  <Header />
   <AnalyzeLoading v-if="analyzeLoading" />
   <RecommendLoading v-if="false" />
-  <PlanLoading v-if="false"/>
+  <PlanLoading v-if="false" />
   <router-view></router-view>
 </template>
 
