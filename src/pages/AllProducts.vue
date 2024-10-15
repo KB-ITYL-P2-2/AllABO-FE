@@ -77,6 +77,7 @@ import ProductItem from "../components/AllProducts/ProductItem.vue";
 import { useRoute } from "vue-router";
 import { requestProductsData } from "../apis/api/product";
 import { checkCardMapping, creditCardMapping, depositMapping, insuranceMapping, loanMapping } from "../servies/mappingData";
+import { getMyFavoritesList } from "../apis/api/favorites";
 
 const nowItemIndex = ref(null);
 const dataStartIndex = ref(0);
@@ -123,8 +124,8 @@ onBeforeMount(async () => {
   if (route.query.recommend) {
     // console.log(JSON.parse(route.query.recommend))
     const json = JSON.parse(route.query.recommend);
-    if(json.length==0) return;
-    switch(json[0].productId){
+    if (json.length == 0) return;
+    switch (json[0].productId) {
       case "A04":
         nowProduct.value = "체크카드";
         nowData.value = checkCardMapping(json);
@@ -190,6 +191,20 @@ onBeforeMount(async () => {
       pageArray.push(new Array(5).fill(null));
     } else {
       pageArray.push(new Array(Math.ceil(pageCount.value % 5)).fill(null));
+    }
+  }
+
+  // 받은 데이터들 찜 기능추가
+  const favoritesList = await getMyFavoritesList();
+
+  for (let favorites of favoritesList) {
+    const id = favorites.productNum;
+    const productId = favorites.productId;
+
+    for (let data of nowData.value) {
+      if (data.id === id && data.productId === productId) {
+        data.isFavorite = true;
+      }
     }
   }
 });
