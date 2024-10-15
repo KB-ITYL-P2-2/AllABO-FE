@@ -110,7 +110,7 @@ const circleData = [
     percent: 25,
   },
   {
-    title: '목표 투자 비용',
+    title: '목표 투자 비율',
     percent: 25,
   },
 ];

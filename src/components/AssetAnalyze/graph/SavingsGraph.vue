@@ -1,10 +1,17 @@
 <template>
-  <div id="graphContainer" class="relative w-full flex justify-center space-y-4">
+  <div
+    id="graphContainer"
+    class="relative w-full flex justify-center space-y-4"
+  >
     <!-- 첫 번째 그래프: 파란색(사용자) + 회색(평균) -->
-    <div class="relative w-full max-w-[600px] h-[60px] ml-[400px]">
+    <div class="relative w-full max-w-[600px] h-[60px]">
       <div
         class="absolute h-[60px] bg-kb-gray-2 rounded-r-lg origin-left"
-        :style="{ width: `${animatedAverageWidth}px`, left: '50%', transform: 'scaleX(-1)' }"
+        :style="{
+          width: `${animatedAverageWidth}px`,
+          left: '50%',
+          transform: 'scaleX(-1)',
+        }"
       ></div>
       <div
         class="absolute h-[60px] rounded-r-lg origin-left"
@@ -17,7 +24,11 @@
     <div class="relative w-full max-w-[600px] h-[60px] mt-8">
       <div
         class="absolute h-[60px] bg-kb-gray-2 rounded-r-lg origin-left"
-        :style="{ width: `${animatedAverageWidth2}px`, left: '50%', transform: 'scaleX(-1)' }"
+        :style="{
+          width: `${animatedAverageWidth2}px`,
+          left: '50%',
+          transform: 'scaleX(-1)',
+        }"
       ></div>
       <div
         class="absolute h-[60px] rounded-r-lg origin-left"
@@ -36,7 +47,7 @@ const props = defineProps({
   totalUserSavings: Number,
   totalAverageSavings: Number,
   assetUserSavings: Number,
-  assetAverageSavings: Number
+  assetAverageSavings: Number,
 });
 
 // 최대 막대 너비 (화면 크기 대비 계산, 가로 그래프니까 width로 설정)
@@ -46,8 +57,8 @@ const animatedAverageWidth = ref(0);
 const animatedUserWidth2 = ref(0);
 const animatedAverageWidth2 = ref(0);
 
-const userClass1 = 'bg-kb-blue-4'; 
-const userClass2 = 'bg-kb-yellow-3'; 
+const userClass1 = 'bg-kb-blue-4';
+const userClass2 = 'bg-kb-yellow-3';
 
 // 첫 번째 그래프 (저축 금액) 계산
 const calculateWidths1 = (userValue, averageValue) => {
@@ -80,7 +91,7 @@ const observeScroll = (userValue, averageValue, isFirstGraph = true) => {
     { threshold: 0.5 } // 50% 이상 보일 때 실행
   );
 
-  const graphContainer = document.getElementById("graphContainer");
+  const graphContainer = document.getElementById('graphContainer');
   if (graphContainer) {
     observer.observe(graphContainer);
   }
