@@ -80,33 +80,7 @@
         class="relative w-full h-full transition-transform duration-500 transform-style-3d"
         :class="flipped[1] ? 'rotateY-180' : ''"
       >
-    <div
-      class="group perspective w-[450px] h-[450px] relative cursor-pointer"
-      @click="toggleFlip(1)"
-    >
-      <div
-        class="relative w-full h-full transition-transform duration-500 transform-style-3d"
-        :class="flipped[1] ? 'rotateY-180' : ''"
-      >
         <!-- 앞면 -->
-        <div
-          class="absolute w-full h-full backface-hidden bg-kb-yellow-8 rounded-[50px] flex flex-col p-10"
-        >
-          <button
-            class="p-2 w-[200px] h-10 rounded-[30px] bg-kb-brown-5 text-[20px] text-white mb-6 font-light"
-          >
-            자산 대비 부채 비율
-          </button>
-          <p class="text-[20px] text-kb-brown-1">
-            20대 평균 자산 대비 부채 비율보다
-          </p>
-          <p class="text-[36px] font-bold text-font-color mb-2">
-            약 {{ compareAssetDebt }}% 낮습니다
-          </p>
-          <DebtGraph
-            :assetDebtRatio="assetDebtRatio"
-            :averageDebtRatio="averageDebtRatio"
-          />
         <div
           class="absolute w-full h-full backface-hidden bg-kb-yellow-8 rounded-[50px] flex flex-col p-10"
         >
@@ -169,33 +143,7 @@
         class="relative w-full h-full transition-transform duration-500 transform-style-3d"
         :class="flipped[2] ? 'rotateY-180' : ''"
       >
-    <div
-      class="group perspective w-[450px] h-[450px] relative cursor-pointer"
-      @click="toggleFlip(2)"
-    >
-      <div
-        class="relative w-full h-full transition-transform duration-500 transform-style-3d"
-        :class="flipped[2] ? 'rotateY-180' : ''"
-      >
         <!-- 앞면 -->
-        <div
-          class="absolute w-full h-full backface-hidden bg-kb-pink-5 rounded-[50px] flex flex-col p-10"
-        >
-          <button
-            class="p-2 w-[200px] h-10 rounded-[30px] bg-kb-pink-6 text-[20px] text-white mb-6 font-light"
-          >
-            연 소득 대비 부채 비율
-          </button>
-          <p class="text-[20px] text-kb-brown-1">
-            20대 평균 연 소득 대비 부채 비율보다
-          </p>
-          <p class="text-[36px] font-bold text-font-color mb-2">
-            약 {{ compareIncomeDebt }}% 낮습니다
-          </p>
-          <IncomeGraph
-            :incomeDebtRatio="incomeDebtRatio"
-            :averageIncomeRatio="averageIncomeRatio"
-          />
         <div
           class="absolute w-full h-full backface-hidden bg-kb-pink-5 rounded-[50px] flex flex-col p-10"
         >
@@ -266,6 +214,7 @@ const flipped = ref([false, false, false]);
 //연령대
 const age = ref("");
 
+// 비교 데이터 변수들
 const compareTotal = ref(0);
 const compareAssetDebt = ref(0);
 const compareIncomeDebt = ref(0);
@@ -285,7 +234,7 @@ const incomeDebtRatio = ref(0);
 const averageIncomeRatio = ref(0);
 const incomeDebtAnalysis = ref("");
 
-//3값에 대한 해시태그들
+// 키워드들
 const assetKeywords = ref([]); // 자산 비교 해시태그
 const assetDebtKeywords = ref([]); // 자산 대비 부채 비율 해시태그
 const incomeDebtKeywords = ref([]); // 연 소득 대비 부채 비율 해시태그
@@ -380,9 +329,9 @@ const fetchAssetLoanData = async () => {
 onMounted(fetchAssetLoanData); // 데이터 가져오기
 
 // 이미지 경로
-const assetImage1 = '/images/AssetAnalyze/asset1.png';
-const assetImage2 = '/images/AssetAnalyze/asset2.png';
-const assetImage3 = '/images/AssetAnalyze/asset3.png';
+const assetImage1 = "/images/AssetAnalyze/asset1.png";
+const assetImage2 = "/images/AssetAnalyze/asset2.png";
+const assetImage3 = "/images/AssetAnalyze/asset3.png";
 
 // 카드 회전 함수
 const toggleFlip = (index) => {

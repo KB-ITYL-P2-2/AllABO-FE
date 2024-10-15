@@ -67,9 +67,9 @@
               <p class="text-[18px] text-font-color">
                 {{ userName }}님의 월 소득
                 <span class="text-font-color text-[22px] font-semibold"
-                  >{{ formatNumber(userIncome) }} 원</span
-                >
-                만 원
+                  >{{ formatNumber(userIncome) }}
+                </span>
+                원
               </p>
             </div>
 
@@ -85,10 +85,10 @@
             >
               <p class="text-[18px] text-font-color">
                 {{ incomeRange }}분위 평균 월 소득
-                <span class="text-font-color text-[22px] font-semibold"
-                  >{{ formatNumber(avgIncomeInGroup) }} 원</span
-                >
-                만 원
+                <span class="text-font-color text-[22px] font-semibold">{{
+                  formatNumber(avgIncomeInGroup)
+                }}</span>
+                원
               </p>
             </div>
           </div>
@@ -160,6 +160,8 @@ const incomeRange = ref("");
 const hashtags = ref([]);
 const userName = ref("문준이");
 const spendingManagementNeeded = ref(false);
+const userExpenditurePercent = ref(0);
+const rangeExpenditurePercent = ref(0);
 
 const isVisible = ref(false);
 const yellowCircle = ref(null);
@@ -197,6 +199,9 @@ const fetchIncomeData = async () => {
     incomeRange.value = data["소득분위(n분위)"];
     hashtags.value = data["#요약키워드(4개)"];
     spendingManagementNeeded.value = data["지출 관리 필요성(true or false)"];
+    console.log(response);
+
+    console.log(data);
   } catch (error) {
     console.error("데이터 가져오기 실패:", error);
   }
