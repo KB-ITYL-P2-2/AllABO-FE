@@ -55,15 +55,27 @@
           </ul>
 
           <!-- 프로필 아이콘_마이페이지 이동 -->
-          <router-link
-            to="/mypage"
-            :class="[
-              isScrolledOrHovered ? 'text-font-color' : 'text-font-color',
-            ]"
-            class="hover:text-kb-brown-1"
-          >
-            <img src="/images/Mypage/user.png" class="w-6 h-6" />
-          </router-link>
+          <!-- 로그인 상태에 따라 클릭 여부 결정 -->
+          <div>
+            <!-- 로그인되지 않은 상태에서만 프로필 클릭 가능 -->
+            <router-link
+              v-if="!authStore.isLoggedIn"
+              to="/mypage"
+              :class="[
+                isScrolledOrHovered ? 'text-font-color' : 'text-font-color',
+              ]"
+              class="hover:text-kb-brown-1"
+            >
+              <img src="/images/Mypage/user.png" class="w-6 h-6" />
+            </router-link>
+            <!-- 로그인된 상태에서는 클릭 불가한 이미지 -->
+            <img
+              v-else
+              src="/images/Mypage/user.png"
+              class="w-6 h-6 cursor-default"
+              alt="프로필 이미지"
+            />
+          </div>
         </div>
       </div>
     </nav>
