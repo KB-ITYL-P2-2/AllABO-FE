@@ -17,7 +17,8 @@
         />
       </div>
       <p class="text-center text-lg font-bold mt-2 whitespace-nowrap">
-        <span class="text-kb-blue-3 text-[24px]">문준일</span>님의 포트폴리오
+        <span class="text-kb-blue-3 text-[24px]">{{ authStore.name }}</span
+        >님의 포트폴리오
       </p>
     </div>
 
@@ -79,6 +80,8 @@ import axios from "axios";
 import { ref, onMounted } from "vue";
 import { useAuthStore } from "../../stores/auth";
 
+const authStore = useAuthStore();
+
 const totalIncome = ref(0);
 const totalAssets = ref(0);
 const totalSavings = ref(0); // 연금
@@ -106,7 +109,6 @@ const formatNumber = (value) => {
 
 // axios 연결
 const totalAssetData = async () => {
-  const authStore = useAuthStore();
   const token = authStore.token;
   if (!token) {
     console.error("토큰이 없습니다. 로그인 후 다시 시도하세요.");
@@ -139,6 +141,13 @@ const totalAssetData = async () => {
   }
 };
 
-// 컴포넌트 마운트 시 데이터 로드
-onMounted(totalAssetData);
+onMounted(async () => {
+  // 첫 번째 작업: 로그인 상태 확인 후 사용자 프로필 정보 가져오기
+  if (authStore.isLoggedIn) {
+    await authStore.fetchUserProfile();
+  }
+
+  // 두 번째 작업: 자산 데이터 가져오기
+  totalAssetData();
+});
 </script>

@@ -56,7 +56,7 @@
               class="w-[45%] text-center bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 p-6 rounded-3xl shadow-md flex flex-col items-center justify-center"
             >
               <p class="text-[18px] text-font-color">
-                {{ userName }}님의 월 소득
+                {{ authStore.name }}님의 월 소득
                 <span class="text-font-color text-[22px] font-semibold"
                   >{{ formatNumber(userIncome) }}
                 </span>
@@ -90,7 +90,7 @@
               class="w-[45%] text-center bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 p-6 rounded-3xl shadow-md flex flex-col items-center justify-center"
             >
               <p class="text-[18px] text-font-color">
-                {{ userName }}님의 소득 대비<br />
+                {{ authStore.name }}님의 소득 대비<br />
                 지출 비율
                 <span class="text-font-color text-[22px] font-semibold pl-1">
                   {{ userExpenditurePercent.toFixed(1) }}%</span
@@ -126,7 +126,7 @@
             </p>
 
             <p class="text-[18px] text-font-color">
-              <span class="font-bold">{{ userName }}</span>
+              <span class="font-bold">{{ authStore.name }}</span>
               <!-- <span class="font-bold">{{ incomeRange }}분위</span>에
               속합니다.<br /> -->
               님은 소속 분위보다 상대적으로
@@ -149,8 +149,9 @@ import { ref, onMounted, computed } from "vue";
 import { useAuthStore } from "../../stores/auth";
 import { loadingStateStore } from "../../stores/loadingStateStore";
 
+const authStore = useAuthStore();
+
 //소득 (원)
-const userName = ref("문준이");
 const incomeRange = ref(""); //"소득분위(n분위)"
 const userIncome = ref(""); //사용자 월 소득
 const avgIncomeInGroup = ref(""); //소속 분위 소득(원)
@@ -176,7 +177,6 @@ const formatNumber = (value) => {
 const loadingStore = loadingStateStore();
 
 const fetchIncomeData = async () => {
-  const authStore = useAuthStore();
   const token = authStore.token;
   if (!token) {
     console.error("토큰이 없습니다. 로그인 후 다시 시도하세요.");
@@ -274,14 +274,21 @@ relativeExpenditurePercent;
 
 let observer;
 
-onMounted(() => {
+onMounted(async () => {
+  if (authStore.isLoggedIn) {
+    await authStore.fetchUserProfile();
+  }
+
   fetchIncomeData();
+
+  // Intersection Observer 초기화
   observer = new IntersectionObserver(observerCallback, {
     threshold: 0.1,
   });
 
+  // yellowCircle 요소가 존재할 경우 옵저버에 추가합니다.
   if (yellowCircle.value) {
-    observer.observe(yellowCircle.value); // yellowCircle 요소를 옵저버에 추가
+    observer.observe(yellowCircle.value);
   }
 });
 </script>
