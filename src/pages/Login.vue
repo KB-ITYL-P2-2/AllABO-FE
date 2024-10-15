@@ -110,17 +110,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import { useAuthStore } from '../stores/auth.js';
-import EmailModal from '../components/Login/EmailModal.vue';
-import PasswordModal from '../components/Login/PasswordModal.vue';
-import { kakaoLoginRequestCodeHandler } from '../apis/api/kakao';
+import { ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { useAuthStore } from "../stores/auth.js";
+import EmailModal from "../components/Login/EmailModal.vue";
+import PasswordModal from "../components/Login/PasswordModal.vue";
+import { kakaoLoginRequestCodeHandler } from "../apis/api/kakao";
 import {
   googleLoginHandler,
   sendTokenToBackend,
-} from '../apis/api/firebaseGoogle.js';
-import { login } from '../apis/api/user.js';
+} from "../apis/api/firebaseGoogle.js";
+import { login } from "../apis/api/user.js";
 
 // 모달 상태
 const showEmailModal = ref(false);
@@ -137,14 +137,14 @@ const handleGoogleLogin = async () => {
   try {
     const idToken = await googleLoginHandler(); // 구글 로그인 수행
     const response = await sendTokenToBackend(idToken); // 토큰을 백엔드로 전송
-    console.log('로그인 성공:', response);
+    console.log("로그인 성공:", response);
   } catch (error) {
-    console.error('로그인 처리 중 오류 발생:', error);
+    console.error("로그인 처리 중 오류 발생:", error);
   }
 };
 
-const id = ref('');
-const pwd = ref('');
+const id = ref("");
+const pwd = ref("");
 
 const router = useRouter();
 const route = useRoute();
@@ -154,15 +154,18 @@ const requestLogin = async () => {
   try {
     const response = await login(id.value, pwd.value);
     if (response.status === 200) {
+      //토큰만 날아오니까 토큰 저장
       authStore.setToken(response.data.accessToken);
-      const redirectPath = route.query.redirect || '/';
+      await authStore.fetchUserProfile();
+
+      const redirectPath = route.query.redirect || "/";
       router.push(redirectPath);
     } else {
-      alert('이메일 또는 비밀번호가 틀렸습니다.');
+      alert("이메일 또는 비밀번호가 틀렸습니다.");
     }
   } catch (e) {
     // console.log(id.value, pwd.value);
-    console.log('login에서 발생한 에러' + e);
+    console.log("login에서 발생한 에러" + e);
     throw new Error(e);
   }
 };
