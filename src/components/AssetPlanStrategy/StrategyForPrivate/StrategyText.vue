@@ -1,10 +1,10 @@
 <template>
   <h1 class="text-[36px] whitespace-nowrap">
-    월 지출을 {{ percent }}% {{ increaseText }}하여<br />
-    <span class="text-red-500 text-[44px] my-3 block">
-      {{ strategy }}<br
+    월 지출을 {{ percent }}% {{ isDeclineText }}하여<br />
+    <span class="text-red-500 text-[44px] my-3 block"
+      >{{ strategy }}<br
     /></span>
-    을 고려해야 합니다.
+    을(를) 추천합니다.
   </h1>
 </template>
 
@@ -16,7 +16,7 @@ const props = defineProps({
     type: Number,
     required: true,
   },
-  isIncrease: {
+  isDecline: {
     type: Boolean,
     required: true,
   },
@@ -26,7 +26,7 @@ const props = defineProps({
   },
 });
 
-const increaseText = computed(() => {
-  return props.isIncrease ? '증가' : '감소';
+const isDeclineText = computed(() => {
+  return props.isDecline ? '감소' : '증가';
 });
 </script>

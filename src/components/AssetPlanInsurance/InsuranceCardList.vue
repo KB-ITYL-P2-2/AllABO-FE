@@ -4,7 +4,7 @@
       v-for="(name, index) in insuranceName"
       :key="index"
       :name="name"
-      :content="insuranceContent[`${name}`]"
+      :content="insuranceContent[name]"
     />
   </div>
 </template>
