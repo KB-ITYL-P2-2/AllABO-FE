@@ -59,7 +59,6 @@ const insuranceName = ref([]);
 const insuranceContent = ref({});
 const rebalancingTitle = ref([]);
 const rebalancingContent = ref({});
-const isMaintain = ref([]);
 
 // axios 연결
 const fetchInsuranceRebalancing = async () => {
