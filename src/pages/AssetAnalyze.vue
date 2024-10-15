@@ -28,27 +28,27 @@
 </template>
 
 <script setup>
-import TotalCircle from '../components/AssetAnalyze/TotalCircle.vue';
-import TotalText from '../components/AssetAnalyze/TotalText.vue';
-import AnalyzeDebt from '../components/AssetAnalyze/AnalyzeDebt.vue';
-import AnalyzeSavings from '../components/AssetAnalyze/AnalyzeSavings.vue';
-import AnalyzeRange from '../components/AssetAnalyze/AnalyzeRange.vue';
-import AnalyzeButton from '../components/AssetAnalyze/AnalyzeButton.vue';
+import TotalCircle from "../components/AssetAnalyze/TotalCircle.vue";
+import TotalText from "../components/AssetAnalyze/TotalText.vue";
+import AnalyzeDebt from "../components/AssetAnalyze/AnalyzeDebt.vue";
+import AnalyzeSavings from "../components/AssetAnalyze/AnalyzeSavings.vue";
+import AnalyzeRange from "../components/AssetAnalyze/AnalyzeRange.vue";
+import AnalyzeButton from "../components/AssetAnalyze/AnalyzeButton.vue";
 
-import { onBeforeMount, onMounted } from 'vue';
+import { onBeforeMount, onMounted } from "vue";
 import {
   getIncomeLevel,
   getLoan,
   getSaving,
   getSavingRatio,
-} from '../apis/api/assetAnalyze';
-import { loadingStateStore } from '../stores/loadingStateStore';
+} from "../apis/api/assetAnalyze";
+import { loadingStateStore } from "../stores/loadingStateStore";
 
 const loadingStore = loadingStateStore();
 
 onBeforeMount(async () => {
   loadingStore.setIsAssetAnalyzeLoading(true);
-  document.body.style.overflow = 'hidden'; // 스크롤 비활성화
+  document.body.style.overflow = "hidden"; // 스크롤 비활성화
 
   try {
     const savingResponse = await getSaving();
@@ -68,10 +68,10 @@ onBeforeMount(async () => {
       incomeLevelResponse.status === 200
     ) {
       loadingStore.setIsAssetAnalyzeLoading(false);
-      document.body.style.overflow = 'auto'; // 스크롤 다시 활성화
+      document.body.style.overflow = "auto"; // 스크롤 다시 활성화
     }
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error("Error fetching data:", error);
     loadingStore.setIsAssetAnalyzeLoading(false); // 에러 발생 시에도 로딩 상태 종료
   }
 });
