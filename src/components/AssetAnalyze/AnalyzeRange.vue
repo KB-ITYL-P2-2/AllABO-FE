@@ -7,7 +7,7 @@
   <div class="flex justify-center px-10 mx-auto space-x-14">
     <!-- 왼쪽 원형 영역 -->
     <div
-      class="relative flex flex-col justify-center items-center"
+      class="relative flex flex-col items-center justify-center"
       ref="yellowCircle"
     >
       <div class="relative">
@@ -16,11 +16,11 @@
           class="flex flex-col items-center justify-center rounded-full bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 shadow-lg h-[550px] w-[550px] text-center px-8"
           :class="{ 'grow-animation': isVisible }"
         >
-          <div class="flex flex-col space-y-4 p-6 items-center">
+          <div class="flex flex-col items-center p-6 space-y-4">
             <div
               v-for="(tag, index) in hashtags"
               :key="index"
-              class="text-font-color p-4 rounded-lg transition-all duration-300 hover:bg-kb-yellow-10"
+              class="p-4 transition-all duration-300 rounded-lg text-font-color hover:bg-kb-yellow-10"
             >
               <p class="font-semibold text-kb-brown-1 text-[24px]">{{ tag }}</p>
             </div>
@@ -58,7 +58,7 @@
             : 'w-[0px] h-[0px] opacity-0'
         "
       >
-        <div v-if="isVisible" class="flex flex-col space-y-4 h-full">
+        <div v-if="isVisible" class="flex flex-col h-full space-y-4">
           <!-- 상단 2개 박스 -->
           <div class="flex items-center space-x-4 h-[30%]">
             <div
@@ -75,9 +75,9 @@
 
             <!-- VS 요소 -->
             <div
-              class="w-12 h-12 flex items-center justify-center flex-shrink-0"
+              class="flex items-center justify-center flex-shrink-0 w-12 h-12"
             >
-              <span class="text-font-color font-bold text-2xl">VS</span>
+              <span class="text-2xl font-bold text-font-color">VS</span>
             </div>
 
             <div
@@ -109,9 +109,9 @@
 
             <!-- VS 요소 -->
             <div
-              class="w-12 h-12 flex items-center justify-center flex-shrink-0"
+              class="flex items-center justify-center flex-shrink-0 w-12 h-12"
             >
-              <span class="text-font-color font-bold text-2xl">VS</span>
+              <span class="text-2xl font-bold text-font-color">VS</span>
             </div>
 
             <div
@@ -151,6 +151,7 @@
 import axios from "axios";
 import { ref, onMounted } from "vue";
 import { useAuthStore } from "../../stores/auth";
+import { loadingStateStore } from "../../stores/loadingStateStore";
 
 // 개별 ref 선언
 const userIncome = ref("");
@@ -174,6 +175,8 @@ const formatNumber = (value) => {
   return value;
 };
 
+const loadingStore = loadingStateStore();
+
 const fetchIncomeData = async () => {
   const authStore = useAuthStore();
   const token = authStore.token;
@@ -181,6 +184,8 @@ const fetchIncomeData = async () => {
     console.error("토큰이 없습니다. 로그인 후 다시 시도하세요.");
     return;
   }
+  loadingStore.setIsAssetAnalyzeLoading(true, 2);
+
   try {
     const response = await axios.post(
       `http://localhost:8080/assets/income-level`,
@@ -192,6 +197,11 @@ const fetchIncomeData = async () => {
         },
       }
     );
+
+    if(response.status == 200){
+      loadingStore.setIsAssetAnalyzeLoading(false, 2);
+    }
+
     const data = response.data.resultMap;
     userIncome.value = Number(data["사용자 월 소득(원)"]);
     userSpendingRatio.value = data["사용자 월 소득 대비 지출 비율(%제외)"];

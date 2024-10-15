@@ -17,7 +17,7 @@
         :userSavings="totalUserSavings"
         :averageSavings="totalAverageSavings"
       />
-      <div class="space-y-2 mb-16">
+      <div class="mb-16 space-y-2">
         <p class="text-[20px] text-kb-brown-6">{{ age }}대 평균 저축액보다</p>
         <p class="font-bold text-[36px] text-font-color">
           약 {{ Math.abs(parseFloat(compareSavings1)).toFixed(1) }}배 더
@@ -37,7 +37,7 @@
         :userSavings="assetUserSavings"
         :averageSavings="assetAverageSavings"
       />
-      <div class="space-y-2 mb-10">
+      <div class="mb-10 space-y-2">
         <p class="text-[20px] text-kb-brown-6">
           {{ age }}대 평균 자산 대비 저축 비율보다
         </p>
@@ -56,7 +56,10 @@
 <script setup>
 import axios from "axios";
 import { ref, onMounted } from "vue";
+
 import { useAuthStore } from "../../stores/auth";
+import { loadingStateStore } from "../../stores/loadingStateStore";
+
 import SavingsGraph from "./graph/SavingsGraph.vue";
 
 //비교군
@@ -75,6 +78,8 @@ const compareSavings2 = ref("0");
 const totalSavingsKeywords = ref([]);
 const savingsRatioKeywords = ref([]);
 
+const loadingStore = loadingStateStore();
+
 // Fetch data from backend
 const fetchSavingsAnalysisData = async () => {
   const authStore = useAuthStore();
@@ -83,6 +88,7 @@ const fetchSavingsAnalysisData = async () => {
     console.error("토큰이 없습니다. 로그인 후 다시 시도하세요.");
     return;
   }
+  loadingStore.setIsAssetAnalyzeLoading(true, 0);
 
   try {
     const response = await axios.post(
@@ -95,6 +101,10 @@ const fetchSavingsAnalysisData = async () => {
         },
       }
     );
+
+    if(response.status == 200){
+      loadingStore.setIsAssetAnalyzeLoading(false, 0);
+    }
 
     const data = response.data.jsonNode;
 

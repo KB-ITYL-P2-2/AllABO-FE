@@ -207,6 +207,7 @@ import { useAuthStore } from "../../stores/auth";
 import AssetGraph from "./graph/AssetGraph.vue";
 import DebtGraph from "./graph/DebtGraph.vue";
 import IncomeGraph from "./graph/IncomeGraph.vue";
+import { loadingStateStore } from "../../stores/loadingStateStore";
 
 // 데이터 상태 관리
 const flipped = ref([false, false, false]);
@@ -239,6 +240,8 @@ const assetKeywords = ref([]); // 자산 비교 해시태그
 const assetDebtKeywords = ref([]); // 자산 대비 부채 비율 해시태그
 const incomeDebtKeywords = ref([]); // 연 소득 대비 부채 비율 해시태그
 
+const loadingStore = loadingStateStore();
+
 // axios 연결
 const fetchAssetLoanData = async () => {
   const authStore = useAuthStore();
@@ -247,6 +250,8 @@ const fetchAssetLoanData = async () => {
     console.error("토큰이 없습니다. 로그인 후 다시 시도하세요.");
     return;
   }
+
+  loadingStore.setIsAssetAnalyzeLoading(true, 1);
 
   try {
     const response = await axios.post(
@@ -259,6 +264,10 @@ const fetchAssetLoanData = async () => {
         },
       }
     );
+
+    if(response.status == 200){
+      loadingStore.setIsAssetAnalyzeLoading(false, 1);
+    }
 
     const data = response?.data?.jsonNode?.["같은 연령대 평균과 비교"];
     if (!data) {

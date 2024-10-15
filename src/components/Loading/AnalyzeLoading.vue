@@ -18,6 +18,7 @@
               class="w-1 h-1 rounded-full bg-kb-yellow-1 animate-bounce"
               :style="{ animationDelay: `${index * 0.2}s` }"
             ></div>
+            로딩중
           </div>
         </div>
       </div>

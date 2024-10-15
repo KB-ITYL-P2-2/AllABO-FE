@@ -1,24 +1,24 @@
 <template>
   <!-- 첫 번째 페이지 -->
-  <div class="section h-screen flex bg-asset-back">
-    <div class="w-screen flex items-center">
+  <div class="flex h-screen section bg-asset-back">
+    <div class="flex items-center w-screen">
       <TotalCircle class="w-1/2 pl-40" />
       <TotalText class="w-1/2 pl-20" />
     </div>
   </div>
 
   <!--저축 분석 페이지 -->
-  <div class="section h-screen items-center bg-asset-back">
+  <div class="items-center h-screen section bg-asset-back">
     <AnalyzeSavings />
   </div>
 
   <!-- 자산, 부채 부석 페이지 -->
-  <div class="section h-screen items-center bg-asset-back">
+  <div class="items-center h-screen section bg-asset-back">
     <AnalyzeDebt />
   </div>
 
   <!--소득 분위별 분석-->
-  <div class="section h-screen items-center bg-asset-back">
+  <div class="items-center h-screen section bg-asset-back">
     <AnalyzeRange />
   </div>
 
@@ -43,37 +43,4 @@ import {
   getSavingRatio,
 } from "../apis/api/assetAnalyze";
 import { loadingStateStore } from "../stores/loadingStateStore";
-
-// const loadingStore = loadingStateStore();
-
-// onBeforeMount(async () => {
-//   loadingStore.setIsAssetAnalyzeLoading(true);
-//   console.log(loadingStore.isAssetAnalyzeLoading);
-//   document.body.style.overflow = "hidden"; // 스크롤 비활성화
-
-//   try {
-//     const savingResponse = await getSaving();
-//     const savingRatioResponse = await getSavingRatio();
-//     const loanResponse = await getLoan();
-//     const incomeLevelResponse = await getIncomeLevel();
-
-//     console.log(savingResponse);
-//     console.log(savingRatioResponse);
-//     console.log(loanResponse);
-//     console.log(incomeLevelResponse);
-
-//     if (
-//       savingResponse.status === 200 &&
-//       savingRatioResponse.status === 200 &&
-//       loanResponse.status === 200 &&
-//       incomeLevelResponse.status === 200
-//     ) {
-//       loadingStore.setIsAssetAnalyzeLoading(false);
-//       document.body.style.overflow = "auto"; // 스크롤 다시 활성화
-//     }
-//   } catch (error) {
-//     console.error("Error fetching data:", error);
-//     loadingStore.setIsAssetAnalyzeLoading(false); // 에러 발생 시에도 로딩 상태 종료
-//   }
-// });
 </script>

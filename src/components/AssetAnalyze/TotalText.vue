@@ -37,6 +37,7 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { useAuthStore } from "../../stores/auth";
+import { loadingStateStore } from "../../stores/loadingStateStore";
 // 데이터 초기 상태 정의
 const data = ref({
   text1: "투자 성향",
@@ -44,6 +45,8 @@ const data = ref({
   text3: "알 수 없음",
   text4: "알 수 없음",
 });
+
+const loadingStore = loadingStateStore();
 
 // axios 연결 및 데이터 가져오기 함수 정의
 const fetchUserSavingData = async () => {
@@ -54,6 +57,8 @@ const fetchUserSavingData = async () => {
     console.error("토큰이 없습니다. 로그인 후 다시 시도하세요.");
     return;
   }
+
+  loadingStore.setIsAssetAnalyzeLoading(true, 3);
 
   try {
     const response = await axios.post(
@@ -66,6 +71,8 @@ const fetchUserSavingData = async () => {
         },
       }
     );
+
+    loadingStore.setIsAssetAnalyzeLoading(false, 3);
 
     // 응답 데이터 처리
     const resultMap = response?.data?.resultMap;
