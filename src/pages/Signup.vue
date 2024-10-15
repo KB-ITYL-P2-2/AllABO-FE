@@ -31,7 +31,7 @@
                 placeholder="주민번호 앞6자리 "
                 class="text-font-color pl-4 h-[50px] w-1/2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
               />
-              <p class="text-lg text-font-color mx-4 mt-2"> - </p>
+              <p class="text-lg text-font-color mx-4 mt-2">-</p>
               <input
                 type="password"
                 id="birthday2"
@@ -44,35 +44,44 @@
 
           <!-- 전화번호 인증 -->
           <div class="mt-6 flex flex-col">
-            <label for="phoneNumber" class="text-font-color mb-1">전화번호</label>
-            <AuthenticationBtn @verification-complete="handlePhoneVerification" />
+            <label for="phoneNumber" class="text-font-color mb-1"
+              >전화번호</label
+            >
+            <AuthenticationBtn
+              @verification-complete="handlePhoneVerification"
+            />
           </div>
 
           <!-- 이메일 -->
-          <label for="id" class="text-font-color mt-2 ">이메일</label>
-          <div class="mt-1 flex space-x-2 ">
-         <div>
-          <input
-          type="email"
-          id="id"
-          v-model="id"
-          placeholder="이메일을 입력해주세요"
-          class="text-font-color pl-4 h-[50px] w-[350px] rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
-        />
-        <p v-if="emailError && emailTouched" class="text-sm text-red-500 mt-2">
-          이메일 형식에 맞게 입력해주세요.
-        </p>
-         </div>
-          <div>
-            <button @click="emailckForm"
-            class="bg-kb-brown-1 w-[120px] text-white rounded-md h-[50px] hover:text-font-color hover:bg-kb-yellow-1">
-             이메일 중복확인
-           </button>
+          <label for="id" class="text-font-color mt-2">이메일</label>
+          <div class="mt-1 flex space-x-2">
+            <div>
+              <input
+                type="email"
+                id="id"
+                v-model="id"
+                placeholder="이메일을 입력해주세요"
+                class="text-font-color pl-4 h-[50px] w-[350px] rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
+              />
+              <p
+                v-if="emailError && emailTouched"
+                class="text-sm text-red-500 mt-2"
+              >
+                이메일 형식에 맞게 입력해주세요.
+              </p>
+            </div>
+            <div>
+              <button
+                @click="emailckForm"
+                class="bg-kb-brown-1 w-[120px] text-white rounded-md h-[50px] hover:text-font-color hover:bg-kb-yellow-1"
+              >
+                이메일 중복확인
+              </button>
+            </div>
           </div>
-          </div>
-          <p v-if="emailChkMessage" class="text-red-500 text-sm ml-2">{{emailChkMessage}}</p>
-
-
+          <p v-if="emailChkMessage" class="text-red-500 text-sm ml-2">
+            {{ emailChkMessage }}
+          </p>
 
           <!-- 비밀번호 -->
           <div class="mt-6 flex flex-col">
@@ -91,7 +100,9 @@
 
           <!-- 비밀번호 확인 -->
           <div class="mt-6 flex flex-col">
-            <label for="passwordConfirm" class="text-font-color mb-1">비밀번호 확인</label>
+            <label for="passwordConfirm" class="text-font-color mb-1"
+              >비밀번호 확인</label
+            >
             <input
               type="password"
               id="passwordConfirm"
@@ -125,7 +136,7 @@
               취소
             </button>
             <button
-            :class="submitButtonClass"
+              :class="submitButtonClass"
               class="h-[50px] w-[150px] rounded-md bg-kb-brown-2 text-white transition duration-200 hover:bg-kb-yellow-1"
             >
               가입하기
@@ -138,26 +149,32 @@
 </template>
 
 <script setup>
-import axios from 'axios';
-import { ref, computed, watch } from 'vue';
-import { useRouter } from 'vue-router';
-import AuthenticationBtn from '../components/Login/AuthenticationBtn.vue';
+import axios from "axios";
+import { ref, computed, watch } from "vue";
+import { useRouter } from "vue-router";
+import AuthenticationBtn from "../components/Login/AuthenticationBtn.vue";
 
-const name = ref('');
-const birthday1 = ref('');
-const birthday2 = ref('');
-const id = ref('');
-const password = ref('');
-const passwordConfirm = ref('');
-const phoneNumber = ref('');
-const asset = ref('');
+const name = ref("");
+const birthday1 = ref("");
+const birthday2 = ref("");
+const id = ref("");
+const password = ref("");
+const passwordConfirm = ref("");
+const phoneNumber = ref("");
+const asset = ref("");
 const emailTouched = ref(false);
 const isVerified = ref(false);
-const emailChkMessage=ref('');
+const emailChkMessage = ref("");
 const isFormValid = computed(() => {
-  return name.value && birthday1.value && birthday2.value.length === 7 && password.value && passwordConfirm.value && asset.value;
+  return (
+    name.value &&
+    birthday1.value &&
+    birthday2.value.length === 7 &&
+    password.value &&
+    passwordConfirm.value &&
+    asset.value
+  );
 });
-
 
 const router = useRouter();
 
@@ -170,9 +187,10 @@ watch(birthday2, (newValue) => {
 
 // 주민번호를 합치는 함수
 const birthday = computed(() => {
-  return birthday1.value && birthday2.value ? `${birthday1.value}-${birthday2.value}` : '';
+  return birthday1.value && birthday2.value
+    ? `${birthday1.value}-${birthday2.value}`
+    : "";
 });
-
 
 // 이메일 유효성 검사
 const emailError = computed(() => {
@@ -182,7 +200,8 @@ const emailError = computed(() => {
 
 // 비밀번호 유효성 검사
 const passwordError = computed(() => {
-  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!#*])[A-Za-z\d~!#*]{8,12}$/;
+  const passwordRegex =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!#*])[A-Za-z\d~!#*]{8,12}$/;
   return !passwordRegex.test(password.value);
 });
 
@@ -195,14 +214,14 @@ const passwordConfirmError = computed(() => {
 // handlePhoneVerification 함수는 부모 컴포넌트에서 호출됨
 function handlePhoneVerification(phone) {
   phoneNumber.value = phone;
-  console.log('인증된 전화번호:', phone);  // 전화번호 값이 제대로 넘어오는지 로그로 확인
+  console.log("인증된 전화번호:", phone); // 전화번호 값이 제대로 넘어오는지 로그로 확인
   isVerified.value = true;
 }
 
 async function submitForm() {
   if (isFormValid.value) {
     try {
-      const response = await axios.post('http://localhost:8080/signup', {
+      const response = await axios.post(`http://localhost:8080/signup`, {
         id: id.value,
         pwd: password.value,
         name: name.value,
@@ -211,22 +230,24 @@ async function submitForm() {
         totalIncome: asset.value,
         "Content-Type": "application/json",
       });
-      router.push({ name: 'SignSuccess', params: { userData: response.data } });
+      router.push({ name: "SignSuccess", params: { userData: response.data } });
     } catch (error) {
-      alert('서버와의 통신에 문제가 발생했습니다.');
+      alert("서버와의 통신에 문제가 발생했습니다.");
     }
   }
 }
 
 // 버튼 클래스 동적 적용
 const submitButtonClass = computed(() => {
-  return isFormValid.value ? 'bg-kb-brown-1' : 'bg-kb-gray-2';
+  return isFormValid.value ? "bg-kb-brown-1" : "bg-kb-gray-2";
 });
 
 // 폼 제출 처리 함수
-async function emailckForm(){
+async function emailckForm() {
   try {
-    const response = await axios.get(`http://localhost:8080/iddupchk/${id.value}`);
+    const response = await axios.get(
+      `http://localhost:8080/iddupchk/${id.value}`
+    );
     // 서버로부터의 응답 메시지를 사용하여 중복 여부 확인
     if (response.data === "이미 존재하는 아이디입니다") {
       emailChkMessage.value = "이미 사용중인 아이디 입니다.";
@@ -235,7 +256,7 @@ async function emailckForm(){
     }
     console.log(response);
   } catch (error) {
-    alert('서버와의 통신에 문제가 발생했습니다.');
+    alert("서버와의 통신에 문제가 발생했습니다.");
   }
 }
 
@@ -247,7 +268,7 @@ function handleEmailBlur() {
 <style scoped>
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 </style>

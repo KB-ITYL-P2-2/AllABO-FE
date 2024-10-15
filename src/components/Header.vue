@@ -26,33 +26,56 @@
             >
               <router-link
                 :to="item.route"
-                class="h-[70px] flex items-center px-4 hover:text-kb-yellow-1 hover:decoration-kb-yellow-1"
+                class="h-[70px] flex items-center px-4 hover:underline hover:text-kb-yellow-1 hover:decoration-kb-yellow-1"
               >
                 {{ item.name }}
               </router-link>
             </li>
 
             <p class="mx-1">|</p>
+
+            <!-- 로그인 상태에 따라 동적 UI -->
             <li class="flex flex-col h-[70px]">
               <router-link
+                v-if="!authStore.isLoggedIn"
                 to="/login"
                 class="h-[70px] flex items-center px-4 hover:underline hover:text-kb-yellow-1 hover:decoration-kb-yellow-1"
               >
                 로그인
               </router-link>
+              <!-- 로그인된 상태일 때 사용자 이름을 표시 -->
+              <button
+                v-else
+                @click="goToMypage"
+                class="h-[70px] flex items-center px-4 hover:underline hover:text-kb-yellow-1 hover:decoration-kb-yellow-1"
+              >
+                {{ authStore.name }}님
+              </button>
             </li>
           </ul>
 
           <!-- 프로필 아이콘_마이페이지 이동 -->
-          <router-link
-            to="/mypage"
-            :class="[
-              isScrolledOrHovered ? 'text-font-color' : 'text-font-color',
-            ]"
-            class="hover:text-kb-brown-1"
-          >
-            <img src="/images/Mypage/user.png" class="w-6 h-6" />
-          </router-link>
+          <!-- 로그인 상태에 따라 클릭 여부 결정 -->
+          <div>
+            <!-- 로그인되지 않은 상태에서만 프로필 클릭 가능 -->
+            <router-link
+              v-if="!authStore.isLoggedIn"
+              to="/mypage"
+              :class="[
+                isScrolledOrHovered ? 'text-font-color' : 'text-font-color',
+              ]"
+              class="hover:text-kb-brown-1"
+            >
+              <img src="/images/Mypage/user.png" class="w-6 h-6" />
+            </router-link>
+            <!-- 로그인된 상태에서는 클릭 불가한 이미지 -->
+            <img
+              v-else
+              src="/images/Mypage/user.png"
+              class="w-6 h-6 cursor-default"
+              alt="프로필 이미지"
+            />
+          </div>
         </div>
       </div>
     </nav>
@@ -62,8 +85,12 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useHeaderStore } from "../stores/headerStore";
+import { useAuthStore } from "../stores/auth";
+import { useRouter } from "vue-router"; // 라우터 사용
 
 const headerStore = useHeaderStore();
+const authStore = useAuthStore(); // authStore 사용
+const router = useRouter(); // 라우터 사용
 
 const navItems = [
   { name: "맞춤 상품", route: "/products" },
@@ -73,10 +100,12 @@ const navItems = [
 
 const isScrolledOrHovered = computed(() => headerStore.isActive);
 
+// 스크롤 상태 핸들링
 function handleScroll() {
   headerStore.setScrolled(window.scrollY > 1);
 }
 
+// 마우스 엔터/리브 핸들링
 function handleMouseEnter() {
   headerStore.setHovered(true);
 }
@@ -84,6 +113,11 @@ function handleMouseEnter() {
 function handleMouseLeave() {
   headerStore.setHovered(false);
 }
+
+// 마이페이지로 이동하는 함수
+const goToMypage = () => {
+  router.push("/mypage");
+};
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
@@ -95,4 +129,10 @@ onUnmounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+</style>
