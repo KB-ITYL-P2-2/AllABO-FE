@@ -1,7 +1,11 @@
 <template>
   <header>
     <nav
-      :class="['fixed top-0 left-0 w-full h-[70px] z-50', isScrolledOrHovered ? 'bg-white shadow-lg' : 'bg-transparent', 'transition duration-500 ease-in-out']"
+      :class="[
+        'fixed top-0 left-0 w-full h-[70px] z-50',
+        isScrolledOrHovered ? 'bg-white shadow-lg' : 'bg-transparent',
+        'transition duration-500 ease-in-out',
+      ]"
       @mouseenter="handleMouseEnter"
       @mouseleave="handleMouseLeave"
     >
@@ -15,10 +19,14 @@
           <!-- 네비게이션 메뉴 -->
           <ul class="flex h-[70px] items-center">
             <!-- 아이템 간 간격 줄이기 -->
-            <li v-for="item in navItems" :key="item.route" class="flex flex-col h-[70px]">
+            <li
+              v-for="item in navItems"
+              :key="item.route"
+              class="flex flex-col h-[70px]"
+            >
               <router-link
                 :to="item.route"
-                class="h-[70px] transition-colors duration-500 ease-in-out flex items-center px-4 bg-gradient-to-b from-transparent to-transparent hover:bg-gradient-to-b hover:from-kb-yellow-4 hover:via-[#ffef63] hover:to-kb-yellow-4"
+                class="h-[70px] flex items-center px-4 hover:text-kb-yellow-1 hover:decoration-kb-yellow-1"
               >
                 {{ item.name }}
               </router-link>
@@ -28,7 +36,7 @@
             <li class="flex flex-col h-[70px]">
               <router-link
                 to="/login"
-                class="h-[70px] hover:transition-colors transition-colors duration-300 bg-gradient-to-b hover:from-kb-yellow-4 hover:via-[#ffef63] hover:to-kb-yellow-4 flex items-center px-4"
+                class="h-[70px] flex items-center px-4 hover:underline hover:text-kb-yellow-1 hover:decoration-kb-yellow-1"
               >
                 로그인
               </router-link>
@@ -36,7 +44,13 @@
           </ul>
 
           <!-- 프로필 아이콘_마이페이지 이동 -->
-          <router-link to="/mypage" :class="[isScrolledOrHovered ? 'text-font-color' : 'text-font-color']" class="hover:text-kb-brown-1">
+          <router-link
+            to="/mypage"
+            :class="[
+              isScrolledOrHovered ? 'text-font-color' : 'text-font-color',
+            ]"
+            class="hover:text-kb-brown-1"
+          >
             <img src="/images/Mypage/user.png" class="w-6 h-6" />
           </router-link>
         </div>

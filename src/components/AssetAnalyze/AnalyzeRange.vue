@@ -14,7 +14,6 @@
         <!-- 큰 노란 원 -->
         <div
           class="flex flex-col items-center justify-center rounded-full bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 shadow-lg h-[550px] w-[550px] text-center px-8"
-          :class="{ 'grow-animation': isVisible }"
         >
           <div class="flex flex-col items-center p-6 space-y-4">
             <div
@@ -49,15 +48,8 @@
 
     <!-- 텍스트 영역 -->
     <div class="flex flex-col justify-center h-[650px] w-[650px] pl-24">
-      <div
-        class="transition-all duration-500 ease-in-out grow-animation-hash"
-        :class="
-          isVisible
-            ? 'w-[500px] h-[500px] opacity-100'
-            : 'w-[0px] h-[0px] opacity-0'
-        "
-      >
-        <div v-if="isVisible" class="flex flex-col h-full space-y-4">
+      <div class="transition-all duration-500 ease-in-out grow-animation-hash">
+        <div class="flex flex-col h-full space-y-4">
           <!-- 상단 2개 박스 -->
           <div class="flex items-center space-x-4 h-[30%]">
             <div
@@ -129,14 +121,17 @@
           <div
             class="w-full bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 p-6 rounded-3xl shadow-md h-[30%] flex flex-col justify-center"
           >
-            <p class="text-[18px] text-font-color font-bold">"{{ status }}"</p>
+            <p class="text-[18px] text-font-color font-bold mb-2">
+              [{{ status }}]
+            </p>
 
             <p class="text-[18px] text-font-color">
-              {{ userName }}님은
+              <span class="font-bold">{{ userName }}</span>
               <!-- <span class="font-bold">{{ incomeRange }}분위</span>에
               속합니다.<br /> -->
-              소속 분위보다 상대적으로 {{ relativeExpenditurePercent }}%을
-              사용합니다.
+              님은 소속 분위보다 상대적으로
+              <span class="font-bold">{{ relativeExpenditurePercent }}%</span>
+              을 사용합니다.
             </p>
             <p class="text-[18px]" :style="{ whiteSpace: 'pre-line' }">
               {{ advice }}
@@ -292,6 +287,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/*
 @keyframes grow {
   from {
     transform: scale(0);
@@ -320,5 +316,5 @@ onMounted(() => {
 
 .grow-animation-hash {
   animation: grow-hash 1s ease-out forwards;
-}
+}*/
 </style>

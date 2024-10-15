@@ -38,8 +38,10 @@
       </div>
 
       <!-- 저축 비교 설명 -->
-      <div class="mb-16 space-y-2">
-        <p class="text-[20px] text-kb-brown-6">{{ age }}대 평균 저축액보다</p>
+      <div class="mb-20 space-y-2">
+        <p class="text-[20px] text-kb-brown-6 mt-4">
+          {{ age }}대 평균 저축액보다
+        </p>
         <p class="font-bold text-[36px] text-font-color">
           약 {{ Math.abs(parseFloat(compareSavings1)).toFixed(1) }}배 더
           {{ parseFloat(compareSavings1) >= 0 ? "높습니다" : "낮습니다" }}
@@ -76,7 +78,7 @@
 
       <!-- 자산 대비 저축 비교 설명 -->
       <div class="mb-10 space-y-2">
-        <p class="text-[20px] text-kb-brown-6">
+        <p class="text-[20px] text-kb-brown-6 mt-4">
           {{ age }}대 평균 자산 대비 저축 비율보다
         </p>
         <p class="font-bold text-[36px] text-font-color">

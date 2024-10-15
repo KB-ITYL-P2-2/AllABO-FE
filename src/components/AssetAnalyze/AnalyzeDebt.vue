@@ -201,7 +201,7 @@
 
 <script setup>
 import axios from "axios";
-import { ref, onMounted } from "vue";
+import { ref, onBeforeMount } from "vue";
 import { useAuthStore } from "../../stores/auth";
 
 import AssetGraph from "./graph/AssetGraph.vue";
@@ -265,7 +265,7 @@ const fetchAssetLoanData = async () => {
       }
     );
 
-    if(response.status == 200){
+    if (response.status == 200) {
       loadingStore.setIsAssetAnalyzeLoading(false, 1);
     }
 
@@ -335,7 +335,7 @@ const fetchAssetLoanData = async () => {
   }
 };
 
-onMounted(fetchAssetLoanData); // 데이터 가져오기
+onBeforeMount(fetchAssetLoanData); // 데이터 가져오기
 
 // 이미지 경로
 const assetImage1 = "/images/AssetAnalyze/asset1.png";
