@@ -14,7 +14,6 @@
         <!-- 큰 노란 원 -->
         <div
           class="flex flex-col items-center justify-center rounded-full bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 shadow-lg h-[550px] w-[550px] text-center px-8"
-          :class="{ 'grow-animation': isVisible }"
         >
           <div class="flex flex-col items-center p-6 space-y-4">
             <div
@@ -27,7 +26,7 @@
           </div>
         </div>
 
-        <!-- 소득 및 지출 비율 차이 작은 원 -->
+        <!-- 분위 원 -->
         <div
           class="absolute z-10 top-[-45px] right-[55px] transform translate-x-10 translate-y-10 rounded-full bg-[#FFE1C2] shadow-md h-[150px] w-[150px] flex items-center justify-center"
         >
@@ -37,28 +36,20 @@
         </div>
       </div>
 
-      <!-- 주황색 원  -->
+      <!-- 지출 초과 원  -->
       <div
         class="absolute top-[130px] right-[-80px] rounded-full bg-kb-blue-6 shadow-md h-[180px] w-[180px] flex items-center justify-center"
       >
-        <p class="text-[28px] font-semibold text-font-color text-center">
-          {{ userSpendingRatio }}%
-          {{ spendingManagementNeeded ? "초과" : "미만" }}
+        <p class="text-[24px] font-semibold text-font-color text-center">
+          "{{ status }}"
         </p>
       </div>
     </div>
 
     <!-- 텍스트 영역 -->
     <div class="flex flex-col justify-center h-[650px] w-[650px] pl-24">
-      <div
-        class="transition-all duration-500 ease-in-out grow-animation-hash"
-        :class="
-          isVisible
-            ? 'w-[500px] h-[500px] opacity-100'
-            : 'w-[0px] h-[0px] opacity-0'
-        "
-      >
-        <div v-if="isVisible" class="flex flex-col h-full space-y-4">
+      <div class="transition-all duration-500 ease-in-out grow-animation-hash">
+        <div class="flex flex-col h-full space-y-4">
           <!-- 상단 2개 박스 -->
           <div class="flex items-center space-x-4 h-[30%]">
             <div
@@ -84,7 +75,7 @@
               class="w-[45%] text-center bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 p-6 rounded-3xl shadow-md flex flex-col items-center justify-center"
             >
               <p class="text-[18px] text-font-color">
-                {{ incomeRange }}분위 평균 월 소득
+                {{ incomeRange }}평균 월 소득
                 <span class="text-font-color text-[22px] font-semibold">{{
                   formatNumber(avgIncomeInGroup)
                 }}</span>
@@ -118,7 +109,7 @@
               class="w-[45%] text-center bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 p-6 rounded-3xl shadow-md flex flex-col items-center justify-center"
             >
               <p class="text-[18px] text-font-color">
-                {{ incomeRange }}분위 소득 대비<br />
+                {{ incomeRange }}소득 대비<br />
                 지출 비율
                 <span class="text-font-color text-[22px] font-semibold pl-1"
                   >{{ rangeExpenditurePercent.toFixed(1) }}%</span
@@ -128,17 +119,22 @@
           </div>
 
           <div
-            class="w-full bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 p-6 rounded-3xl shadow-md h-[30%] flex flex-col items-center justify-center"
+            class="w-full bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 p-6 rounded-3xl shadow-md h-[30%] flex flex-col justify-center"
           >
+            <p class="text-[18px] text-font-color font-bold mb-2">
+              [{{ status }}]
+            </p>
+
             <p class="text-[18px] text-font-color">
-              {{ userName }}님은
-              <span class="font-bold">{{ incomeRange }}분위</span>에
-              속합니다.<br />
-              {{
-                spendingManagementNeeded
-                  ? "지출 관리가 필요합니다."
-                  : "지출 관리가 양호합니다."
-              }}
+              <span class="font-bold">{{ userName }}</span>
+              <!-- <span class="font-bold">{{ incomeRange }}분위</span>에
+              속합니다.<br /> -->
+              님은 소속 분위보다 상대적으로
+              <span class="font-bold">{{ relativeExpenditurePercent }}%</span>
+              을 사용합니다.
+            </p>
+            <p class="text-[18px]" :style="{ whiteSpace: 'pre-line' }">
+              {{ advice }}
             </p>
           </div>
         </div>
@@ -149,21 +145,23 @@
 
 <script setup>
 import axios from "axios";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useAuthStore } from "../../stores/auth";
 import { loadingStateStore } from "../../stores/loadingStateStore";
 
-// 개별 ref 선언
-const userIncome = ref("");
-const userSpendingRatio = ref("");
-const avgIncomeInGroup = ref("");
-const incomeRange = ref("");
-const hashtags = ref([]);
+//소득 (원)
 const userName = ref("문준이");
-const spendingManagementNeeded = ref(false);
-const userExpenditurePercent = ref(0);
-const rangeExpenditurePercent = ref(0);
+const incomeRange = ref(""); //"소득분위(n분위)"
+const userIncome = ref(""); //사용자 월 소득
+const avgIncomeInGroup = ref(""); //소속 분위 소득(원)
 
+//소득별 퍼센트(%)
+const userExpenditurePercent = ref(0); //사용자 월 소득 대비 지출 비율(%제외)
+const rangeExpenditurePercent = ref(0); // 소속 분위 대비 지출 비율
+
+const spendingManagementNeeded = ref(false);
+
+const hashtags = ref([]);
 const isVisible = ref(false);
 const yellowCircle = ref(null);
 
@@ -198,14 +196,19 @@ const fetchIncomeData = async () => {
       }
     );
 
-    if(response.status == 200){
+    if (response.status == 200) {
       loadingStore.setIsAssetAnalyzeLoading(false, 2);
     }
 
     const data = response.data.resultMap;
     userIncome.value = Number(data["사용자 월 소득(원)"]);
-    userSpendingRatio.value = data["사용자 월 소득 대비 지출 비율(%제외)"];
+    userExpenditurePercent.value = Number(
+      data["사용자 월 소득 대비 지출 비율(%제외)"]
+    );
     avgIncomeInGroup.value = Number(data["소속 분위 소득(원)"]);
+    rangeExpenditurePercent.value = Number(
+      data["소속 분위 월 소득 대비 지출 비율(%제외)"]
+    );
     incomeRange.value = data["소득분위(n분위)"];
     hashtags.value = data["#요약키워드(4개)"];
     spendingManagementNeeded.value = data["지출 관리 필요성(true or false)"];
@@ -217,6 +220,47 @@ const fetchIncomeData = async () => {
   }
 };
 
+// 상대적 지출 비율 계산하기 상대적_지출_비율 = (사용자_지출_비율 / 소속_분위_지출_비율) * 100
+
+const relativeExpenditurePercent = computed(() => {
+  return (
+    (userExpenditurePercent.value / rangeExpenditurePercent.value) *
+    100
+  ).toFixed(1);
+});
+const statusAndAdvice = computed(() => {
+  const relative = parseFloat(relativeExpenditurePercent.value);
+  let status = "";
+  let advice = "";
+
+  if (relative <= 38) {
+    status = "지출 관리 시급";
+    advice =
+      "필수 지출과 선택 지출을 구분하고,\n 선택 지출을 줄이는 것부터 시작하세요.";
+  } else if (relative >= 39 && relative <= 48) {
+    status = "지출 관리 필요";
+    advice = "지출 내역을 꼼꼼히 분석하고,\n 불필요한 지출을 찾아 줄여보세요.";
+  } else if (relative >= 49 && relative <= 50) {
+    status = "지출 관리 양호";
+    advice =
+      "현재의 지출 패턴을 유지하면서,\n 저축을 조금씩 늘려보는 것은 어떨까요?";
+  } else if (relative >= 51 && relative <= 59) {
+    status = "지출 관리 우수";
+    advice =
+      "잉여 자금으로 투자나 재테크를 고려해보세요.\n 장기적인 재무 목표를 세워보는 것도 좋겠습니다.";
+  } else {
+    status = "지출 관리 매우 우수";
+    advice =
+      "현재의 지출 습관을 유지하세요.\n 다만, 과도한 절약으로 삶의 질이 떨어지지 않도록 주의하세요.";
+  }
+
+  return { status, advice };
+});
+
+// status와 advice 추출
+const status = computed(() => statusAndAdvice.value.status);
+const advice = computed(() => statusAndAdvice.value.advice);
+
 const observerCallback = (entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -225,6 +269,8 @@ const observerCallback = (entries) => {
     }
   });
 };
+
+relativeExpenditurePercent;
 
 let observer;
 
@@ -241,6 +287,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/*
 @keyframes grow {
   from {
     transform: scale(0);
@@ -269,5 +316,5 @@ onMounted(() => {
 
 .grow-animation-hash {
   animation: grow-hash 1s ease-out forwards;
-}
+}*/
 </style>
