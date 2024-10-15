@@ -85,12 +85,16 @@
           :animationDelay="`${index * 0.5 + 0.5}s`"
         />
       </div>
+      <div class="absolute bottom-16 text-center">
+        <CommonButton @click="goToAssetPlan" :text="'돌아가기'" />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
 import StrategyCircle from './StrategyForPrivate/StrategyCircle.vue';
 import StrategyText from './StrategyForPrivate/StrategyText.vue';
@@ -99,6 +103,7 @@ import StrategyDeptSolution from './StrategyForPrivate/StrategyDeptSolution.vue'
 import StrategyButton from './StrategyButton.vue';
 
 import solutionData from '../../constant/solutionData';
+import CommonButton from '../common/CommonButton.vue';
 
 const circleData = [
   {
@@ -165,6 +170,12 @@ const getLineEndX = (index) => {
 const getLineEndY = (index) => {
   const position = getSolutionPosition(index);
   return position.includes('top') ? '30%' : '70%';
+};
+
+const router = useRouter();
+
+const goToAssetPlan = () => {
+  router.push('/asset-plan');
 };
 
 watch(isVisible, (newValue) => {
