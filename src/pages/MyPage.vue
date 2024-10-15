@@ -6,7 +6,7 @@
       <div class="flex items-center mb-[30px]">
         <div class="flex flex-col">
           <img
-            src="/images/Mypage/user1.png"
+            :src="profileImage"
             class="w-40 h-40 rounded-full mb-[10px]"
             alt="user profile"
           />
@@ -38,10 +38,14 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/auth";
 import LikeProducts from "../components/MyPage/LikeProducts.vue";
 
+const profileImage = ref(
+  sessionStorage.getItem("profileImage") || "/images/Mypage/user.png"
+);
 const router = useRouter();
 const authStore = useAuthStore();
 

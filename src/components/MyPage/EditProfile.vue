@@ -51,7 +51,7 @@
             <input
               type="text"
               id="name"
-              v-model="name"
+              :value="authStore.name"
               placeholder="이름을 입력해주세요"
               class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200 mb-6"
               readonly
@@ -75,7 +75,7 @@
             <input
               type="email"
               id="email"
-              v-model="email"
+              :value="authStore.id"
               placeholder="이메일을 입력해주세요"
               class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200 mb-6"
             />
@@ -118,35 +118,36 @@
 </template>
 
 <script setup>
+import { useAuthStore } from "../../stores/auth";
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import SideBar from "./SideBar.vue";
 
-const name = ref("김가나");
+const authStore = useAuthStore();
 const birthday = ref("1999.01.01");
-const email = ref("abc@gmail.com");
 const tel = ref("010-1234-1234");
 const router = useRouter();
 
 const isFormValid = computed(() => {
-  return name.value && birthday.value && email.value && tel.value;
+  return birthday.value && tel.value;
 });
 
 const editForm = () => {
   if (isFormValid.value) {
     console.log("폼 제출:", {
-      name: name.value,
       birthday: birthday.value,
-      email: email.value,
       tel: tel.value,
     });
+    sessionStorage.setItem("profileImage", selectedIcon.value);
     router.push("/mypage");
   }
 };
 
 // 아이콘 선택 관련 로직
 const showIconPicker = ref(false);
-const selectedIcon = ref("/images/Mypage/user1.png");
+const selectedIcon = ref(
+  sessionStorage.getItem("profileImage") || "/images/Mypage/user1.png"
+);
 const icons = [
   "/images/Mypage/user.png",
   "/images/Mypage/user1.png",
@@ -155,7 +156,8 @@ const icons = [
 ];
 
 const selectIcon = (icon) => {
-  selectedIcon.value = icon;
-  showIconPicker.value = false;
+  selectedIcon.value = icon; // 선택한 아이콘을 반영
+  sessionStorage.setItem("profileImage", icon); // 세션 스토리지에 저장
+  showIconPicker.value = false; // 모달창 닫기
 };
 </script>
