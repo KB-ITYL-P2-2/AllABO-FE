@@ -14,14 +14,26 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
+
 const props = defineProps({
-  title: {
-    type: String,
-    required: true,
+  savingStrategy: {
+    type: Object,
+    required: false,
   },
-  products: {
-    type: Array,
-    required: true,
+  investmentStrategy: {
+    type: Object,
+    required: false,
   },
 });
+
+const title = computed(() =>
+  props.savingStrategy ? '권장 저축 상품' : '권장 투자 상품'
+);
+
+const products = computed(() =>
+  props.savingStrategy
+    ? props.savingStrategy['권장_저축_상품(최대3개)']
+    : props.investmentStrategy['권장_투자_상품']
+);
 </script>

@@ -50,6 +50,8 @@ defineProps({
     required: true,
   },
 });
+
+defineEmits(['prev', 'next']);
 </script>
 
 <style></style>

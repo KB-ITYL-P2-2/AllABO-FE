@@ -5,31 +5,33 @@
         <!-- 3원 -->
         <div class="relative flex-1 h-full mr-9 mt-6">
           <StrategyCircle
-            v-for="(item, index) in circleData"
+            v-for="(title, index) in strategyTitle"
             :key="index"
             :class="currentIndex === index ? 'opacity-100' : 'opacity-0'"
-            class="absolute animation top-[7%] left-0"
-            :title="item.title"
-            :percent="item.percent"
+            class="absolute animation top-[7%] -left-20"
+            :title="title"
+            :data="strategyData[title]"
           />
         </div>
 
         <!-- contents -->
         <div class="relative flex-[2] h-full">
           <StrategyText
-            :percent="textData.percent"
-            :isIncrease="textData.isIncrease"
-            :strategy="textData.strategy"
+            :percent="spendingPercent"
+            :isDecline="isDecline"
+            :strategy="strategy"
             :class="currentIndex === 0 ? 'opacity-100' : 'opacity-0'"
-            class="absolute animation top-[22%] left-0"
+            class="absolute animation top-[22%] -left-16"
           />
           <StrategyRecommend
-            v-for="(item, index) in productData"
-            :key="index"
-            :class="currentIndex === index + 1 ? 'opacity-100' : 'opacity-0'"
+            :class="currentIndex === 1 ? 'opacity-100' : 'opacity-0'"
             class="absolute top-[26%] animation"
-            :title="item.title"
-            :products="item.products"
+            :savingStrategy="savingStrategy"
+          />
+          <StrategyRecommend
+            :class="currentIndex === 2 ? 'opacity-100' : 'opacity-0'"
+            class="absolute top-[26%] animation"
+            :investmentStrategy="investmentStrategy"
           />
         </div>
       </div>
@@ -75,10 +77,10 @@
 
         <!-- 솔루션들 -->
         <StrategyDeptSolution
-          v-for="(solution, index) in solutionData"
+          v-for="(title, index) in solutionTitle"
           :key="index"
-          :title="solution.title"
-          :content="solution.content"
+          :title="title"
+          :content="solutionContent[title]"
           :class="[getSolutionPosition(index), 'absolute']"
           :positionClass="getSolutionPosition(index)"
           :isVisible="isVisible && visibleSolutions[index]"
@@ -94,7 +96,9 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue';
+import axios from 'axios';
 import { useRouter } from 'vue-router';
+import { useAuthStore } from '../../stores/auth';
 
 import StrategyCircle from './StrategyForPrivate/StrategyCircle.vue';
 import StrategyText from './StrategyForPrivate/StrategyText.vue';
@@ -105,37 +109,58 @@ import StrategyButton from './StrategyButton.vue';
 import solutionData from '../../constant/solutionData';
 import CommonButton from '../common/CommonButton.vue';
 
-const circleData = [
-  {
-    title: '목표 지출 절감률',
-    percent: 10,
-  },
-  {
-    title: '목표 저축률',
-    percent: 25,
-  },
-  {
-    title: '목표 투자 비율',
-    percent: 25,
-  },
-];
+// 개선 전략 데이터
+const strategyTitle = ref([]);
+const strategyData = ref({});
+const spendingPercent = ref(0);
+const strategy = ref('');
+const isDecline = ref(false);
+const savingStrategy = ref({});
+const investmentStrategy = ref({});
+const solutionTitle = ref([]);
+const solutionContent = ref({});
 
-const textData = {
-  percent: 10,
-  isIncrease: false,
-  strategy: '추가 저축 및 투자 비율을 높이는 방안',
+// axios 연결
+const fetchStrategy = async () => {
+  const authStore = useAuthStore();
+  const token = authStore.token;
+
+  if (!token) {
+    console.error('토큰이 없습니다. 로그인 후 다시 시도하세요.');
+    return;
+  }
+
+  try {
+    const response = await axios.post(
+      `http://localhost:8080/assets/plan`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const data = response?.data?.jsonNode;
+
+    strategyTitle.value = Object.keys(data.개선된_전략_요약);
+    strategyData.value = data.개선된_전략_요약;
+    spendingPercent.value = data.개선된_전략_요약.지출_조정.월_지출;
+    isDecline.value = data.개선된_전략_요약.지출_조정.감소여부;
+    strategy.value = data.개선된_전략_요약.지출_조정.방안;
+    savingStrategy.value = data.개선된_전략_요약.저축_전략;
+    investmentStrategy.value = data.개선된_전략_요약.투자_전략;
+    solutionTitle.value = Object.keys(data.부채_관리);
+    solutionContent.value = data.부채_관리;
+  } catch (error) {
+    console.error('데이터 가져오기 실패', error);
+  }
 };
 
-const productData = [
-  {
-    title: '권장 저축 상품',
-    products: ['정기예금', '국채형 저축 상품'],
-  },
-  {
-    title: '권장 투자 상품',
-    products: ['ETF', '배당주', '안전자산 펀드'],
-  },
-];
+onMounted(() => {
+  fetchStrategy();
+});
 
 const solutionSection = ref(null);
 const isVisible = ref(false);

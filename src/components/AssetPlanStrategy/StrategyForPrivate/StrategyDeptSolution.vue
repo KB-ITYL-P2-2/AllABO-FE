@@ -9,7 +9,7 @@
     :style="{ animationDelay: animationDelay }"
   >
     <div class="bg-kb-yellow-8 p-2 text-center">
-      <span class="text-lg text-gray-800">{{ title }}</span>
+      <span class="text-lg text-gray-800">{{ title.replace(/_/g, ' ') }}</span>
     </div>
     <div class="flex-grow flex items-center justify-center p-4">
       <span class="text-base text-gray-600 text-center">{{ content }}</span>
@@ -18,6 +18,8 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
+
 const props = defineProps({
   title: {
     type: String,
