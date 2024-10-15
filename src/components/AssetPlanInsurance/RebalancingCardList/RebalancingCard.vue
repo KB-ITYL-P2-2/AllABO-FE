@@ -16,7 +16,7 @@
       <p
         v-for="(item, index) in content"
         :key="index"
-        class="bg-kb-yellow-9 rounded-full p-1 my-1 text-center shadow-md"
+        class="bg-kb-yellow-9 rounded-lg p-1 my-1 text-center shadow-md"
       >
         {{ item }}
       </p>
