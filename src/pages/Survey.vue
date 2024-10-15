@@ -132,18 +132,24 @@ const totalStep = computed(() => {
 
 const progress = computed(() => (currentStep.value / totalStep.value) * 100);
 
+const categoryUrl = ref('');
+
 // 카테고리 선택에 따라 설문 데이터 결정
 const surveyData = computed(() => {
   const category = route.query.category;
 
   switch (category) {
     case '카드':
+      categoryUrl.value = '/card';
       return cardSurvey;
     case '예/적금':
+      categoryUrl.value = '/deposit';
       return depositsSurvey;
     case '대출':
+      categoryUrl.value = '/loan';
       return loanSurvey;
     case '보험':
+      categoryUrl.value = '/insurance';
       return insuranceSurvey;
   }
 });
@@ -183,10 +189,10 @@ watch(
 
 function selectOption(option, question) {
   const optionIndex = question.options.indexOf(option);
-  selectedOptions.value.push(optionIndex);
+  selectedOptions.value.push([option, optionIndex]);
   currentStep.value++;
   isMovingForward.value = true;
-  console.log(selectedOptions.value);
+  // console.log(selectedOptions.value);
 
   if (currentStep.value > totalStep.value) {
     sendData();
@@ -219,11 +225,17 @@ function goToPreviousQuestion() {
 
 async function sendData() {
   try {
-    const response = await postSurvey(selectedOptions);
-    console.log(response);
+    const response = await postSurvey(selectedOptions.value, categoryUrl.value);
+    // console.log(response.data);
 
     if (response.status === 200) {
-      router.push('/all-products');
+      router.push({
+        path: '/all-products',
+        query: {
+          recommend: JSON.stringify(response.data),
+          category: route.query.category,
+        },
+      });
     } else {
       // 알림창? 설문 다시?
     }
