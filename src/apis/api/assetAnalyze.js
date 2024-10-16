@@ -1,5 +1,10 @@
 import { authInstance } from "../utils/instance";
 
+export const requestAnalyze = ()=>{
+  const response = authInstance.get(`${import.meta.env.VITE_MY_SERVER_URL}/assets/analyze`);
+  return response;
+}
+
 export const getSaving = () => {
   const response = authInstance.post(`${import.meta.env.VITE_MY_SERVER_URL}/assets/saving`);
   return response;

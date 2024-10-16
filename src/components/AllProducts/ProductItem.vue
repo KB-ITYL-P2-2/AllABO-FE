@@ -1,5 +1,5 @@
 <template>
-  <div class="px-[20%]">
+  <div :class="isMyPage ? '' : 'px-[20%]'">
     <div class="relative flex w-full gap-4 p-5 cursor-pointer hover:bg-gray-50" :class="index != nowItemIndex && 'border-b'">
       <!-- 이미지 -->
       <div class="relative flex items-center justify-center w-20 h-20">
@@ -84,15 +84,19 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+  isMyPage: {
+    type: Boolean,
+    required: false,
+  },
 });
 
 const favoriteHandler = async () => {
   if (!props.items.isFavorite) {
-    props.items.isFavorite=true;
+    props.items.isFavorite = true;
     const res = await addFavorite(props.items.productId, props.items.id);
     // console.log(res);
   } else {
-    props.items.isFavorite=false
+    props.items.isFavorite = false;
     const res = await removeFavorite(props.items.productId, props.items.id);
     // console.log(res);
   }
