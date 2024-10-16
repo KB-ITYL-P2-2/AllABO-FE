@@ -147,7 +147,7 @@ const editForm = () => {
 // 아이콘 선택 관련 로직
 const showIconPicker = ref(false);
 const selectedIcon = ref(
-  sessionStorage.getItem("profileImage") || "/images/Mypage/user1.png"
+  sessionStorage.getItem("profileImage") || "/images/Mypage/user.png"
 );
 const icons = [
   "/images/Mypage/user.png",
