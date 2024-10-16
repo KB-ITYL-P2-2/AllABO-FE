@@ -44,10 +44,10 @@
         </p>
         <p class="font-bold text-[36px] text-font-color">
           약 {{ Math.abs(parseFloat(compareSavings1)).toFixed(1) }}배 더
-          {{ parseFloat(compareSavings1) >= 0 ? "높습니다" : "낮습니다" }}
+          {{ parseFloat(compareSavings1) >= 0 ? '높습니다' : '낮습니다' }}
         </p>
         <p class="text-kb-blue-5 font-semibold text-[26px]">
-          {{ totalSavingsKeywords.join(", ") }}
+          {{ totalSavingsKeywords.join(', ') }}
         </p>
       </div>
     </div>
@@ -55,7 +55,7 @@
     <!-- 연령대별 평균 자산 대비 저축 비율 비교 -->
     <div class="relative z-10 flex flex-col items-center">
       <!-- 자산 대비 저축 비율 그래프 -->
-      <div class="relative w-full max-w-[600px] h-[60px]">
+      <div class="rotate-180 relative w-full max-w-[600px] h-[60px]">
         <!-- 평균 자산 대비 저축 비율 막대 -->
         <div
           class="absolute h-[60px] bg-kb-gray-2 rounded-r-lg origin-left transition-transform duration-1000 ease-out"
@@ -83,10 +83,10 @@
         </p>
         <p class="font-bold text-[36px] text-font-color">
           약 {{ Math.abs(parseFloat(compareSavings2)).toFixed(1) }}배 더
-          {{ parseFloat(compareSavings2) >= 0 ? "높습니다" : "낮습니다" }}
+          {{ parseFloat(compareSavings2) >= 0 ? '높습니다' : '낮습니다' }}
         </p>
         <p class="text-kb-blue-5 font-semibold text-[26px]">
-          {{ savingsRatioKeywords.join(", ") }}
+          {{ savingsRatioKeywords.join(', ') }}
         </p>
       </div>
     </div>
@@ -94,11 +94,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import axios from "axios";
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
-import { useAuthStore } from "../../stores/auth";
-import { loadingStateStore } from "../../stores/loadingStateStore";
+import { useAuthStore } from '../../stores/auth';
+import { loadingStateStore } from '../../stores/loadingStateStore';
 
 // IntersectionObserver 상태 관리
 const isIntersecting = ref(false);
@@ -115,8 +115,8 @@ const totalAverageSavings = ref(0);
 const assetUserSavings = ref(0);
 const assetAverageSavings = ref(0);
 
-const compareSavings1 = ref("0");
-const compareSavings2 = ref("0");
+const compareSavings1 = ref('0');
+const compareSavings2 = ref('0');
 const totalSavingsKeywords = ref([]);
 const savingsRatioKeywords = ref([]);
 
@@ -132,18 +132,18 @@ const fetchSavingsAnalysisData = async () => {
   const authStore = useAuthStore();
   const token = authStore.token;
   if (!token) {
-    console.error("토큰이 없습니다. 로그인 후 다시 시도하세요.");
+    console.error('토큰이 없습니다. 로그인 후 다시 시도하세요.');
     return;
   }
 
   try {
     const response = await axios.post(
-      "http://localhost:8080/assets/saving-ratio",
+      'http://localhost:8080/assets/saving-ratio',
       {},
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       }
     );
@@ -154,28 +154,28 @@ const fetchSavingsAnalysisData = async () => {
     age.value = parseInt(data.비교균);
 
     totalUserSavings.value = parseInt(
-      data["총 저축 금액 분석"]["내 자산"].replace("원", "")
+      data['총 저축 금액 분석']['내 자산'].replace('원', '')
     );
     totalAverageSavings.value = parseInt(
-      data["총 저축 금액 분석"]["비교군 자산"].replace("원", "")
+      data['총 저축 금액 분석']['비교군 자산'].replace('원', '')
     );
-    compareSavings1.value = data["총 저축 금액 분석"]["비교군과 비교%"].replace(
-      "%",
-      ""
+    compareSavings1.value = data['총 저축 금액 분석']['비교군과 비교%'].replace(
+      '%',
+      ''
     );
-    totalSavingsKeywords.value = data["총 저축 금액 분석"]["요약"];
+    totalSavingsKeywords.value = data['총 저축 금액 분석']['요약'];
 
     assetUserSavings.value = parseFloat(
-      data["자산 대비 저축 비율 분석"]["자산 대비 저축 비율"].replace("%", "")
+      data['자산 대비 저축 비율 분석']['자산 대비 저축 비율'].replace('%', '')
     );
     assetAverageSavings.value = parseFloat(
-      data["자산 대비 저축 비율 분석"]["비교균 저축 비율"].replace("%", "")
+      data['자산 대비 저축 비율 분석']['비교균 저축 비율'].replace('%', '')
     );
-    compareSavings2.value = data["자산 대비 저축 비율 분석"]["차이"].replace(
-      "%",
-      ""
+    compareSavings2.value = data['자산 대비 저축 비율 분석']['차이'].replace(
+      '%',
+      ''
     );
-    savingsRatioKeywords.value = data["자산 대비 저축 비율 분석"]["요약"];
+    savingsRatioKeywords.value = data['자산 대비 저축 비율 분석']['요약'];
 
     // 최대값 계산
     maxTotalSavings.value = Math.max(
@@ -187,7 +187,7 @@ const fetchSavingsAnalysisData = async () => {
       assetAverageSavings.value
     );
   } catch (error) {
-    console.error("데이터 가져오기 오류", error);
+    console.error('데이터 가져오기 오류', error);
   }
 };
 

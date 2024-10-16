@@ -4,7 +4,7 @@
 
     <div class="flex gap-5 mt-5">
       <span
-        class="bg-kb-brown-3 rounded-[100px] p-2 text-center text-white w-[150px]"
+        class="bg-kb-brown-3 rounded-[100px] p-2 text-center text-white w-[180px]"
         v-for="(product, index) in products"
         :key="index"
         >{{ product }}</span

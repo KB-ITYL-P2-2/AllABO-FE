@@ -67,7 +67,7 @@
       class="absolute bottom-[-150px] left-1/2 transform -translate-x-1/2 z-0"
     >
       <button
-        class="px-4 py-2.5 rounded-lg text-gray-500 bg-white shadow-md text-[16px] hover:bg-gray-100 duration-300"
+        class="px-4 py-2.5 rounded-lg text-gray-500 bg-white shadow-md text-[16px] hover:bg-gray-100 hover:text-font-color duration-300"
         @click="
           () => {
             router.push({
