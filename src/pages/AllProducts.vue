@@ -197,7 +197,7 @@ onBeforeMount(async () => {
   // 받은 데이터들 찜 기능추가
   const favoritesList = await getMyFavoritesList();
 
-  for (let favorites of favoritesList) {
+  for (let favorites of favoritesList.data) {
     const id = favorites.productNum;
     const productId = favorites.productId;
 

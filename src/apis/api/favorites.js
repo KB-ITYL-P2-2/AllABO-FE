@@ -1,12 +1,13 @@
 import { authInstance } from "../utils/instance"
 
 export const addFavorite = async(productId, productNum)=>{
-  const response = await authInstance.post(`${import.meta.env.VITE_MY_SERVER_URL}/api/favorites/add`)
+  // console.log(productId, productNum)
+  const response = await authInstance.post(`${import.meta.env.VITE_MY_SERVER_URL}/api/favorites/add?productId=${productId}&productNum=${productNum}`)
   return response;
 }
 
 export const removeFavorite = async(productId, productNum)=>{
-  const response = await authInstance.post(`${import.meta.env.VITE_MY_SERVER_URL}/api/favorites/remove`)
+  const response = await authInstance.post(`${import.meta.env.VITE_MY_SERVER_URL}/api/favorites/remove?productId=${productId}&productNum=${productNum}`)
   return response;
 
 }
