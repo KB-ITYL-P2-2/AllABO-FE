@@ -1,6 +1,6 @@
 <template>
-  <div class="h-[70px] mb-[120px]"></div>
-  <div class="flex">
+  <div class="bg-kb-yellow-4"></div>
+  <div class="flex mt-[190px]">
     <SideBar />
 
     <div class="flex-col justify-center relative">
@@ -57,7 +57,7 @@
               readonly
             />
           </div>
-          <div class="flex flex-col">
+          <!-- <div class="flex flex-col">
             <label for="birthday" class="block text-font-color mb-1"
               >생년월일</label
             >
@@ -69,7 +69,7 @@
               class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200 mb-6"
               readonly
             />
-          </div>
+          </div> -->
           <div class="flex flex-col">
             <label for="email" class="block text-font-color mb-1">이메일</label>
             <input
@@ -90,7 +90,7 @@
               class="text-font-color pl-4 h-[50px] w-[500px] rounded-md border border-kb-gray-1 focus:outline-none focus:ring-1 focus:ring-kb-brown-2 transition duration-200"
             />
           </div>
-          <div class="flex mt-8 ml-[80px]">
+          <div class="flex mt-20 ml-[80px]">
             <button
               type="button"
               @click="$router.push('/mypage')"
@@ -122,10 +122,11 @@ import { useAuthStore } from "../../stores/auth";
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import SideBar from "./SideBar.vue";
+import { profileStateStore } from "../../stores/profileStore";
 
 const authStore = useAuthStore();
 const birthday = ref("1999.01.01");
-const tel = ref("010-1234-1234");
+const tel = ref("010-1234-****");
 const router = useRouter();
 
 const isFormValid = computed(() => {
@@ -155,9 +156,12 @@ const icons = [
   "/images/Mypage/user3.png",
 ];
 
+const profileStore = profileStateStore();
+
 const selectIcon = (icon) => {
   selectedIcon.value = icon; // 선택한 아이콘을 반영
   sessionStorage.setItem("profileImage", icon); // 세션 스토리지에 저장
+  profileStore.setImageUrl(icon);
   showIconPicker.value = false; // 모달창 닫기
 };
 </script>

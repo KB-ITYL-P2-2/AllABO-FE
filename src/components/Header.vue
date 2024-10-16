@@ -83,10 +83,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed, watchEffect } from "vue";
+import { ref, onMounted, onUnmounted, computed, watchEffect, watch } from "vue";
 import { useHeaderStore } from "../stores/headerStore";
 import { useAuthStore } from "../stores/auth";
 import { useRouter } from "vue-router"; // 라우터 사용
+import { profileStateStore } from "../stores/profileStore";
 
 const profileImage = ref(
   sessionStorage.getItem("profileImage") || "/images/Mypage/user.png"
@@ -95,6 +96,7 @@ const profileImage = ref(
 const headerStore = useHeaderStore();
 const authStore = useAuthStore(); // authStore 사용
 const router = useRouter(); // 라우터 사용
+const profileStore = profileStateStore();
 
 const navItems = [
   { name: "맞춤 상품", route: "/products" },
@@ -136,6 +138,11 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
+});
+
+watch(profileStore.getImageUrl, () => {
+  profileImage.value =
+    sessionStorage.getItem("profileImage") || "/images/Mypage/user.png";
 });
 </script>
 
