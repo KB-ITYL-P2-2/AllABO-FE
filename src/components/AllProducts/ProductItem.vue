@@ -1,5 +1,5 @@
 <template>
-  <div class="px-[20%]">
+  <div :class="isMyPage ? '' : 'px-[20%]'">
     <div
       class="relative flex w-full gap-4 p-5 cursor-pointer hover:bg-gray-50"
       :class="index != nowItemIndex && 'border-b'"
@@ -24,9 +24,19 @@
       </div>
 
       <div class="absolute right-3 top-[30%] flex items-center gap-2">
-        <button class="p-2 ml-4 bg-white rounded-full shadow-lg">
+        <button
+          class="p-2 ml-4 bg-white rounded-full shadow-lg"
+          @click.stop="favoriteHandler"
+        >
           <font-awesome-icon
+            v-if="!items.isFavorite"
             :icon="['far', 'heart']"
+            class="text-kb-yellow-3"
+            size="xl"
+          />
+          <font-awesome-icon
+            v-else
+            :icon="['fas', 'heart']"
             class="text-kb-yellow-3"
             size="xl"
           />
@@ -84,9 +94,7 @@
           :class="itemIndex != dataLength && `border-r`"
         >
           <h3 class="text-kb-gray-1">{{ key }}</h3>
-          <h3 class="text-[20px] mt-2">
-            {{ item }}
-          </h3>
+          <h3 class="text-[20px] mt-2">{{ item }}</h3>
         </div>
       </div>
       <div class="mb-4 text-center">
@@ -99,6 +107,7 @@
 <script setup>
 import { ref } from 'vue';
 import CommonButton from '../common/CommonButton.vue';
+import { addFavorite, removeFavorite } from '../../apis/api/favorites';
 
 const props = defineProps({
   items: {
@@ -117,7 +126,27 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+  isMyPage: {
+    type: Boolean,
+    required: false,
+  },
 });
+
+const favoriteHandler = async () => {
+  if (!localStorage.getItem('accessToken')) {
+    alert('로그인 후 이용해주세요');
+    return;
+  }
+  if (!props.items.isFavorite) {
+    props.items.isFavorite = true;
+    const res = await addFavorite(props.items.productId, props.items.id);
+    // console.log(res);
+  } else {
+    props.items.isFavorite = false;
+    const res = await removeFavorite(props.items.productId, props.items.id);
+    // console.log(res);
+  }
+};
 
 const dataLength = ref(Object.keys(props.items.data).length - 1);
 // console.log(dataLength.value);

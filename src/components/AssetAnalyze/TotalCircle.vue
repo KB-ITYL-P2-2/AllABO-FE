@@ -103,8 +103,12 @@ const getPosition = (index) => {
 };
 
 // 숫자 포맷팅 함수
+// const formatNumber = (value) => {
+//   return new Intl.NumberFormat().format(value);
+// };
+
 const formatNumber = (value) => {
-  return new Intl.NumberFormat().format(value);
+  return new Intl.NumberFormat().format(Math.floor(value)); // 소수점 제거
 };
 
 // axios 연결
@@ -136,6 +140,8 @@ const totalAssetData = async () => {
     totalInvestment.value = data.totalInvestment / 10000;
     monthExpenses.value = data.monthExpenses / 10000;
     totalLoan.value = data.totalLoan / 10000;
+
+    console, log(totalIncome.value);
   } catch (error) {
     console.error('데이터를 불러오는 중 오류가 발생했습니다:', error);
   }

@@ -77,7 +77,7 @@
             <!-- 로그인된 상태에서는 클릭 불가한 이미지 -->
             <img
               v-else
-              src="/images/Mypage/user.png"
+              :src="profileImage"
               class="w-6 h-6 cursor-default"
               alt="프로필 이미지"
             />
@@ -89,15 +89,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { useHeaderStore } from '../stores/headerStore';
 import { useAuthStore } from '../stores/auth';
 import { useRouter, useRoute } from 'vue-router'; // 라우터 사용
+import { ref, onMounted, onUnmounted, computed, watchEffect, watch } from 'vue';
+import { profileStateStore } from '../stores/profileStore';
+
+const profileImage = ref(
+  sessionStorage.getItem('profileImage') || '/images/Mypage/user.png'
+);
 
 const headerStore = useHeaderStore();
 const authStore = useAuthStore(); // authStore 사용
 const router = useRouter(); // 라우터 사용
 const route = useRoute();
+const profileStore = profileStateStore();
 
 const navItems = [
   { name: '맞춤 상품', route: '/products' },
@@ -134,6 +140,12 @@ const handleNavClick = (event) => {
   }
 };
 
+// 세션 스토리지에 저장된 이미지가 변경될 때마다 실시간으로 반영
+watchEffect(() => {
+  profileImage.value =
+    sessionStorage.getItem('profileImage') || '/images/Mypage/user.png';
+});
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
   headerStore.resetState();
@@ -141,6 +153,11 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
+});
+
+watch(profileStore.getImageUrl, () => {
+  profileImage.value =
+    sessionStorage.getItem('profileImage') || '/images/Mypage/user.png';
 });
 </script>
 

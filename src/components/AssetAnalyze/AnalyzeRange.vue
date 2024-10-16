@@ -40,7 +40,9 @@
       <div
         class="absolute top-[130px] right-[-80px] rounded-full bg-kb-blue-6 shadow-md h-[180px] w-[180px] flex items-center justify-center"
       >
-        <p class="text-[24px] font-semibold text-font-color text-center">
+        <p
+          class="text-[24px] font-semibold text-font-color text-center whitespace-pre-wrap"
+        >
           "{{ status }}"
         </p>
       </div>
@@ -249,7 +251,7 @@ const statusAndAdvice = computed(() => {
     advice =
       '잉여 자금으로 투자나 재테크를 고려해보세요.\n 장기적인 재무 목표를 세워보는 것도 좋겠습니다.';
   } else {
-    status = '지출 관리 매우 우수';
+    status = '지출 관리\n매우 우수';
     advice =
       '현재의 지출 습관을 유지하세요.\n 다만, 과도한 절약으로 삶의 질이 떨어지지 않도록 주의하세요.';
   }
