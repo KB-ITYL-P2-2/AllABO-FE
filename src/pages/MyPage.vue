@@ -12,7 +12,7 @@
           />
           <button
             @click="$router.push('/mypage-profile')"
-            class="text-kb-gray-2 underline"
+            class="underline text-kb-gray-2"
           >
             내 정보 수정
           </button>
@@ -20,7 +20,7 @@
 
         <div class="ml-[40px] flex flex-col justify-center">
           <div class="flex items-end">
-            <p class="text-4xl text-font-color font-semibold">
+            <p class="text-4xl font-semibold text-font-color">
               {{ authStore.name }}
             </p>
             <button class="text-kb-gray-2 ml-[22px]" @click="handleLogout">
@@ -42,6 +42,8 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/auth";
 import LikeProducts from "../components/MyPage/LikeProducts.vue";
+import { onBeforeMount } from "vue";
+import { getMyDetailFavoritesList } from "../apis/api/favorites";
 
 const profileImage = ref(
   sessionStorage.getItem("profileImage") || "/images/Mypage/user.png"
@@ -54,4 +56,9 @@ const handleLogout = () => {
   authStore.logout();
   router.push("/");
 };
+
+onBeforeMount(async()=>{
+  const response = await getMyDetailFavoritesList();
+  console.log(response)
+})
 </script>

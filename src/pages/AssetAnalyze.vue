@@ -41,6 +41,12 @@ import {
   getLoan,
   getSaving,
   getSavingRatio,
+  requestAnalyze,
 } from "../apis/api/assetAnalyze";
 import { loadingStateStore } from "../stores/loadingStateStore";
+
+onBeforeMount(async ()=>{
+  const res = await requestAnalyze();
+  console.log(res);
+})
 </script>

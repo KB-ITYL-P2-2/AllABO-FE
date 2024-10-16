@@ -35,7 +35,7 @@
                 <span>현재 전략: {{ item.data.현재_전략 }}</span>
                 <span>개선된 전략: {{ item.data.개선된_전략 }}</span>
                 <div class="h-[1px] bg-black"></div>
-                <span class="text-[20px] font-semibold">{{ `${item.data.차이.toLocaleString()}원 ${item.data["상승 여부"] ? "더 상승" : "더 감소"}` }}</span>
+                <span class="text-[20px] font-semibold">{{ `${amountData[index].toLocaleString()}원 ${item.data["상승 여부"] ? "더 상승" : "더 감소"}` }}</span>
               </div>
             </div>
           </div>
@@ -200,6 +200,8 @@ onBeforeMount(async () => {
     // console.log(ratingData.value);
     // console.log(simulationData.value);
     const nowAmount = []
+    // console.log(chartData.value)
+    // console.log(chartData.value.개선된_전략.datasets)
     for(let c of chartData.value.개선된_전략.datasets){
       nowAmount.push(c.data[4])
     }
@@ -208,7 +210,7 @@ onBeforeMount(async () => {
       planAmount.push(c.data[4])
     }
     for(let i=0; i<=4; i++){
-      amountData.value.push(planAmount[i]-nowAmount[i]);
+      amountData.value.push(nowAmount[i]-planAmount[i]);
     }
   }
 });

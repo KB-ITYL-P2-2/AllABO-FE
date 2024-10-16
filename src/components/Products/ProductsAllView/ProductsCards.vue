@@ -37,9 +37,18 @@
         >
           자세히 보기
         </button>
-        <button class="px-2 py-1.5 ml-4 bg-white rounded-full">
+        <button class="px-2 py-1.5 ml-4 bg-white rounded-full" @click="()=>{
+          isFavorite=!isFavorite
+        }">
           <font-awesome-icon
+          v-if="!isFavorite"
             :icon="['far', 'heart']"
+            class="text-kb-yellow-3"
+            size="lg"
+          />
+          <font-awesome-icon
+          v-else
+            :icon="['fas', 'heart']"
             class="text-kb-yellow-3"
             size="lg"
           />
@@ -50,6 +59,8 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
 const props = defineProps({
   items: {
     type: Object,
@@ -76,6 +87,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const isFavorite = ref(false);
 
 const openPage = () => {
   window.open(props.items.pageUrl);
