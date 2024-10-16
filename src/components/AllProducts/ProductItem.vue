@@ -14,7 +14,7 @@
       </div>
 
       <div class="absolute right-3 top-[30%] flex items-center gap-2">
-        <button class="p-2 ml-4 bg-white rounded-full shadow-lg">
+        <button class="p-2 ml-4 bg-white rounded-full shadow-lg" @click.stop="">
           <font-awesome-icon :icon="['far', 'heart']" class="text-kb-yellow-3" size="xl" />
         </button>
         <button>

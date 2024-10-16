@@ -2,7 +2,7 @@
   <Header />
   <AnalyzeLoading v-if="analyzeLoading" />
   <RecommendLoading v-if="false" />
-  <PlanLoading v-if="false" />
+  <PlanLoading v-if="loadingStore.isAssetPlanLoading" />
   <router-view></router-view>
 </template>
 
@@ -27,6 +27,14 @@ const router = useRouter();
 const analyzeLoading = computed(() => loadingStore.isAssetAnalyzeLoading.includes(true));
 
 watch(analyzeLoading, (value)=>{
+  if(value){
+    document.body.style.overflow = "hidden";
+  }else{
+    document.body.style.overflow = "auto";
+  }
+})
+
+watch(() => loadingStore.isAssetPlanLoading, (value)=>{
   if(value){
     document.body.style.overflow = "hidden";
   }else{

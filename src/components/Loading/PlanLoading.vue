@@ -7,14 +7,14 @@
       ></div>
     </div>
 
-    <div class="absolute inset-0 flex items-center justify-center z-50 mr-52">
+    <div class="absolute inset-0 z-50 flex items-center justify-center mr-52">
       <img
         src="/images/AssetPlanLoading/yellow-box.png"
         alt="yellow-box"
         class="w-[800px] h-auto mt-20 animate-float"
       />
       <div class="flex flex-col">
-        <div class="text-font-color text-3xl mb-10">
+        <div class="mb-10 text-3xl text-font-color">
         <h1 class="pb-4">미래를 디자인하는 스마트한 선택</h1>
         <h1 class="pb-4">맞춤형 자산 관리에서 혁신적인 자산 설계까지</h1>
         <h1>당신만의 금융 여정이 시작됩니다.</h1>
@@ -30,7 +30,7 @@
           :style="{ animationDelay: `${index * 0.2}s` }"
         ></div>
       </div>
-      <span class="ml-2">90%</span>
+      <span class="ml-2">로딩중</span>
     </div>
     </div>
   </div>

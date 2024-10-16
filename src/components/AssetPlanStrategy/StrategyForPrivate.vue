@@ -1,9 +1,9 @@
 <template>
-  <div class="h-screen relative">
-    <div class="w-full h-full bg-kb-yellow-4 flex items-center justify-center">
+  <div class="relative h-screen">
+    <div class="flex items-center justify-center w-full h-full bg-kb-yellow-4">
       <div class="h-[400px] bg-kb-yellow-8 w-full flex items-center px-[22%]">
         <!-- 3원 -->
-        <div class="relative flex-1 h-full mr-9 mt-6">
+        <div class="relative flex-1 h-full mt-6 mr-9">
           <StrategyCircle
             v-for="(title, index) in strategyTitle"
             :key="index"
@@ -47,12 +47,12 @@
     <!-- 부채 관리 솔루션 -->
     <div
       ref="solutionSection"
-      class="w-screen h-screen bg-kb-yellow-4 relative flex items-center justify-center"
+      class="relative flex items-center justify-center w-screen h-screen bg-kb-yellow-4"
     >
-      <div class="w-full h-full relative">
+      <div class="relative w-full h-full">
         <!-- SVG for lines -->
         <svg
-          class="absolute top-0 left-0 w-full h-full z-0"
+          class="absolute top-0 left-0 z-0 w-full h-full"
           :class="{ 'lines-visible': isVisible }"
         >
           <line
@@ -70,7 +70,7 @@
         <!-- 3원 -->
         <div
           ref="centerCircle"
-          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+          class="absolute z-10 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
         >
           <StrategyCircle :title="'부채관리'" :text="'솔루션'" />
         </div>
@@ -87,7 +87,7 @@
           :animationDelay="`${index * 0.5 + 0.5}s`"
         />
       </div>
-      <div class="absolute bottom-16 text-center">
+      <div class="absolute text-center bottom-16">
         <CommonButton @click="goToAssetPlan" :text="'돌아가기'" />
       </div>
     </div>
@@ -108,6 +108,7 @@ import StrategyButton from './StrategyButton.vue';
 
 import solutionData from '../../constant/solutionData';
 import CommonButton from '../common/CommonButton.vue';
+import { loadingStateStore } from '../../stores/loadingStateStore';
 
 // 개선 전략 데이터
 const strategyTitle = ref([]);
@@ -120,6 +121,8 @@ const investmentStrategy = ref({});
 const solutionTitle = ref([]);
 const solutionContent = ref({});
 
+const loadingStore = loadingStateStore();
+
 // axios 연결
 const fetchStrategy = async () => {
   const authStore = useAuthStore();
@@ -131,6 +134,7 @@ const fetchStrategy = async () => {
   }
 
   try {
+    loadingStore.setIsAssetPlanLoadingState(true);
     const response = await axios.post(
       `http://localhost:8080/assets/plan`,
       {},
@@ -142,6 +146,9 @@ const fetchStrategy = async () => {
       }
     );
 
+    if(response.status==200){
+      loadingStore.setIsAssetPlanLoadingState(false);
+    }
     const data = response?.data?.jsonNode;
 
     strategyTitle.value = Object.keys(data.개선된_전략_요약);
