@@ -3,7 +3,7 @@
     <!-- 소개 -->
     <div class="h-[40%] flex px-[17%] py-[2%] items-end text-font-color">
       <h1>
-        <span>ㅇㅇㅇ님의 자산과 보험 여부를 고려한</span><br />
+        <span>{{ userName }}님의 자산과 보험 여부를 고려한</span><br />
         <span class="font-bold text-[42px]">미래 자산 설계</span>
       </h1>
     </div>
@@ -29,8 +29,12 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
+import { useAuthStore } from '../../stores/auth';
 
 const router = useRouter();
+const authStore = useAuthStore();
+
+const userName = authStore.$state.name;
 
 const navItem = [
   { id: '01', text: '맞춤 개선 전략', url: '/asset-plan/strategy' },

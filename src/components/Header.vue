@@ -11,7 +11,9 @@
     >
       <div class="mx-[340px] h-full flex items-center justify-between">
         <!-- 로고 -->
-        <router-link to="/" class="text-2xl font-bold"> F:YL </router-link>
+        <router-link to="/" class="text-2xl font-bold" @click="handleNavClick">
+          F:YL
+        </router-link>
 
         <!-- 네비게이션 메뉴와 프로필 아이콘을 포함하는 컨테이너 -->
         <div class="flex items-center">
@@ -66,7 +68,11 @@
               ]"
               class="hover:text-kb-brown-1"
             >
-              <img src="/images/Mypage/user.png" class="w-6 h-6" />
+              <img
+                src="/images/Mypage/user.png"
+                class="w-6 h-6"
+                alt="프로필 아이콘"
+              />
             </router-link>
             <!-- 로그인된 상태에서는 클릭 불가한 이미지 -->
             <img
@@ -83,19 +89,20 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from "vue";
-import { useHeaderStore } from "../stores/headerStore";
-import { useAuthStore } from "../stores/auth";
-import { useRouter } from "vue-router"; // 라우터 사용
+import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { useHeaderStore } from '../stores/headerStore';
+import { useAuthStore } from '../stores/auth';
+import { useRouter, useRoute } from 'vue-router'; // 라우터 사용
 
 const headerStore = useHeaderStore();
 const authStore = useAuthStore(); // authStore 사용
 const router = useRouter(); // 라우터 사용
+const route = useRoute();
 
 const navItems = [
-  { name: "맞춤 상품", route: "/products" },
-  { name: "자산 분석", route: "/asset-detail" },
-  { name: "자산 설계", route: "/asset-plan" },
+  { name: '맞춤 상품', route: '/products' },
+  { name: '자산 분석', route: '/asset-detail' },
+  { name: '자산 설계', route: '/asset-plan' },
 ];
 
 const isScrolledOrHovered = computed(() => headerStore.isActive);
@@ -116,16 +123,24 @@ function handleMouseLeave() {
 
 // 마이페이지로 이동하는 함수
 const goToMypage = () => {
-  router.push("/mypage");
+  router.push('/mypage');
+};
+
+const handleNavClick = (event) => {
+  if (route.path === event.target.getAttribute('href')) {
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    headerStore.setScrolled(false);
+  }
 };
 
 onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
+  window.addEventListener('scroll', handleScroll);
   headerStore.resetState();
 });
 
 onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
+  window.removeEventListener('scroll', handleScroll);
 });
 </script>
 
