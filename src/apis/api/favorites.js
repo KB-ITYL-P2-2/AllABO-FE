@@ -16,3 +16,8 @@ export const getMyFavoritesList = async()=>{
   const response = await authInstance.get(`${import.meta.env.VITE_MY_SERVER_URL}/api/favorites/list`)
   return response
 }
+
+export const getMyDetailFavoritesList = async()=>{
+  const response = await authInstance.get(`${import.meta.env.VITE_MY_SERVER_URL}/api/favorites/mapping-list`);
+  return response
+}
