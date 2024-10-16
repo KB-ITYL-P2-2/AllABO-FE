@@ -91,6 +91,10 @@ const props = defineProps({
 });
 
 const favoriteHandler = async () => {
+  if(!localStorage.getItem('accessToken')){
+    alert("로그인 후 이용해주세요");
+    return;
+  }
   if (!props.items.isFavorite) {
     props.items.isFavorite = true;
     const res = await addFavorite(props.items.productId, props.items.id);
