@@ -106,7 +106,6 @@ import StrategyRecommend from './StrategyForPrivate/StrategyRecommend.vue';
 import StrategyDeptSolution from './StrategyForPrivate/StrategyDeptSolution.vue';
 import StrategyButton from './StrategyButton.vue';
 
-import solutionData from '../../constant/solutionData';
 import CommonButton from '../common/CommonButton.vue';
 
 // 개선 전략 데이터

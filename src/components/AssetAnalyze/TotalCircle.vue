@@ -27,58 +27,58 @@
       class="absolute w-[155px] h-[155px] bg-kb-blue-2 rounded-full flex items-center justify-center flex-col text-center text-font-color"
       :style="getPosition(0)"
     >
-      <p class="text-lg font-bold">연 소득 금액</p>
-      <p class="text-lg">{{ formatNumber(totalIncome) }}만원</p>
+      <p class="text-lg">연 소득 금액</p>
+      <p class="text-xl font-bold">{{ formatNumber(totalIncome) }}만원</p>
     </div>
     <div
       class="absolute w-[155px] h-[155px] bg-kb-yellow-6 rounded-full flex items-center justify-center flex-col text-center text-font-color"
       :style="getPosition(1)"
     >
-      <p class="text-lg font-bold">계좌 자산</p>
-      <p class="text-lg">{{ formatNumber(totalAssets) }}만원</p>
+      <p class="text-lg">계좌 자산</p>
+      <p class="text-xl font-bold">{{ formatNumber(totalAssets) }}만원</p>
     </div>
     <div
       class="absolute w-[155px] h-[155px] bg-kb-yellow-5 rounded-full flex items-center justify-center flex-col text-center text-font-color"
       :style="getPosition(2)"
     >
-      <p class="text-lg font-bold">연금 준비 금액</p>
-      <p class="text-lg">{{ formatNumber(totalSavings) }}만원</p>
+      <p class="text-lg">연금 준비 금액</p>
+      <p class="text-xl font-bold">{{ formatNumber(totalSavings) }}만원</p>
     </div>
     <div
       class="absolute w-[155px] h-[155px] bg-kb-pink-2 rounded-full flex items-center justify-center flex-col text-center text-font-color"
       :style="getPosition(3)"
     >
-      <p class="text-lg font-bold">보험 납부 금액</p>
-      <p class="text-lg">{{ formatNumber(totalInsurance) }}만원</p>
+      <p class="text-lg">보험 납부 금액</p>
+      <p class="text-xl font-bold">{{ formatNumber(totalInsurance) }}만원</p>
     </div>
     <div
       class="absolute w-[155px] h-[155px] bg-kb-pink-1 rounded-full flex items-center justify-center flex-col text-center text-font-color"
       :style="getPosition(4)"
     >
-      <p class="text-lg font-bold">투자 평가 금액</p>
-      <p class="text-lg">{{ formatNumber(totalInvestment) }}만원</p>
+      <p class="text-lg">투자 평가 금액</p>
+      <p class="text-xl font-bold">{{ formatNumber(totalInvestment) }}만원</p>
     </div>
     <div
       class="absolute w-[155px] h-[155px] bg-kb-green-1 rounded-full flex items-center justify-center flex-col text-center text-font-color"
       :style="getPosition(5)"
     >
-      <p class="text-lg font-bold">카드 이용 금액</p>
-      <p class="text-lg">{{ formatNumber(monthExpenses) }}만원</p>
+      <p class="text-lg">카드 이용 금액</p>
+      <p class="text-xl font-bold">{{ formatNumber(monthExpenses) }}만원</p>
     </div>
     <div
       class="absolute w-[155px] h-[155px] bg-kb-blue-1 rounded-full flex items-center justify-center flex-col text-center text-font-color"
       :style="getPosition(6)"
     >
-      <p class="text-lg font-bold">부채 금액</p>
-      <p class="text-lg">{{ formatNumber(totalLoan) }}만원</p>
+      <p class="text-lg">부채 금액</p>
+      <p class="text-xl font-bold">{{ formatNumber(totalLoan) }}만원</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import axios from "axios";
-import { ref, onMounted } from "vue";
-import { useAuthStore } from "../../stores/auth";
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
+import { useAuthStore } from '../../stores/auth';
 
 const authStore = useAuthStore();
 
@@ -111,7 +111,7 @@ const formatNumber = (value) => {
 const totalAssetData = async () => {
   const token = authStore.token;
   if (!token) {
-    console.error("토큰이 없습니다. 로그인 후 다시 시도하세요.");
+    console.error('토큰이 없습니다. 로그인 후 다시 시도하세요.');
     return;
   }
 
@@ -119,14 +119,14 @@ const totalAssetData = async () => {
     const response = await axios.get(`http://localhost:8080/assets/portfolio`, {
       headers: {
         Authorization: `Bearer ${token}`, // 헤더 정보
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
 
     // 응답 데이터 구조에 맞게 데이터 가져오기
     const data = response.data;
     if (!data) {
-      throw new Error("유효한 데이터를 가져오지 못했습니다.");
+      throw new Error('유효한 데이터를 가져오지 못했습니다.');
     }
 
     // API에서 제공하는 값들로 상태 업데이트
@@ -137,7 +137,7 @@ const totalAssetData = async () => {
     monthExpenses.value = data.monthExpenses / 10000;
     totalLoan.value = data.totalLoan / 10000;
   } catch (error) {
-    console.error("데이터를 불러오는 중 오류가 발생했습니다:", error);
+    console.error('데이터를 불러오는 중 오류가 발생했습니다:', error);
   }
 };
 
