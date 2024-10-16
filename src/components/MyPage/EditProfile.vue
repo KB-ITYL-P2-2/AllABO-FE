@@ -3,51 +3,30 @@
   <div class="flex mt-[190px]">
     <SideBar />
 
-    <div class="flex-col justify-center relative">
-      <div class="flex justify-center relative">
-        <img
-          :src="selectedIcon"
-          alt="프로필 이미지"
-          class="justify-center w-32 h-32 rounded-full ml-[450px] mb-[50px] relative"
-        />
-        <button
-          @click="showIconPicker = true"
-          class="absolute bottom-[50px] right-[85px] p-0 border-none bg-transparent"
-        >
-          <img
-            src="/images/Mypage/imgEditBtn.png"
-            alt="연필 아이콘"
-            class="w-8 h-8"
-          />
+    <div class="relative flex-col justify-center">
+      <div class="relative flex justify-center">
+        <img :src="selectedIcon" alt="프로필 이미지" class="justify-center w-32 h-32 rounded-full ml-[450px] mb-[50px] relative" />
+        <button @click="showIconPicker = true" class="absolute bottom-[50px] right-[85px] p-0 border-none bg-transparent">
+          <img src="/images/Mypage/imgEditBtn.png" alt="연필 아이콘" class="w-8 h-8" />
         </button>
       </div>
 
       <!-- 아이콘 변경 모달-->
       <div
         v-if="showIconPicker"
-        class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-wrap justify-center bg-white p-6 rounded-lg shadow-lg"
+        class="fixed flex flex-wrap justify-center p-6 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg top-1/2 left-1/2"
       >
-        <div
-          v-for="(icon, index) in icons"
-          :key="index"
-          class="cursor-pointer p-3"
-          @click="selectIcon(icon)"
-        >
+        <div v-for="(icon, index) in icons" :key="index" class="p-3 cursor-pointer" @click="selectIcon(icon)">
           <img :src="icon" class="w-16 h-16 rounded-full" />
         </div>
-        <button
-          @click="showIconPicker = false"
-          class="absolute top-2 right-2 bg-gray-200 p-2 rounded-full"
-        >
-          ✕
-        </button>
+        <button @click="showIconPicker = false" class="absolute p-2 bg-gray-200 rounded-full top-2 right-2">✕</button>
       </div>
 
       <!-- 정보 수정 폼 -->
       <div class="w-4/5 flex flex-col items-center mb-[100px] ml-[250px]">
         <form @submit.prevent="editForm" class="w-2/3">
           <div class="flex flex-col">
-            <label for="name" class="block text-font-color mb-1">이름</label>
+            <label for="name" class="block mb-1 text-font-color">이름</label>
             <input
               type="text"
               id="name"
@@ -58,7 +37,7 @@
             />
           </div>
           <!-- <div class="flex flex-col">
-            <label for="birthday" class="block text-font-color mb-1"
+            <label for="birthday" class="block mb-1 text-font-color"
               >생년월일</label
             >
             <input
@@ -71,7 +50,7 @@
             />
           </div> -->
           <div class="flex flex-col">
-            <label for="email" class="block text-font-color mb-1">이메일</label>
+            <label for="email" class="block mb-1 text-font-color">이메일</label>
             <input
               type="email"
               id="email"
@@ -81,7 +60,7 @@
             />
           </div>
           <div class="flex flex-col">
-            <label for="tel" class="block text-font-color mb-1">전화번호</label>
+            <label for="tel" class="block mb-1 text-font-color">전화번호</label>
             <input
               type="tel"
               id="tel"
@@ -100,11 +79,7 @@
             </button>
             <button
               type="submit"
-              :class="[
-                isFormValid
-                  ? 'bg-kb-brown-2 hover:bg-kb-yellow-1'
-                  : 'bg-kb-gray-2',
-              ]"
+              :class="[isFormValid ? 'bg-kb-brown-2 hover:bg-kb-yellow-1' : 'bg-kb-gray-2']"
               :disabled="!isFormValid"
               class="h-[50px] w-[150px] rounded-md text-white transition duration-200"
             >
@@ -146,19 +121,12 @@ const editForm = () => {
 
 // 아이콘 선택 관련 로직
 const showIconPicker = ref(false);
-const selectedIcon = ref(
-  sessionStorage.getItem("profileImage") || "/images/Mypage/user1.png"
-);
-const icons = [
-  "/images/Mypage/user.png",
-  "/images/Mypage/user1.png",
-  "/images/Mypage/user2.png",
-  "/images/Mypage/user3.png",
-];
+const selectedIcon = ref(sessionStorage.getItem("profileImage") || "/images/Mypage/user.png");
+const icons = ["/images/Mypage/user.png", "/images/Mypage/user1.png", "/images/Mypage/user2.png", "/images/Mypage/user3.png"];
 
 const profileStore = profileStateStore();
 
-const selectIcon = (icon) => {
+const selectIcon = icon => {
   selectedIcon.value = icon; // 선택한 아이콘을 반영
   sessionStorage.setItem("profileImage", icon); // 세션 스토리지에 저장
   profileStore.setImageUrl(icon);
