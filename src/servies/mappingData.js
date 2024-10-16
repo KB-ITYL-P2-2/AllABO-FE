@@ -1,17 +1,20 @@
-export const checkCardMapping = checkCardData => {
+export const checkCardMapping = data => {
   const mappingData = [];
 
-  for (let checkCard of checkCardData) {
+  for (let d of data) {
     mappingData.push({
-      name: checkCard.checkCardName,
-      content: checkCard.checkCardContent,
+      id: d.checkCardId,
+      productId: d.productId,
+      name: d.checkCardName,
+      content: d.checkCardContent,
       data: {
-        카테고리: checkCard.checkCardCategory,
+        카테고리: d.checkCardCategory,
       },
       url: {
-        imageUrl: checkCard.checkCardImageUrl,
-        pageUrl: checkCard.checkCardDetailUrl,
+        imageUrl: d.checkCardImageUrl,
+        pageUrl: d.checkCardDetailUrl,
       },
+      isFavorite: false
     });
   }
 
@@ -23,6 +26,8 @@ export const creditCardMapping = data => {
 
   for (let d of data) {
     mappingData.push({
+      id: d.creditCardId,
+      productId: d.productId,
       name: d.creditCardName,
       content: d.creditCardContent,
       data: {
@@ -33,6 +38,7 @@ export const creditCardMapping = data => {
         imageUrl: d.creditCardImageUrl,
         pageUrl: d.creditCardDetailUrl,
       },
+      isFavorite: false
     });
   }
 
@@ -44,6 +50,8 @@ export const loanMapping = data => {
 
   for (let d of data) {
     mappingData.push({
+      id: d.loanId,
+      productId: d.productId,
       name: d.loanName,
       content: d.loanContent,
       data: {
@@ -55,6 +63,7 @@ export const loanMapping = data => {
         imageUrl: "/images/common/money.png",
         pageUrl: d.loanUrl,
       },
+      isFavorite: false
     });
   }
 
@@ -66,6 +75,8 @@ export const depositMapping = data => {
 
   for (let d of data) {
     mappingData.push({
+      id: d.depositId,
+      productId: d.productId,
       name: d.depositName,
       content: d.depositContent,
       data: {
@@ -76,6 +87,7 @@ export const depositMapping = data => {
         imageUrl: d.depositCategory == "예금" ? "/images/common/money.png" : "/images/common/bank.png",
         pageUrl: d.depositUrl,
       },
+      isFavorite: false
     });
   }
 
@@ -87,6 +99,8 @@ export const insuranceMapping = data => {
 
   for (let d of data) {
     mappingData.push({
+      id: d.insuranceId,
+      productId: d.productId,
       name: d.insuranceName,
       content: "KB 보험",
       data: {
@@ -96,6 +110,7 @@ export const insuranceMapping = data => {
         imageUrl: "/images/common/bank.png",
         pageUrl: d.insuranceUrl,
       },
+      isFavorite: false
     });
   }
 

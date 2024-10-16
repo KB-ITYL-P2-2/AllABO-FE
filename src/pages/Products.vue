@@ -27,7 +27,7 @@
           }"
         >
           <h1
-            class="absolute w-full px-4 text-xl font-bold text-center transform -translate-x-1/2 text-kb-brown-2 left-1/2 sm:text-2xl md:text-3xl"
+            class="absolute w-full px-4 text-xl font-bold text-center transform -translate-x-1/2 text-kb-brown-1 left-1/2 sm:text-2xl md:text-3xl"
             style="top: 25vh"
           >
             간단한 설문을 통해 맞춤 상품을 추천 받아보세요!
@@ -78,8 +78,19 @@
           class="absolute flex flex-col items-center justify-center space-y-0 text-center text-gray-400 transform -translate-x-1/2 bottom-2 left-1/2"
         >
           <p class="text-sm">전체 상품 보러가기</p>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="-mt-1 size-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="-mt-1 size-5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m19.5 8.25-7.5 7.5-7.5-7.5"
+            />
           </svg>
         </div>
       </div>
@@ -91,7 +102,7 @@
 
     <!-- 네비게이션 -->
     <div
-      class="fixed left-[10%] top-[30%] z-10 flex flex-col border border-[#BDBDBD] bg-white rounded-[10px] overflow-hidden p-2"
+      class="fixed left-[10%] top-[30%] z-10 flex flex-col bg-white rounded-[10px] overflow-hidden shadow-md"
       :class="{
         'opacity-0': !navigationTrigger,
         'opacity-100': navigationTrigger,
@@ -102,8 +113,20 @@
         transition: 'opacity 1000ms',
       }"
     >
-      <div v-for="(item, index) in data" :key="index" class="py-1 text-center" :class="index!==data.length-1 && 'border-b-[1px]'">
-        <button ref="navButton" class="rounded-[10px] text-[18px] w-[60px] h-[60px]" :class="item.index === swiperIndex ? 'bg-kb-yellow-3' : 'text-kb-gray-3'" @click="goToSlide(item.index)">
+      <div
+        v-for="(item, index) in data"
+        :key="index"
+        class="text-center"
+        :class="index !== data.length - 1 && 'border-b-[0.5px]'"
+      >
+        <button
+          ref="navButton"
+          class="text-[16px] w-[60px] h-[60px]"
+          :class="
+            item.index === swiperIndex ? 'bg-kb-yellow-12' : 'text-kb-gray-3'
+          "
+          @click="goToSlide(item.index)"
+        >
           <span v-html="formatText(item.title)"></span>
         </button>
       </div>
@@ -112,19 +135,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Mousewheel, Pagination } from "swiper/modules";
-import { useHeaderStore } from "../stores/headerStore.js";
+import { ref, onMounted, onUnmounted } from 'vue';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Mousewheel, Pagination } from 'swiper/modules';
+import { useHeaderStore } from '../stores/headerStore.js';
 
-import "swiper/css";
-import "swiper/css/pagination";
+import 'swiper/css';
+import 'swiper/css/pagination';
 
-import CategoryButton from "../components/Products/CategoryButton.vue";
-import Top3Products from "../components/Products/Top3Products.vue";
+import CategoryButton from '../components/Products/CategoryButton.vue';
+import Top3Products from '../components/Products/Top3Products.vue';
 
-import LAYOUT_VARIANTS from "../constant/layout.js";
-import productCategoryData from "../constant/productCategoryData.js";
+import LAYOUT_VARIANTS from '../constant/layout.js';
+import productCategoryData from '../constant/productCategoryData.js';
 
 const headerStore = useHeaderStore();
 
@@ -133,7 +156,7 @@ const swiperIndex = ref(0);
 
 const mySwiper = ref(null);
 
-const handleSlideChange = swiper => {
+const handleSlideChange = (swiper) => {
   swiperIndex.value = swiper.activeIndex;
   // console.log(swiperIndex.value)
 
@@ -146,42 +169,42 @@ const handleSlideChange = swiper => {
   }
 };
 
-const onSwiperInit = swiperInstance => {
+const onSwiperInit = (swiperInstance) => {
   mySwiper.value = swiperInstance; // Swiper 인스턴스 저장
 };
 
-const goToSlide = index => {
+const goToSlide = (index) => {
   if (mySwiper.value) {
     // console.log(mySwiper.value)
     mySwiper.value.slideTo(index); // Swiper 인스턴스의 slideTo 메서드 호출
   }
 };
 
-const formatText=(text)=>{
+const formatText = (text) => {
   return text.replace(/.{2}/g, '$&<br>');
-}
+};
 
 const data = [
-  { title: "신용카드", index: 1, request: '/credit-card' },
-  { title: "체크카드", index: 2, request: '/check-card' },
-  { title: "예금적금", index: 3, request: '/deposit' },
-  { title: "보험", index: 4, request: '/insurance' },
-  { title: "대출", index: 5, request: '/loan' },
+  { title: '신용카드', index: 1, request: '/credit-card' },
+  { title: '체크카드', index: 2, request: '/check-card' },
+  { title: '예금적금', index: 3, request: '/deposit' },
+  { title: '보험', index: 4, request: '/insurance' },
+  { title: '대출', index: 5, request: '/loan' },
 ];
 
 const isExpanded = ref(false);
-const hoveredCategory = ref("");
+const hoveredCategory = ref('');
 
 const modules = [Mousewheel, Pagination];
 
-const onCategoryHover = categoryName => {
+const onCategoryHover = (categoryName) => {
   isExpanded.value = true;
   hoveredCategory.value = categoryName;
 };
 
 const onCategoryLeave = () => {
   isExpanded.value = false;
-  hoveredCategory.value = "";
+  hoveredCategory.value = '';
 };
 
 onMounted(() => {

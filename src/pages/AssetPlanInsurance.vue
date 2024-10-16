@@ -1,47 +1,101 @@
 <template>
-    <div class="h-[160px]"></div>
-    <div class="bg-rebalancing-back bg-cover flex flex-col items-center">
-      <h1 class="text-4xl font-bold text-center p-2 text-font-color">
-        보험 리밸런싱
-      </h1>
-      <p class="text-sm text-kb-gray-1 text-center">
-        제공된 가입 보험 내역을 바탕으로 한 리밸런싱 결과로, 실제 데이터와
-        차이가 있을 수 있습니다.
-      </p>
+  <div class="h-[70px] mb-12"></div>
+  <!-- <div class="flex flex-col items-center "> -->
+  <h1 class="p-2 text-4xl font-bold text-center text-font-color">보험 리밸런싱</h1>
+  <p class="text-sm text-center text-kb-gray-1">제공된 가입 보험 내역을 바탕으로 한 리밸런싱 결과로, 실제 데이터와 차이가 있을 수 있습니다.</p>
+  <!-- 
+      <InsuranceAnalyze :insurance="insurance" :desc="desc" /> -->
+  <!-- </div> -->
 
-      <InsuranceAnalyze :insurance="insurance" :desc="desc" />
-    </div>
+  <div class="mt-8">
+    <div class="flex flex-col items-center w-full bg-cover bg-rebalancing-back">
+      <AssetPlanTabButton v-model="showCurrentAnalysis" />
 
-    <div class="w-full flex flex-col items-center mt-36">
-      <AssetPlanTabButton 
-        v-model="showCurrentAnalysis" />
-
-      <div>
-        <InsuranceCardList v-if="showCurrentAnalysis" :insuranceData="insuranceData" />
-        <RebalancingCardList v-else :rebalancingData="rebalancingData"/>
-        <div class="h-[200px] text-center">
-          <CommonButton class="mt-20" :text="'돌아가기'" />
-        </div>
+      <div class="w-full p-10">
+        <InsuranceCardList class="flex justify-center" v-if="showCurrentAnalysis" :insuranceName="insuranceName" :insuranceContent="insuranceContent" />
+        <RebalancingCardList
+          class="flex justify-center"
+          v-else
+          :rebalancingTitle="rebalancingTitle"
+          :rebalancingContent="rebalancingContent"
+          :insuranceName="insuranceName"
+          :insuranceContent="insuranceContent"
+        />
+      </div>
+      <div class="h-[200px] text-center">
+        <CommonButton @click="goToAssetPlan" class="mt-10" :text="'돌아가기'" />
       </div>
     </div>
+  </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 import InsuranceAnalyze from "../components/AssetPlanInsurance/InsuranceAnalyze.vue";
 import InsuranceCardList from "../components/AssetPlanInsurance/InsuranceCardList.vue";
 import RebalancingCardList from "../components/AssetPlanInsurance/RebalancingCardList.vue";
-import insuranceData from "../constant/insuranceData.js";
-import rebalancingData from "../constant/rebalancingData.js";
 import AssetPlanTabButton from "../components/AssetPlanInsurance/AssetPlanTabButton.vue";
 import CommonButton from "../components/common/CommonButton.vue";
 
-const insurance = ["건강보험", "실손의료비보험", "치아보험"];
+import axios from "axios";
+import { useAuthStore } from "../stores/auth";
+import { loadingStateStore } from "../stores/loadingStateStore";
 
-const desc =
-  "20대는 상대적으로 건강 리스크가 낮으나 실손의료비와 같은 보장은 필수적입니다. 그러나 사용자의 현재 보험료 비중을 고려할 때 건강보험과 실손보험의 중복 보장을 줄이고 미래의 질병 리스크를 대비하는 방향으로 리밸런싱을 권장합니다.";
-
+const router = useRouter();
 const showCurrentAnalysis = ref(true);
+
+// 보험 리밸런싱 페이지 데이터
+const insuranceName = ref([]);
+const insuranceContent = ref({});
+const rebalancingTitle = ref([]);
+const rebalancingContent = ref({});
+
+const loadingStore = loadingStateStore();
+
+// axios 연결
+const fetchInsuranceRebalancing = async () => {
+  const authStore = useAuthStore();
+  const token = authStore.token;
+
+  if (!token) {
+    console.error("토큰이 없습니다. 로그인 후 다시 시도하세요.");
+    return;
+  }
+
+  try {
+    loadingStore.setIsAssetPlanLoadingState(true);
+    const response = await axios.post(
+      `http://localhost:8080/insurance/rebalancing`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.status == 200) {
+      loadingStore.setIsAssetPlanLoadingState(false);
+    }
+    const data = response?.data?.rebalancingProposal?.리밸런싱_제안;
+
+    insuranceName.value = Object.keys(data.현재_보험_리스트);
+    insuranceContent.value = data.현재_보험_리스트;
+    rebalancingTitle.value = Object.keys(data.제안);
+    rebalancingContent.value = data.제안;
+  } catch (error) {
+    console.error("데이터 가져오기 실패: ", error);
+  }
+};
+
+const goToAssetPlan = () => {
+  router.push("/asset-plan");
+};
+
+onMounted(() => {
+  fetchInsuranceRebalancing();
+});
 </script>
 
 <style></style>

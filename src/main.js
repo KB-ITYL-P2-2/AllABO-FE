@@ -10,6 +10,7 @@ import { faHeart as faHeart1 } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeart2 } from '@fortawesome/free-regular-svg-icons'
 import { faHeart as faHeart3 } from '@fortawesome/free-regular-svg-icons/faHeart'
 import { faHeart as faHeart4 } from '@fortawesome/free-solid-svg-icons/faHeart'
+// import {heart}
 import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons'
 import { faQuoteRight } from '@fortawesome/free-solid-svg-icons'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown' 

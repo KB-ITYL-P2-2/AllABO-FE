@@ -1,121 +1,257 @@
 <template>
-  <div class="h-full">
-    <div class="w-full h-[1150px] bg-kb-yellow-4">
-      <div class="sticky top-[28%] h-[400px] bg-kb-yellow-8 w-full flex items-center px-[22%]">
+  <div class="relative h-screen">
+    <div class="flex items-center justify-center w-full h-full bg-kb-yellow-4">
+      <div class="h-[400px] bg-kb-yellow-8 w-full flex items-center px-[22%]">
         <!-- 3원 -->
-        <div class="relative flex-1 h-full">
-          <template v-for="(item, index) in goalData" :key="index">
-            <StrategyCircle
-              :class="scrollY < (index + 1) * 400 && scrollY >= index * 400 ? 'opacity-100' : 'opacity-0'"
-              class="absolute animation top-[7%] left-0"
-              :title="item.title"
-              :percent="item.percent"
-            />
-          </template>
+        <div class="relative flex-1 h-full mt-6 mr-9">
+          <StrategyCircle
+            v-for="(title, index) in strategyTitle"
+            :key="index"
+            :class="currentIndex === index ? 'opacity-100' : 'opacity-0'"
+            class="absolute animation top-[7%] -left-20"
+            :title="title"
+            :data="strategyData[title]"
+          />
         </div>
 
         <!-- contents -->
         <div class="relative flex-[2] h-full">
-          <StrategyText :class="scrollY < 200 ? 'opacity-100' : 'opacity-0'" class="absolute animation top-[22%] left-0" />
-          <template v-for="(item, index) in recommendData" :key="index">
-            <StrategyRecommend
-              :class="scrollY >= (index + 1) * 200 && scrollY < (index + 2) * 200 ? 'opacity-100' : 'opacity-0'"
-              class="absolute top-[26%] animation"
-              :title="item.title"
-              :products="item.products"
-            />
-          </template>
+          <StrategyText
+            :percent="spendingPercent"
+            :isDecline="isDecline"
+            :strategy="strategy"
+            :class="currentIndex === 0 ? 'opacity-100' : 'opacity-0'"
+            class="absolute animation top-[22%] -left-16"
+          />
+          <StrategyRecommend
+            :class="currentIndex === 1 ? 'opacity-100' : 'opacity-0'"
+            class="absolute top-[26%] animation"
+            :savingStrategy="savingStrategy"
+          />
+          <StrategyRecommend
+            :class="currentIndex === 2 ? 'opacity-100' : 'opacity-0'"
+            class="absolute top-[26%] animation"
+            :investmentStrategy="investmentStrategy"
+          />
         </div>
       </div>
+
+      <!-- 이동 버튼 -->
+      <StrategyButton
+        :currentIndex="currentIndex"
+        @prev="prevSlide"
+        @next="nextSlide"
+      />
     </div>
 
     <!-- 부채 관리 솔루션 -->
-    <div class="w-full h-[2000px] bg-kb-yellow-4 relative">
-      <div
-        :class="scrollY > 800 ? 'opacity-100' : 'opacity-0'"
-        class="sticky top-0 border-x-[1px] border-kb-brown-3 h-[100vh] animation flex items-center justify-center"
-      >
-        <div class="flex justify-center h-full pt-32 pb-24 flex-3">
-          <div class="absolute top-0 left-[21.1%] -z-10 w-[1px] h-full bg-[#6D6262]"></div>
-          <div class="flex flex-col items-center justify-between">
-            <StrategyDept :class="scrollY < 1400 ? 'opacity-100' : 'opacity-0 '" class="absolute animation" :text="'우선순위'" />
-            <StrategyDeptSolution
-              :class="scrollY >= 1400 ? 'opacity-100' : 'opacity-0 '"
-              class="absolute animation"
-              :title="`우선순위`"
-              :content="'주택 담보 대출 상환을 우선적으로 고려'"
-            />
-            <StrategyDept :class="scrollY < 1600 ? 'opacity-100' : 'opacity-0 '" class="absolute bottom-24 animation" :text="'우선순위'" />
-            <StrategyDeptSolution
-              :class="scrollY >= 1600 ? 'opacity-100' : 'opacity-0 '"
-              class="absolute bottom-24 animation"
-              :title="`우선순위`"
-              :content="'주택 담보 대출 상환을 우선적으로 고려'"
-            />
-          </div>
-        </div>
+    <div
+      ref="solutionSection"
+      class="relative flex items-center justify-center w-screen h-screen bg-kb-yellow-4"
+    >
+      <div class="relative w-full h-full">
+        <!-- SVG for lines -->
+        <svg
+          class="absolute top-0 left-0 z-0 w-full h-full"
+          :class="{ 'lines-visible': isVisible }"
+        >
+          <line
+            v-for="(_, index) in solutionTitle"
+            :key="`line-${index}`"
+            :class="[`line-${getSolutionPosition(index)}`, 'solution-line']"
+            x1="50%"
+            y1="50%"
+            :x2="getLineEndX(index)"
+            :y2="getLineEndY(index)"
+            :style="{ animationDelay: `${index * 0.5}s` }"
+          />
+        </svg>
 
         <!-- 3원 -->
-        <div class="flex items-center justify-center flex-1" ref="circleElement">
-          <StrategyCircle :title="'부채관리'" :percent="'솔루션'" />
+        <div
+          ref="centerCircle"
+          class="absolute z-10 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+        >
+          <StrategyCircle :title="'부채관리'" :text="'솔루션'" />
         </div>
 
-        <div class="flex justify-center h-full pt-40 pb-12 flex-3">
-          <div class="absolute top-0 right-[21%] -z-10 w-[1px] h-full bg-[#6D6262]"></div>
-          <div class="relative flex flex-col items-center justify-between">
-            <StrategyDept :class="scrollY < 1500 ? 'opacity-100' : 'opacity-0'" class="absolute animation" :text="'우선순위'" />
-            <StrategyDeptSolution
-              :class="scrollY >= 1500 ? 'opacity-100' : 'opacity-0'"
-              class="absolute animation"
-              :title="`우선순위`"
-              :content="'주택 담보 대출 상환을 우선적으로 고려'"
-            />
-            <StrategyDept :class="scrollY < 1700 ? 'opacity-100' : 'opacity-0'" class="absolute bottom-0 animation" :text="'우선순위'" />
-            <StrategyDeptSolution
-              :class="scrollY >= 1700 ? 'opacity-100' : 'opacity-0'"
-              class="absolute bottom-0 animation"
-              :title="`우선순위`"
-              :content="'주택 담보 대출 상환을 우선적으로 고려'"
-            />
-          </div>
-        </div>
+        <!-- 솔루션들 -->
+        <StrategyDeptSolution
+          v-for="(title, index) in solutionTitle"
+          :key="index"
+          :title="title"
+          :content="solutionContent[title]"
+          :class="[getSolutionPosition(index), 'absolute']"
+          :positionClass="getSolutionPosition(index)"
+          :isVisible="isVisible && visibleSolutions[index]"
+          :animationDelay="`${index * 0.5 + 0.5}s`"
+        />
+      </div>
+      <div class="absolute text-center bottom-16">
+        <CommonButton @click="goToAssetPlan" :text="'돌아가기'" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watch } from "vue";
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '../../stores/auth';
 
-import StrategyCircle from "./StrategyForPrivate/StrategyCircle.vue";
-import StrategyText from "./StrategyForPrivate/StrategyText.vue";
-import StrategyRecommend from "./StrategyForPrivate/StrategyRecommend.vue";
-import StrategyDept from "./StrategyForPrivate/StrategyDept.vue";
-import StrategyDeptSolution from "./StrategyForPrivate/StrategyDeptSolution.vue";
+import StrategyCircle from './StrategyForPrivate/StrategyCircle.vue';
+import StrategyText from './StrategyForPrivate/StrategyText.vue';
+import StrategyRecommend from './StrategyForPrivate/StrategyRecommend.vue';
+import StrategyDeptSolution from './StrategyForPrivate/StrategyDeptSolution.vue';
+import StrategyButton from './StrategyButton.vue';
 
-const goalData = [
-  { title: "목표 저축률", percent: `${25}%` },
-  { title: "목표 투자 비율", percent: `${25}%` },
-];
+import CommonButton from '../common/CommonButton.vue';
+import { loadingStateStore } from '../../stores/loadingStateStore';
 
-const recommendData = [
-  { title: "권장 저축 상품", products: ["정기예금", "국채형 저축 상품"] },
-  { title: "권장 투자 상품", products: ["ETF", "배당주", "안전자산 펀드"] },
-];
+// 개선 전략 데이터
+const strategyTitle = ref([]);
+const strategyData = ref({});
+const spendingPercent = ref(0);
+const strategy = ref('');
+const isDecline = ref(false);
+const savingStrategy = ref({});
+const investmentStrategy = ref({});
+const solutionTitle = ref([]);
+const solutionContent = ref({});
 
-const scrollY = ref(0);
+const loadingStore = loadingStateStore();
 
-const handleScroll = () => {
-  scrollY.value = window.scrollY;
-  console.log(scrollY.value);
+// axios 연결
+const fetchStrategy = async () => {
+  const authStore = useAuthStore();
+  const token = authStore.token;
+
+  if (!token) {
+    console.error('토큰이 없습니다. 로그인 후 다시 시도하세요.');
+    return;
+  }
+
+  try {
+    loadingStore.setIsAssetPlanLoadingState(true);
+    const response = await axios.post(
+      `http://localhost:8080/assets/plan`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    if(response.status==200){
+      loadingStore.setIsAssetPlanLoadingState(false);
+    }
+    const data = response?.data?.jsonNode;
+
+    strategyTitle.value = Object.keys(data.개선된_전략_요약);
+    strategyData.value = data.개선된_전략_요약;
+    spendingPercent.value = data.개선된_전략_요약.지출_조정.월_지출;
+    isDecline.value = data.개선된_전략_요약.지출_조정.감소여부;
+    strategy.value = data.개선된_전략_요약.지출_조정.방안;
+    savingStrategy.value = data.개선된_전략_요약.저축_전략;
+    investmentStrategy.value = data.개선된_전략_요약.투자_전략;
+    solutionTitle.value = Object.keys(data.부채_관리);
+    solutionContent.value = data.부채_관리;
+  } catch (error) {
+    console.error('데이터 가져오기 실패', error);
+  }
 };
 
 onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
+  fetchStrategy();
 });
 
-onBeforeUnmount(() => {
-  window.removeEventListener("scroll", handleScroll);
+const solutionSection = ref(null);
+const isVisible = ref(false);
+const visibleSolutions = ref([]);
+const animationKey = ref(0);
+
+const getSolutionPosition = (index) => {
+  const positions = [
+    'solution-top-left', // 왼쪽 위
+    'solution-top-right', // 오른쪽 위
+    'solution-bottom-left', // 왼쪽 아래
+    'solution-bottom-right', // 오른쪽 아래
+  ];
+  return positions[index];
+};
+
+const currentIndex = ref(0);
+
+const nextSlide = () => {
+  currentIndex.value = currentIndex.value + 1;
+};
+
+const prevSlide = () => {
+  currentIndex.value = currentIndex.value - 1;
+};
+
+const getLineEndX = (index) => {
+  const position = getSolutionPosition(index);
+  return position.includes('left') ? '25%' : '75%';
+};
+
+const getLineEndY = (index) => {
+  const position = getSolutionPosition(index);
+  return position.includes('top') ? '30%' : '70%';
+};
+
+const router = useRouter();
+
+const goToAssetPlan = () => {
+  router.push('/asset-plan');
+};
+
+// solutionTitle이 변경될 때마다 visibleSolutions를 업데이트
+watch(
+  solutionTitle,
+  (newValue) => {
+    visibleSolutions.value = newValue.map(() => false);
+  },
+  { immediate: true }
+);
+
+watch(isVisible, (newValue) => {
+  if (newValue) {
+    animationKey.value++;
+    solutionTitle.value.forEach((_, index) => {
+      setTimeout(() => {
+        visibleSolutions.value = [
+          ...visibleSolutions.value.slice(0, index),
+          true,
+          ...visibleSolutions.value.slice(index + 1),
+        ];
+      }, (index * 0.5 + 1) * 1000);
+    });
+  } else {
+    visibleSolutions.value = solutionTitle.value.map(() => false);
+  }
+});
+
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      isVisible.value = entry.isIntersecting;
+    },
+    { threshold: 0.5 }
+  );
+
+  if (solutionSection.value) {
+    observer.observe(solutionSection.value);
+  }
+
+  onUnmounted(() => {
+    if (solutionSection.value) {
+      observer.unobserve(solutionSection.value);
+    }
+  });
 });
 </script>
 
@@ -123,7 +259,49 @@ onBeforeUnmount(() => {
 .animation {
   transition: opacity 0.5s, transform 0.5s; /* 부드러운 전환 */
 }
-.flex-3 {
-  flex: 4 1 0; /* flex-grow, flex-shrink, flex-basis */
+
+.solution-line {
+  stroke: #f6ce46;
+  stroke-width: 1;
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  animation: none;
+}
+
+.lines-visible .solution-line {
+  animation: drawLine 1s ease-out forwards;
+}
+
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeInScale {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.solution-top-left {
+  top: 19%;
+  left: 17%;
+}
+
+.solution-top-right {
+  top: 19%;
+  right: 17%;
+}
+
+.solution-bottom-left {
+  bottom: 19%;
+  left: 17%;
+}
+
+.solution-bottom-right {
+  bottom: 19%;
+  right: 17%;
 }
 </style>

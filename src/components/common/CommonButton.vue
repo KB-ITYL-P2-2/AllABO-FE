@@ -1,12 +1,16 @@
 <template>
-  <button class="text-white bg-kb-brown-2 rounded-[15px] py-2 px-4">{{ text }}</button>
+  <button
+    class="text-font-color bg-asset-yellow-2 w-32 hover:bg-[#FFF1BF] duration-300 shadow-md rounded-[15px] py-2 px-4"
+  >
+    {{ text }}
+  </button>
 </template>
 
 <script setup>
 const props = defineProps({
-  text:{
+  text: {
     type: String,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 </script>
