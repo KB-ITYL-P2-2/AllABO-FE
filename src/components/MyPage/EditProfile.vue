@@ -122,6 +122,7 @@ import { useAuthStore } from "../../stores/auth";
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import SideBar from "./SideBar.vue";
+import { profileStateStore } from "../../stores/profileStore";
 
 const authStore = useAuthStore();
 const birthday = ref("1999.01.01");
@@ -155,9 +156,12 @@ const icons = [
   "/images/Mypage/user3.png",
 ];
 
+const profileStore = profileStateStore();
+
 const selectIcon = (icon) => {
   selectedIcon.value = icon; // 선택한 아이콘을 반영
   sessionStorage.setItem("profileImage", icon); // 세션 스토리지에 저장
+  profileStore.setImageUrl(icon);
   showIconPicker.value = false; // 모달창 닫기
 };
 </script>

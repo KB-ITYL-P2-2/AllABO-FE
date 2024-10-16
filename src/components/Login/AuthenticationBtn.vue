@@ -4,7 +4,7 @@
     <div class="mt-1">
       <div class="flex space-x-2">
         <select
-          class="text-font-color pl-4 h-[50px] w-[80px] rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
+          class="mr-1 text-font-color pl-2 h-[50px] w-[80px] rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
         >
           <option value="0">통신사</option>
           <option value="1">skt</option>
@@ -15,7 +15,7 @@
           v-model="phoneNumber"
           type="text"
           placeholder="전화번호 입력( - 없이 입력해주세요)"
-          class="pl-4 text-font-color h-[50px] w-[260px] rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
+          class="ml-2 pl-4 text-font-color h-[50px] w-[260px] rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-kb-brown-2 transition duration-200"
         />
         <button
           @click="sendCode"
