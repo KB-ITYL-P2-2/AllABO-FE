@@ -1,15 +1,12 @@
 <template>
   <button
     @click="$emit('click')"
-    v-if="left"
-    class="rounded-[15px] text-white border border-white p-4 hover:bg-white hover:text-kb-brown-2"
-  >
-    {{ text }}
-  </button>
-
-  <button
-    v-else
-    class="rounded-[15px] bg-white text-kb-brown-2 shadow-md px-4 py-3 hover:bg-kb-brown-2 hover:text-white duration-300"
+    :class="[
+      'rounded-[15px] px-4 py-3 duration-300',
+      left
+        ? 'text-white border border-white hover:bg-white hover:text-kb-brown-2'
+        : 'bg-white text-kb-brown-2 shadow-md hover:bg-kb-brown-2 hover:text-white',
+    ]"
   >
     {{ text }}
   </button>
@@ -23,7 +20,13 @@ const props = defineProps({
   },
   left: {
     type: Boolean,
-    required: true,
+    required: false,
+  },
+  url: {
+    type: String,
+    required: false,
   },
 });
+
+defineEmits(['click']);
 </script>

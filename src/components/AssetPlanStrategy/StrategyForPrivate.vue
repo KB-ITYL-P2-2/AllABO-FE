@@ -56,7 +56,7 @@
           :class="{ 'lines-visible': isVisible }"
         >
           <line
-            v-for="(_, index) in solutionData"
+            v-for="(_, index) in solutionTitle"
             :key="`line-${index}`"
             :class="[`line-${getSolutionPosition(index)}`, 'solution-line']"
             x1="50%"
@@ -95,7 +95,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '../../stores/auth';
@@ -106,7 +106,6 @@ import StrategyRecommend from './StrategyForPrivate/StrategyRecommend.vue';
 import StrategyDeptSolution from './StrategyForPrivate/StrategyDeptSolution.vue';
 import StrategyButton from './StrategyButton.vue';
 
-import solutionData from '../../constant/solutionData';
 import CommonButton from '../common/CommonButton.vue';
 import { loadingStateStore } from '../../stores/loadingStateStore';
 
@@ -171,7 +170,7 @@ onMounted(() => {
 
 const solutionSection = ref(null);
 const isVisible = ref(false);
-const visibleSolutions = ref(solutionData.map(() => false));
+const visibleSolutions = ref([]);
 const animationKey = ref(0);
 
 const getSolutionPosition = (index) => {
@@ -210,16 +209,29 @@ const goToAssetPlan = () => {
   router.push('/asset-plan');
 };
 
+// solutionTitle이 변경될 때마다 visibleSolutions를 업데이트
+watch(
+  solutionTitle,
+  (newValue) => {
+    visibleSolutions.value = newValue.map(() => false);
+  },
+  { immediate: true }
+);
+
 watch(isVisible, (newValue) => {
   if (newValue) {
     animationKey.value++;
-    solutionData.forEach((_, index) => {
+    solutionTitle.value.forEach((_, index) => {
       setTimeout(() => {
-        visibleSolutions.value[index] = true;
-      }, (index * 0.5 + 1) * 1000); // 1초(선 애니메이션) + 각 솔루션 간 0.5초 지연
+        visibleSolutions.value = [
+          ...visibleSolutions.value.slice(0, index),
+          true,
+          ...visibleSolutions.value.slice(index + 1),
+        ];
+      }, (index * 0.5 + 1) * 1000);
     });
   } else {
-    visibleSolutions.value = solutionData.map(() => false);
+    visibleSolutions.value = solutionTitle.value.map(() => false);
   }
 });
 

@@ -111,7 +111,7 @@
               class="w-[45%] text-center bg-gradient-to-b from-kb-yellow-4 to-kb-yellow-10 p-6 rounded-3xl shadow-md flex flex-col items-center justify-center"
             >
               <p class="text-[18px] text-font-color">
-                {{ incomeRange }}소득 대비<br />
+                {{ incomeRange }} 소득 대비<br />
                 지출 비율
                 <span class="text-font-color text-[22px] font-semibold pl-1"
                   >{{ rangeExpenditurePercent.toFixed(1) }}%</span
@@ -146,17 +146,17 @@
 </template>
 
 <script setup>
-import axios from "axios";
-import { ref, onMounted, computed } from "vue";
-import { useAuthStore } from "../../stores/auth";
-import { loadingStateStore } from "../../stores/loadingStateStore";
+import axios from 'axios';
+import { ref, onMounted, computed } from 'vue';
+import { useAuthStore } from '../../stores/auth';
+import { loadingStateStore } from '../../stores/loadingStateStore';
 
 const authStore = useAuthStore();
 
 //소득 (원)
-const incomeRange = ref(""); //"소득분위(n분위)"
-const userIncome = ref(""); //사용자 월 소득
-const avgIncomeInGroup = ref(""); //소속 분위 소득(원)
+const incomeRange = ref(''); //"소득분위(n분위)"
+const userIncome = ref(''); //사용자 월 소득
+const avgIncomeInGroup = ref(''); //소속 분위 소득(원)
 
 //소득별 퍼센트(%)
 const userExpenditurePercent = ref(0); //사용자 월 소득 대비 지출 비율(%제외)
@@ -170,7 +170,7 @@ const yellowCircle = ref(null);
 
 // 숫자 정리
 const formatNumber = (value) => {
-  if (typeof value === "number") {
+  if (typeof value === 'number') {
     return Math.floor(value).toLocaleString(); // 소수점 이하 버리고 세 자리마다 콤마 추가
   }
   return value;
@@ -181,7 +181,7 @@ const loadingStore = loadingStateStore();
 const fetchIncomeData = async () => {
   const token = authStore.token;
   if (!token) {
-    console.error("토큰이 없습니다. 로그인 후 다시 시도하세요.");
+    console.error('토큰이 없습니다. 로그인 후 다시 시도하세요.');
     return;
   }
   loadingStore.setIsAssetAnalyzeLoading(true, 2);
@@ -193,7 +193,7 @@ const fetchIncomeData = async () => {
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       }
     );
@@ -203,22 +203,22 @@ const fetchIncomeData = async () => {
     }
 
     const data = response.data.resultMap;
-    userIncome.value = Number(data["사용자 월 소득(원)"]);
+    userIncome.value = Number(data['사용자 월 소득(원)']);
     userExpenditurePercent.value = Number(
-      data["사용자 월 소득 대비 지출 비율(%제외)"]
+      data['사용자 월 소득 대비 지출 비율(%제외)']
     );
-    avgIncomeInGroup.value = Number(data["소속 분위 소득(원)"]);
+    avgIncomeInGroup.value = Number(data['소속 분위 소득(원)']);
     rangeExpenditurePercent.value = Number(
-      data["소속 분위 월 소득 대비 지출 비율(%제외)"]
+      data['소속 분위 월 소득 대비 지출 비율(%제외)']
     );
-    incomeRange.value = data["소득분위(n분위)"];
-    hashtags.value = data["#요약키워드(4개)"];
-    spendingManagementNeeded.value = data["지출 관리 필요성(true or false)"];
+    incomeRange.value = data['소득분위(n분위)'];
+    hashtags.value = data['#요약키워드(4개)'];
+    spendingManagementNeeded.value = data['지출 관리 필요성(true or false)'];
     console.log(response);
 
     console.log(data);
   } catch (error) {
-    console.error("데이터 가져오기 실패:", error);
+    console.error('데이터 가져오기 실패:', error);
   }
 };
 
@@ -232,28 +232,28 @@ const relativeExpenditurePercent = computed(() => {
 });
 const statusAndAdvice = computed(() => {
   const relative = parseFloat(relativeExpenditurePercent.value);
-  let status = "";
-  let advice = "";
+  let status = '';
+  let advice = '';
 
   if (relative <= 38) {
-    status = "지출 관리 시급";
+    status = '지출 관리 시급';
     advice =
-      "필수 지출과 선택 지출을 구분하고,\n 선택 지출을 줄이는 것부터 시작하세요.";
+      '필수 지출과 선택 지출을 구분하고,\n 선택 지출을 줄이는 것부터 시작하세요.';
   } else if (relative >= 39 && relative <= 48) {
-    status = "지출 관리 필요";
-    advice = "지출 내역을 꼼꼼히 분석하고,\n 불필요한 지출을 찾아 줄여보세요.";
+    status = '지출 관리 필요';
+    advice = '지출 내역을 꼼꼼히 분석하고,\n 불필요한 지출을 찾아 줄여보세요.';
   } else if (relative >= 49 && relative <= 50) {
-    status = "지출 관리 양호";
+    status = '지출 관리 양호';
     advice =
-      "현재의 지출 패턴을 유지하면서,\n 저축을 조금씩 늘려보는 것은 어떨까요?";
+      '현재의 지출 패턴을 유지하면서,\n 저축을 조금씩 늘려보는 것은 어떨까요?';
   } else if (relative >= 51 && relative <= 59) {
-    status = "지출 관리 우수";
+    status = '지출 관리 우수';
     advice =
-      "잉여 자금으로 투자나 재테크를 고려해보세요.\n 장기적인 재무 목표를 세워보는 것도 좋겠습니다.";
+      '잉여 자금으로 투자나 재테크를 고려해보세요.\n 장기적인 재무 목표를 세워보는 것도 좋겠습니다.';
   } else {
-    status = "지출 관리\n매우 우수";
+    status = '지출 관리\n매우 우수';
     advice =
-      "현재의 지출 습관을 유지하세요.\n 다만, 과도한 절약으로 삶의 질이 떨어지지 않도록 주의하세요.";
+      '현재의 지출 습관을 유지하세요.\n 다만, 과도한 절약으로 삶의 질이 떨어지지 않도록 주의하세요.';
   }
 
   return { status, advice };
